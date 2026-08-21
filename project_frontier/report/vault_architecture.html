@@ -1,0 +1,351 @@
+<title>Fabrik Vault Architecture</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;650&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#f6f6f4; --panel:#ffffff; --ink:#17191d; --ink2:#565b63; --hair:#dcdbd4;
+  --logic:#0e7078; --logic-fill:#dbeced; --dram:#a8722c; --dram-fill:#f2e3cd;
+  --miss:#9aa0a6; --figground:#ffffff;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#141619; --panel:#1c1f23; --ink:#eceae4; --ink2:#a2a7ad; --hair:#33373c;
+    --logic:#4cc4cd; --logic-fill:#10393c; --dram:#d9a459; --dram-fill:#3a2c17;
+    --miss:#6b7178; --figground:#1c1f23;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#141619; --panel:#1c1f23; --ink:#eceae4; --ink2:#a2a7ad; --hair:#33373c;
+  --logic:#4cc4cd; --logic-fill:#10393c; --dram:#d9a459; --dram-fill:#3a2c17;
+  --miss:#6b7178; --figground:#1c1f23;
+}
+*{box-sizing:border-box}
+body{background:var(--ground); color:var(--ink); margin:0;
+  font-family:"Source Serif 4",Georgia,serif; font-size:16.5px; line-height:1.6;}
+main{max-width:60rem; margin:0 auto; padding:3rem 1.3rem 4.5rem;}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.15em;
+  text-transform:uppercase; color:var(--logic); margin:0 0 .8rem;}
+h1{font-family:Archivo,system-ui,sans-serif; font-weight:650; font-size:2rem;
+  letter-spacing:-.02em; line-height:1.15; margin:0 0 .9rem; text-wrap:balance;}
+h2{font-family:Archivo,system-ui,sans-serif; font-weight:650; font-size:1.15rem;
+  letter-spacing:-.01em; margin:0 0 .7rem; text-wrap:balance;}
+p{margin:0 0 1rem; max-width:44rem;}
+.lede{font-size:1.02rem; color:var(--ink2);}
+section{margin-top:2.8rem;}
+figure{margin:1.2rem 0 .8rem; background:var(--figground); border:1px solid var(--hair);
+  border-radius:10px; padding:1.1rem 1rem .8rem; overflow-x:auto;}
+figure svg{max-width:100%; height:auto; display:block; margin:0 auto; color:var(--ink);}
+figcaption{font-size:.85rem; color:var(--ink2); line-height:1.5; margin-top:.7rem;
+  max-width:46rem;}
+/* diagram element roles */
+.dram-blk{fill:var(--dram-fill); stroke:var(--dram); stroke-width:1.4;}
+.logic-blk{fill:var(--logic-fill); stroke:var(--logic); stroke-width:1.6;}
+.plain-blk{fill:none; stroke:currentColor; stroke-width:1.3;}
+.miss-blk{fill:none; stroke:var(--miss); stroke-width:1.3; stroke-dasharray:5 4;}
+.wire{stroke:currentColor; stroke-width:1.2; fill:none;}
+.flow{stroke:var(--logic); stroke-width:2; fill:none;}
+.lbl{font-family:"IBM Plex Mono",monospace; font-size:12px; fill:currentColor;}
+.lbl-s{font-family:"IBM Plex Mono",monospace; font-size:10.5px; fill:currentColor; opacity:.72;}
+.lbl-hd{font-family:Archivo,sans-serif; font-size:13px; font-weight:650; fill:currentColor;}
+.lbl-ac{font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--logic);}
+.lbl-dr{font-family:"IBM Plex Mono",monospace; font-size:11px; fill:var(--dram);}
+.twrap{overflow-x:auto; margin:1rem 0;}
+table{border-collapse:collapse; width:100%; font-size:.86rem;
+  font-variant-numeric:tabular-nums;}
+th{font-family:"IBM Plex Mono",monospace; font-size:.68rem; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink2); text-align:left; font-weight:500;
+  padding:.4rem .8rem .4rem 0; border-bottom:1px solid var(--ink2); white-space:nowrap;}
+td{padding:.45rem .8rem .45rem 0; border-bottom:1px solid var(--hair); vertical-align:top;}
+td.n{font-family:"IBM Plex Mono",monospace; font-size:.82rem;}
+code,.mono{font-family:"IBM Plex Mono",monospace; font-size:.85em;}
+.note{font-size:.86rem; color:var(--ink2); border-left:2px solid var(--hair);
+  padding-left:.9rem; margin:1.2rem 0; max-width:44rem;}
+footer{margin-top:3rem; padding-top:1.1rem; border-top:1px solid var(--hair);
+  font-size:.8rem; color:var(--ink2); max-width:46rem;}
+</style>
+<main>
+<p class="eyebrow">Project Frontier · Fabrik decode accelerator</p>
+<h1>The DRAM-on-logic system, as currently modeled</h1>
+<p class="lede">Fabrik is not a processor with memory attached. It is an array of independent
+<em>vault columns</em> — each compute tile bonded face-to-face to its own 3D-DRAM stack, with
+hundreds of channels landing directly in local buffers. Every number below is either measured in
+this project's simulations or carried from a sourced device spec; the distinction is marked.</p>
+
+<section>
+<h2>1 · One vault column, and the array it repeats into</h2>
+<figure>
+<svg viewBox="0 0 920 470" role="img" aria-label="Left: cross-section of one vault column showing eight 3D-DRAM layers bonded above a compute tile, with sixteen channels of vertical I/O crossing the hybrid bond. Right: plan view of sixteen such vault columns tiled in a 4-by-4 mesh, each tile owning its own stack, connected laterally by an on-chip network.">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="currentColor"/>
+    </marker>
+    <marker id="ah-t" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="var(--logic)"/>
+    </marker>
+  </defs>
+
+  <text class="lbl-hd" x="40" y="28">Cross-section · one vault column</text>
+  <text class="lbl-s" x="40" y="46">side view, not to scale</text>
+
+  <!-- DRAM layers -->
+  <rect class="dram-blk" x="60" y="62"  width="290" height="15" rx="2"/>
+  <rect class="dram-blk" x="60" y="82"  width="290" height="15" rx="2"/>
+  <rect class="dram-blk" x="60" y="102" width="290" height="15" rx="2"/>
+  <rect class="dram-blk" x="60" y="122" width="290" height="15" rx="2"/>
+  <rect class="dram-blk" x="60" y="142" width="290" height="15" rx="2"/>
+  <rect class="dram-blk" x="60" y="162" width="290" height="15" rx="2"/>
+  <rect class="dram-blk" x="60" y="182" width="290" height="15" rx="2"/>
+  <rect class="dram-blk" x="60" y="202" width="290" height="15" rx="2"/>
+  <text class="lbl-dr" x="360" y="128">3D DRAM</text>
+  <text class="lbl-dr" x="360" y="144">8 layers</text>
+  <text class="lbl-dr" x="360" y="160">4–16 GB</text>
+
+  <!-- vertical I/O through the bond -->
+  <line class="wire" x1="90"  y1="221" x2="90"  y2="252" marker-end="url(#ah)"/>
+  <line class="wire" x1="140" y1="221" x2="140" y2="252" marker-end="url(#ah)"/>
+  <line class="wire" x1="190" y1="221" x2="190" y2="252" marker-end="url(#ah)"/>
+  <line class="wire" x1="240" y1="221" x2="240" y2="252" marker-end="url(#ah)"/>
+  <line class="wire" x1="290" y1="221" x2="290" y2="252" marker-end="url(#ah)"/>
+  <line class="wire" x1="340" y1="221" x2="340" y2="252" marker-end="url(#ah)"/>
+  <text class="lbl-s" x="60" y="243">hybrid bond · 16 ch × 1024 pin · ~0.25 pJ/bit</text>
+
+  <!-- logic tile -->
+  <rect class="logic-blk" x="60" y="256" width="290" height="72" rx="4"/>
+  <text class="lbl" x="76" y="282">compute tile</text>
+  <text class="lbl-s" x="76" y="300">MAC array · SRAM · controller</text>
+  <text class="lbl-ac" x="76" y="318">1.024 TB/s from its own vault</text>
+
+  <!-- NoC edge out of the tile -->
+  <line class="flow" x1="350" y1="292" x2="404" y2="292" marker-end="url(#ah-t)"/>
+  <text class="lbl-ac" x="356" y="284">NoC</text>
+
+  <text class="lbl-s" x="60" y="352">Memory is private to the tile above it.</text>
+  <text class="lbl-s" x="60" y="368">Only activations cross the network.</text>
+
+  <!-- divider -->
+  <line class="wire" x1="425" y1="20" x2="425" y2="440" stroke-dasharray="3 5" opacity=".45"/>
+
+  <!-- plan view -->
+  <text class="lbl-hd" x="470" y="28">Plan view · the array</text>
+  <text class="lbl-s" x="470" y="46">16 vault columns = one stock chip</text>
+
+  <!-- mesh wires first (behind tiles) -->
+  <g class="wire" opacity=".55">
+    <line x1="530" y1="92"  x2="570" y2="92"/><line x1="630" y1="92"  x2="670" y2="92"/><line x1="730" y1="92"  x2="770" y2="92"/>
+    <line x1="530" y1="180" x2="570" y2="180"/><line x1="630" y1="180" x2="670" y2="180"/><line x1="730" y1="180" x2="770" y2="180"/>
+    <line x1="530" y1="268" x2="570" y2="268"/><line x1="630" y1="268" x2="670" y2="268"/><line x1="730" y1="268" x2="770" y2="268"/>
+    <line x1="530" y1="356" x2="570" y2="356"/><line x1="630" y1="356" x2="670" y2="356"/><line x1="730" y1="356" x2="770" y2="356"/>
+    <line x1="500" y1="122" x2="500" y2="150"/><line x1="600" y1="122" x2="600" y2="150"/><line x1="700" y1="122" x2="700" y2="150"/><line x1="800" y1="122" x2="800" y2="150"/>
+    <line x1="500" y1="210" x2="500" y2="238"/><line x1="600" y1="210" x2="600" y2="238"/><line x1="700" y1="210" x2="700" y2="238"/><line x1="800" y1="210" x2="800" y2="238"/>
+    <line x1="500" y1="298" x2="500" y2="326"/><line x1="600" y1="298" x2="600" y2="326"/><line x1="700" y1="298" x2="700" y2="326"/><line x1="800" y1="298" x2="800" y2="326"/>
+  </g>
+
+  <!-- 4x4 tiles, each with its stack cap -->
+  <g>
+    <rect class="dram-blk" x="470" y="62" width="60" height="8" rx="2"/><rect class="logic-blk" x="470" y="72" width="60" height="50" rx="3"/>
+    <rect class="dram-blk" x="570" y="62" width="60" height="8" rx="2"/><rect class="logic-blk" x="570" y="72" width="60" height="50" rx="3"/>
+    <rect class="dram-blk" x="670" y="62" width="60" height="8" rx="2"/><rect class="logic-blk" x="670" y="72" width="60" height="50" rx="3"/>
+    <rect class="dram-blk" x="770" y="62" width="60" height="8" rx="2"/><rect class="logic-blk" x="770" y="72" width="60" height="50" rx="3"/>
+
+    <rect class="dram-blk" x="470" y="150" width="60" height="8" rx="2"/><rect class="logic-blk" x="470" y="160" width="60" height="50" rx="3"/>
+    <rect class="dram-blk" x="570" y="150" width="60" height="8" rx="2"/><rect class="logic-blk" x="570" y="160" width="60" height="50" rx="3"/>
+    <rect class="dram-blk" x="670" y="150" width="60" height="8" rx="2"/><rect class="logic-blk" x="670" y="160" width="60" height="50" rx="3"/>
+    <rect class="dram-blk" x="770" y="150" width="60" height="8" rx="2"/><rect class="logic-blk" x="770" y="160" width="60" height="50" rx="3"/>
+
+    <rect class="dram-blk" x="470" y="238" width="60" height="8" rx="2"/><rect class="logic-blk" x="470" y="248" width="60" height="50" rx="3"/>
+    <rect class="dram-blk" x="570" y="238" width="60" height="8" rx="2"/><rect class="logic-blk" x="570" y="248" width="60" height="50" rx="3"/>
+    <rect class="dram-blk" x="670" y="238" width="60" height="8" rx="2"/><rect class="logic-blk" x="670" y="248" width="60" height="50" rx="3"/>
+    <rect class="dram-blk" x="770" y="238" width="60" height="8" rx="2"/><rect class="logic-blk" x="770" y="248" width="60" height="50" rx="3"/>
+
+    <rect class="dram-blk" x="470" y="326" width="60" height="8" rx="2"/><rect class="logic-blk" x="470" y="336" width="60" height="50" rx="3"/>
+    <rect class="dram-blk" x="570" y="326" width="60" height="8" rx="2"/><rect class="logic-blk" x="570" y="336" width="60" height="50" rx="3"/>
+    <rect class="dram-blk" x="670" y="326" width="60" height="8" rx="2"/><rect class="logic-blk" x="670" y="336" width="60" height="50" rx="3"/>
+    <rect class="dram-blk" x="770" y="326" width="60" height="8" rx="2"/><rect class="logic-blk" x="770" y="336" width="60" height="50" rx="3"/>
+  </g>
+  <text class="lbl-s" x="845" y="100">each square:</text>
+  <text class="lbl-s" x="845" y="115">tile +</text>
+  <text class="lbl-s" x="845" y="130">its stack</text>
+
+  <text class="lbl" x="470" y="412">16 vaults → 16.4 TB/s · 128 GB</text>
+  <text class="lbl-ac" x="470" y="432">scale the array, scale the bandwidth: 49 vaults → 50 TB/s · 256 GB</text>
+</svg>
+<figcaption><strong>Bandwidth is a function of how many columns you build, not how fast a bus runs.</strong>
+Each tile reads its own stack over its own channels, so aggregate bandwidth is <span class="mono">vaults × 1.024 TB/s</span>
+and capacity is <span class="mono">vaults × stack size</span>. Verified in the ATLAS simulator, which instantiates one
+DRAM controller per core (<span class="mono">simulator/src/core/core.cpp:156</span>) — the stock cloud chip is 16 columns.
+The consequence for MoE decode: a router-selected expert ideally streams from the vault directly beneath the tile that
+needs it, and only the small activation vector crosses the network.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>2 · What actually moves during one decode step</h2>
+<p>Three traffic classes leave the stacks every token, and they do <em>not</em> achieve the same
+fraction of peak bandwidth. Treating them as interchangeable bytes is the single largest source of
+error in a memory-centric model — which is why each is priced separately here, from Ramulator
+measurements rather than a flat assumption.</p>
+<figure>
+<svg viewBox="0 0 920 360" role="img" aria-label="Dataflow diagram: a 3D-DRAM vault on the left sends three labelled traffic classes to a compute tile — expert weights as a sequential stream achieving 80 percent of peak bandwidth, KV blocks as gathers achieving 77 percent for 128-kilobyte blocks but only 29 percent for scattered 576-byte rows, and index entries as a scan achieving 81 percent. The tile emits an activation vector of a few kilobytes onto the network toward the next layer.">
+  <defs>
+    <marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="var(--logic)"/>
+    </marker>
+    <marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" fill="currentColor"/>
+    </marker>
+  </defs>
+
+  <!-- vault -->
+  <rect class="dram-blk" x="45" y="60" width="150" height="235" rx="5"/>
+  <text class="lbl" x="60" y="86">3D-DRAM</text>
+  <text class="lbl" x="60" y="104">vault</text>
+  <text class="lbl-dr" x="60" y="128">expert weights</text>
+  <text class="lbl-dr" x="60" y="146">KV cache</text>
+  <text class="lbl-dr" x="60" y="164">index entries</text>
+  <text class="lbl-s" x="60" y="196">peak</text>
+  <text class="lbl-s" x="60" y="212">1.024 TB/s</text>
+  <text class="lbl-s" x="60" y="228">per vault</text>
+
+  <!-- three traffic classes -->
+  <line class="flow" x1="197" y1="102" x2="452" y2="102" marker-end="url(#ah2)"/>
+  <text class="lbl" x="205" y="92">expert weights · sequential stream</text>
+  <text class="lbl-ac" x="205" y="120">achieves 0.80 of peak</text>
+
+  <line class="flow" x1="197" y1="180" x2="452" y2="180" marker-end="url(#ah2)"/>
+  <text class="lbl" x="205" y="170">KV blocks · gather</text>
+  <text class="lbl-ac" x="205" y="198">0.77 for 128 KB blocks · 0.29 for 576 B rows</text>
+
+  <line class="flow" x1="197" y1="258" x2="452" y2="258" marker-end="url(#ah2)"/>
+  <text class="lbl" x="205" y="248">index entries · full scan</text>
+  <text class="lbl-ac" x="205" y="276">achieves 0.81 of peak</text>
+
+  <!-- tile -->
+  <rect class="logic-blk" x="455" y="92" width="185" height="176" rx="5"/>
+  <text class="lbl" x="472" y="120">compute tile</text>
+  <text class="lbl-s" x="472" y="144">GEMV over</text>
+  <text class="lbl-s" x="472" y="160">streamed weights</text>
+  <text class="lbl-s" x="472" y="184">attention over</text>
+  <text class="lbl-s" x="472" y="200">gathered KV</text>
+  <text class="lbl-s" x="472" y="224">top-k over</text>
+  <text class="lbl-s" x="472" y="240">scanned index</text>
+
+  <!-- out -->
+  <line class="flow" x1="643" y1="180" x2="726" y2="180" marker-end="url(#ah2)"/>
+  <text class="lbl" x="650" y="170">activation</text>
+  <text class="lbl-ac" x="650" y="198">~7 KB</text>
+
+  <rect class="plain-blk" x="729" y="140" width="146" height="80" rx="5"/>
+  <text class="lbl" x="745" y="170">on-chip network</text>
+  <text class="lbl-s" x="745" y="190">→ next layer</text>
+
+  <line class="wire" x1="802" y1="223" x2="802" y2="262" marker-end="url(#ah3)"/>
+  <text class="lbl-s" x="700" y="282">0.87 MB / token total</text>
+
+  <text class="lbl-s" x="45" y="330">Fractions are Ramulator-measured on the 16-vault configuration; they set achieved bandwidth everywhere in the model.</text>
+</svg>
+<figcaption><strong>Not all bytes cost the same.</strong> A long expert stream runs at four-fifths of peak;
+a scattered 576-byte compressed-KV row gather runs at barely a quarter. The 2.8× spread between
+best and worst pattern dominates model realism at batch 1–4, where compute sits at 3–10% of peak —
+so the memory system, not the tile, is where fidelity has to be bought.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>3 · What goes inside the tile — three candidates, one shared gap</h2>
+<figure>
+<svg viewBox="0 0 920 320" role="img" aria-label="Three tile interiors compared. The Tensix tile contains a 2048-MAC FP8 array and 1.5 megabytes of SRAM. The PULP tile contains a Snitch control cluster, a RedMulE FP16 engine and a NEUREKA low-bit engine over shared TCDM. The custom hybrid contains GEMV lanes, a reconfigurable systolic array and, uniquely, a solid index and top-k engine. All three show an index engine block; it is dashed and greyed as absent in the Tensix and PULP tiles and solid and highlighted in the custom hybrid.">
+  <!-- panel 1: tensix -->
+  <text class="lbl-hd" x="40" y="26">Tensix-class</text>
+  <text class="lbl-s" x="40" y="43">public silicon params</text>
+  <rect class="plain-blk" x="40" y="54" width="250" height="196" rx="6"/>
+  <rect class="logic-blk" x="58" y="72" width="214" height="60" rx="4"/>
+  <text class="lbl" x="72" y="98">FP8 MAC array</text>
+  <text class="lbl-s" x="72" y="118">2048 MAC/clk · 1.35 GHz</text>
+  <rect class="plain-blk" x="58" y="144" width="214" height="42" rx="4"/>
+  <text class="lbl" x="72" y="170">SRAM · 1.5 MB</text>
+  <rect class="miss-blk" x="58" y="198" width="214" height="36" rx="4"/>
+  <text class="lbl-s" x="72" y="221" fill="var(--miss)">index engine — absent</text>
+
+  <!-- panel 2: pulp -->
+  <text class="lbl-hd" x="335" y="26">PULP heterogeneous</text>
+  <text class="lbl-s" x="335" y="43">open RTL</text>
+  <rect class="plain-blk" x="335" y="54" width="250" height="196" rx="6"/>
+  <rect class="plain-blk" x="353" y="72" width="214" height="34" rx="4"/>
+  <text class="lbl-s" x="367" y="94">Snitch cluster · control, SSR/FREP</text>
+  <rect class="logic-blk" x="353" y="116" width="103" height="60" rx="4"/>
+  <text class="lbl-s" x="365" y="140">RedMulE</text>
+  <text class="lbl-s" x="365" y="158">FP16 attn</text>
+  <rect class="logic-blk" x="464" y="116" width="103" height="60" rx="4"/>
+  <text class="lbl-s" x="476" y="140">NEUREKA</text>
+  <text class="lbl-s" x="476" y="158">low-bit experts</text>
+  <rect class="plain-blk" x="353" y="186" width="214" height="26" rx="4"/>
+  <text class="lbl-s" x="367" y="204">TCDM · 128 KiB, 32 banks</text>
+  <rect class="miss-blk" x="353" y="220" width="214" height="26" rx="4"/>
+  <text class="lbl-s" x="367" y="238" fill="var(--miss)">index engine — absent</text>
+
+  <!-- panel 3: custom -->
+  <text class="lbl-hd" x="630" y="26">Custom hybrid</text>
+  <text class="lbl-s" x="630" y="43">this study's flagship</text>
+  <rect class="plain-blk" x="630" y="54" width="250" height="196" rx="6"/>
+  <rect class="logic-blk" x="648" y="72" width="214" height="42" rx="4"/>
+  <text class="lbl-s" x="662" y="98">GEMV lanes · M = 1–4 native</text>
+  <rect class="logic-blk" x="648" y="124" width="214" height="42" rx="4"/>
+  <text class="lbl-s" x="662" y="150">reconfigurable systolic array</text>
+  <rect class="plain-blk" x="648" y="176" width="214" height="26" rx="4"/>
+  <text class="lbl-s" x="662" y="194">SRAM · 64 MB / die</text>
+  <rect x="648" y="212" width="214" height="34" rx="4" fill="var(--logic-fill)" stroke="var(--logic)" stroke-width="2.4"/>
+  <text class="lbl-ac" x="662" y="234">index + top-k engine — present</text>
+
+  <text class="lbl-s" x="40" y="284">Every tile candidate consumes a vault's stream comfortably at batch 1–4. The block they differ on is the scan engine:</text>
+  <text class="lbl-ac" x="40" y="304">adding it is worth 1.57× whole-die throughput on compressed-attention decode at 1M context.</text>
+</svg>
+<figcaption><strong>The tile choice is nearly settled by bandwidth; the open question is the scan block.</strong>
+Tensix and PULP both reach the interactivity targets when memory-bound, and the study's V4-Flash workload
+drove all three routes to the same conclusion independently: the compressed-attention index scan is the one
+operator with no good home on a general tile, and the one custom block that pays for itself.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>4 · The configurations under study</h2>
+<div class="twrap">
+<table>
+<tr><th>configuration</th><th>vaults</th><th>bandwidth</th><th>capacity</th><th>compute</th><th>SRAM</th><th>status</th></tr>
+<tr><td>Stock ATLAS cloud chip</td><td class="n">16</td><td class="n">16.4 TB/s</td><td class="n">128 GB</td><td class="n">262 TF fp16</td><td class="n">48 MB</td><td>validation baseline</td></tr>
+<tr><td>FabrikV1-S (CUBE)</td><td class="n">16</td><td class="n">4.1 TB/s</td><td class="n">64 GB</td><td class="n">262 TF fp8</td><td class="n">96 MB</td><td>v1 product point</td></tr>
+<tr><td>FabrikV1-M</td><td class="n">32</td><td class="n">8.2 TB/s</td><td class="n">128 GB</td><td class="n">524 TF fp8</td><td class="n">192 MB</td><td>v1 product point</td></tr>
+<tr><td>FabrikV1-L</td><td class="n">48</td><td class="n">12.3 TB/s</td><td class="n">192 GB</td><td class="n">786 TF fp8</td><td class="n">288 MB</td><td>v1 product point</td></tr>
+<tr><td><strong>Flagship</strong></td><td class="n">49</td><td class="n">50 TB/s</td><td class="n">256 GB</td><td class="n">1 PF fp8</td><td class="n">64 MB</td><td>study recommendation</td></tr>
+</table>
+</div>
+<p class="note">Flagship operating point, V4-Flash at 128K context: <span class="mono">2,562 tok/s/user</span> at batch 1,
+<span class="mono">1,484</span> at batch 4, ~<span class="mono">480–560 W</span>, 84–92 °C on liquid cooling.
+Power splits DRAM array ≈55%, vertical interface 9%, compute 7%, SRAM 6%, static 9% — a memory-centric
+machine spends its energy in the memory array, and any honest model must say so.</p>
+</section>
+
+<section>
+<h2>5 · Which simulator owns which layer</h2>
+<p>No single tool is credible across the whole stack, so each layer is modeled by the tool whose
+accuracy claim actually holds for it, and outputs carry the label.</p>
+<div class="twrap">
+<table>
+<tr><th>layer</th><th>tool</th><th>fidelity</th></tr>
+<tr><td>DRAM channels, banks, refresh</td><td>Ramulator (in ATLAS)</td><td>cycle-accurate</td></tr>
+<tr><td>On-chip network</td><td>BookSim (in ATLAS)</td><td>cycle-accurate</td></tr>
+<tr><td>Thermal / sustainable frequency</td><td>HotSpot via PyTA</td><td>measured, 30-case sweep</td></tr>
+<tr><td>Tile control &amp; orchestration</td><td>Banshee (Snitch)</td><td>executed, cycle-approximate</td></tr>
+<tr><td>HWPE busy time (RedMulE, NEUREKA)</td><td>closed-form models</td><td>paper-anchored to 0.6%</td></tr>
+<tr><td>Full-model decode composition</td><td>analytical framework</td><td>±20% vs ATLAS cycle sim</td></tr>
+</table>
+</div>
+</section>
+
+<footer>
+Figures drawn from the models and measurements in <span class="mono">project_frontier/</span> on branch
+<span class="mono">claude/fabrik-decode-accelerator-q98dsy</span>. Device parameters are sourced per value in
+<span class="mono">params/pulp_tile.yaml</span> and <span class="mono">models/model_manifest.json</span>;
+assumptions carry ranges in <span class="mono">params/ASSUMPTIONS.md</span>. Full reasoning:
+<span class="mono">report/PROJECT_FRONTIER_REPORT.md</span>, <span class="mono">docs/IP_SELECTION.md</span>,
+<span class="mono">docs/PULP_LOGIC_DIE_SIM.md</span>.
+</footer>
+</main>
