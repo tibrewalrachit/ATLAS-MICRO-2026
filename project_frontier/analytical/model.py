@@ -124,18 +124,25 @@ def decode_step(workload, hw: FabrikPoint, batch: int = 1,
     latency_lower = max(tot_mem_t, tot_comp_t) + fixed
     tps = 1.0 / latency
 
-    # capacity check (weights + batch x KV)
-    from importlib import import_module
-    if workload.model == "deepseek_v4_flash":
-        from deepseek_v4_flash.dag import kv_capacity_per_user, total_params
-        kv_cap = kv_capacity_per_user(workload.context)
-        wt_bytes = total_params()["total"] * 0.75   # mixed fp4/fp8 avg (exact per-tensor in report)
+    # capacity check (weights + batch x KV). Workloads may carry explicit
+    # weight_capacity_bytes / kv_per_user_bytes attributes; the two original
+    # models fall back to their modules; unknown models skip the check.
+    kv_cap = getattr(workload, "kv_per_user_bytes", None)
+    wt_bytes = getattr(workload, "weight_capacity_bytes", None)
+    if wt_bytes is None:
+        if workload.model == "deepseek_v4_flash":
+            from deepseek_v4_flash.dag import kv_capacity_per_user, total_params
+            kv_cap = kv_capacity_per_user(workload.context)
+            wt_bytes = total_params()["total"] * 0.75   # mixed fp4/fp8 avg
+        elif workload.model == "minimax_m3":
+            from minimax_m3.dag import kv_capacity_per_user, total_params
+            kp = 1.0 if workload.mode.endswith("fp8") else 2.0
+            kv_cap = kv_capacity_per_user(workload.context, kp)
+            wt_bytes = total_params()["total"] * kp
+    if wt_bytes is not None:
+        fits = wt_bytes + batch * (kv_cap or 0.0) <= hw.capacity_GB * 1e9
     else:
-        from minimax_m3.dag import kv_capacity_per_user, total_params
-        kp = 1.0 if workload.mode.endswith("fp8") else 2.0
-        kv_cap = kv_capacity_per_user(workload.context, kp)
-        wt_bytes = total_params()["total"] * kp
-    fits = wt_bytes + batch * kv_cap <= hw.capacity_GB * 1e9
+        fits = True
 
     return StepResult(
         latency_s=latency, latency_lower_s=latency_lower,

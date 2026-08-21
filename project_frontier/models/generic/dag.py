@@ -10,8 +10,9 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 from workload_common import Op, Engine, AccessPattern, DecodeWorkload
 
 
-def build_decode_dag(config_path: str, context: int, element_size: int = 2,
-                     tp: int = 8, ep: int = 8, name: str = "") -> DecodeWorkload:
+def build_decode_dag(config_path: str, context: int, element_size: float = 2,
+                     tp: int = 8, ep: int = 8, name: str = "",
+                     expert_element_size: float = None) -> DecodeWorkload:
     cfg = json.load(open(config_path))
     hid = cfg["hidden_size"]
     n_layers = cfg["num_hidden_layers"]
@@ -54,9 +55,10 @@ def build_decode_dag(config_path: str, context: int, element_size: int = 2,
         # EP shards experts across ep chips: per-chip resident experts =
         # n_exp/ep; expected traffic on this chip = (unique-expert stream)/ep
         # under uniform expert placement (validated vs ATLAS mixtral case).
+        ees = expert_element_size if expert_element_size is not None else es
         ops.append(Op("routed_experts", "routed_expert", Engine.MATRIX,
                       flops=2.0 * (gate_f + 1) * hid * ffn_inter * top_k / ep,
-                      weight_bytes=(gate_f + 1) * hid * ffn_inter * top_k * es / ep,
+                      weight_bytes=(gate_f + 1) * hid * ffn_inter * top_k * ees / ep,
                       shared_across_batch=False, count=n_layers))
         ops.append(Op("router", "router", Engine.MATRIX,
                       flops=2.0 * hid * n_exp, weight_bytes=hid * n_exp * es,

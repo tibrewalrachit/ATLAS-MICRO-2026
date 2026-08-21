@@ -517,3 +517,57 @@ pays for itself, and it could be added beside otherwise-standard Tensix
 tiles. Cycle-level bracket runs of the Tensix-analog chip (both mac_num
 bounds, opt-66B + Mixtral on the 16-vault system) are executing on Modal;
 results are appended here on completion.
+
+---
+
+## Appendix C — FabrikV1: Tensix logic die on CUBE-class stacks (product-v1 study)
+
+A v1-product study (user-supplied, built on Tenstorrent's Polaris archspec
+with `tt_bh.yaml` Tensix parameters: 2,048 FP8 MACs/clk/core @1 GHz, and a
+CUBE-class stack of 1024 I/O × 2 GT/s = 256 GB/s / 4 GB) was incorporated
+and cross-validated (`architectures/fabrik/cube.py`,
+`experiments/run_fabrikv1.py`, GPT-OSS-120B source-of-truth archived —
+116.8B params reconstructed, 63 GB serving footprint at MXFP4 experts + FP8
+rest vs the study's 59 GB, delta = fp4 scale-overhead assumptions).
+
+**Cross-check** (`results/processed/fabrikv1_cube.csv`) `[analytical]`:
+this framework, with Ramulator-calibrated pattern efficiencies and the
+Tensix tile brackets, lands **6–19% below** the Polaris-style flat-80%
+numbers — same story, honest haircut:
+
+| GPT-OSS-120B, B=1 | V1-S (4.1 TB/s, 64 GB) | V1-M (8.2, 128) | V1-L (12.3, 192) |
+|---|---|---|---|
+| Polaris-style @8K | 942 | 1,883 | 2,825 |
+| this model @8K (tinytile) | 854 | 1,613 | 2,292 |
+| this model @8K (tile32, no tiny tiles) | 682 | 1,303 | 1,871 |
+| this model @128K (tinytile) | 537* | 1,036 | 1,501 |
+
+\* capacity-marginal: see below. Qwen3-235B-A22B: 401 (M) / 591 (L) vs the
+study's 431 / 646.
+
+**Confirmed:** the compute-de-risking claim. Compute utilization is
+**3–10% of peak** across every GPT-OSS operating point — at CUBE-class
+bandwidth (4–12 TB/s) the Tensix B=1 GEMV/tile-utilization question is
+nearly irrelevant (even the no-tiny-tiles bracket costs only ~20%). The
+tile question *does* matter at the 50 TB/s Fabrik flagship class
+(Appendix B) — compute headroom shrinks as bandwidth grows.
+
+**Added by this framework (capacity granularity the flat model lacks):**
+(1) V1-S is capacity-infeasible for GPT-OSS at 128K (63 GB weights + 2.4 GB
+KV/user > 64 GB) — S is an 8K–32K part unless the fp4 scale overhead is
+tightened; (2) Qwen3-235B-A22B misses V1-M by ~0.6 GB (120.6 GB weights +
+KV > 128 GB) — M wants ≥33 stacks for that model; (3) batching hurts
+per-user speed exactly as the study notes (854→339 at B=1→4: top-4-of-128
+gives ~3% expert overlap), so the v1 economics are per-user premium
+interactivity, not aggregate throughput — consistent with §A.2's balance
+table (a 15.6 GB-per-TB/s V1-S is a B=1 interactivity part by
+construction).
+
+**The declared gap — achieved-vs-peak under real channel/NoC behavior** —
+is exactly what this infrastructure produces: ATLAS cycle runs of a
+CUBE-analog chip (16 stacks × 4-channel 256 GB/s Ramulator config, Tensix-
+class 8,192-MAC tiles, 4×4 BookSim mesh) are executing now; results are
+appended here on completion, alongside the Tensix-bracket cycle runs of
+Appendix B. The Polaris archspec draft (`fabrik_cube_polaris.yaml`) remains
+the correlation path against Tenstorrent's internal LUTs — the ask stands:
+a Blackhole operator LUT to correlate this config.
