@@ -1,0 +1,11 @@
+{
+  "seq_stream": 0.801,
+  "block_gather": 0.769228,
+  "random_gather": 0.286637,
+  "scan": 0.808722,
+  "_burst_latency_csa_512rows_s": 7.748e-06,
+  "_burst_latency_msa_17blocks_s": 2.676e-06,
+  "_source": "ramulator test_dram on 16ch HBDRAM 1TB/s (test_chip_16ch)",
+  "_seq_stream_note": "matrix probe 1x4096x8192 tile(1,512,8192)=0.801; naive tiling gives 0.20-0.31 -> low case",
+  "_seq_stream_low": 0.31
+}

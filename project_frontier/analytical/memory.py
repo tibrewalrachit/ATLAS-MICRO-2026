@@ -24,12 +24,29 @@ EFF_RANGES = {  # low / base / high for uncertainty analysis (Part XXXIV)
 }
 
 
+def load_calibrated(path=None):
+    """Load Ramulator-measured pattern efficiencies if present (Part XI)."""
+    import json, os
+    path = path or os.path.join(os.path.dirname(__file__), "..", "results",
+                                "processed", "mem_eff_calibrated.json")
+    try:
+        d = json.load(open(path))
+        return ({k: d[k] for k in ("seq_stream", "block_gather", "random_gather", "scan")}
+                | {"on_chip": 1.0}), "ramulator_calibrated"
+    except Exception:
+        return dict(DEFAULT_EFF), "assumed_defaults"
+
+
 @dataclass
 class MemorySystem:
     peak_bw: float                     # bytes/s
     capacity: float                    # bytes
-    eff: dict = field(default_factory=lambda: dict(DEFAULT_EFF))
-    calibration_source: str = "assumed_defaults"
+    eff: dict = None
+    calibration_source: str = ""
+
+    def __post_init__(self):
+        if self.eff is None:
+            self.eff, self.calibration_source = load_calibrated()
 
     def time_for(self, bytes_by_pattern: dict) -> float:
         """Seconds to move the given bytes, pattern-aware. Patterns share the
