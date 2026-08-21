@@ -1,12 +1,14 @@
 [submodule "simulator/src/dram/ramulator2"]
 	path = simulator/src/dram/ramulator2
 	url = https://github.com/CMU-SAFARI/ramulator2.git
+	ignore = all
 [submodule "simulator/3rd/yaml-cpp"]
 	path = simulator/3rd/yaml-cpp
 	url = https://github.com/jbeder/yaml-cpp.git
 [submodule "simulator/src/noc/booksim2"]
 	path = simulator/src/noc/booksim2
 	url = https://github.com/booksim/booksim2.git
+	ignore = all
 [submodule "simulator/3rd/pybind11"]
 	path = simulator/3rd/pybind11
 	url = https://github.com/pybind/pybind11
