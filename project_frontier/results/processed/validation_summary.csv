@@ -1,0 +1,3 @@
+case,ctx,batch,analytical_ms,cycle_ms,ratio
+opt_66b,4096,8,2.083,2.544,0.82
+mixtral_8x22b,16384,8,2.789,2.4,1.16

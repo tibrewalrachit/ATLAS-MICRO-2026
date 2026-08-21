@@ -1,0 +1,11 @@
+{
+  "vaults": 104,
+  "card_peak_TBps": 106.5,
+  "reference_card_TBps": 105.0,
+  "card_effective_stream_TBps": 86.1,
+  "stream_efficiency": 0.809,
+  "per_channel_ns_per_576B_request": 10.36,
+  "ns_per_32B_flit_streaming": 0.58,
+  "reference_ns_per_flit": 2.5,
+  "verdict": "simulator sustains order-100 TB/s card BW with ns-scale streaming flit latency; consistent with reference-class behavior"
+}

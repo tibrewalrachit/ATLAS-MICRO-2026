@@ -35,6 +35,15 @@ class FabrikPoint:
         ms = MemorySystem(self.peak_bw_TBps * 1e12, self.capacity_GB * 1e9)
         if self.mem_eff:
             ms.eff.update(self.mem_eff)
+        # SRAM effect: streaming efficiency needs double-buffered weight/act
+        # tiles; below ~16 MB per TB/s-class stream the tiling explorer is
+        # forced into small tiles -> extra row activations and re-reads.
+        # Calibration anchor: test_dram matrix probes (tile 512x8192 -> 0.80,
+        # small tiles -> 0.20-0.31). Modeled as a smooth penalty, labeled
+        # assumption in report.
+        req_mb = 16.0 + 2.0 * self.peak_bw_TBps / 10.0
+        f = min(1.0, 0.55 + 0.45 * min(1.0, self.sram_MB / req_mb))
+        ms.eff = {k: (v * f if k != "on_chip" else v) for k, v in ms.eff.items()}
         return ms
 
 

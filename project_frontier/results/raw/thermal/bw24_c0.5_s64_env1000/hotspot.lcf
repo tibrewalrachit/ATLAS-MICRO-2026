@@ -1,0 +1,49 @@
+
+# File Format:
+#<Layer Number>
+#<Lateral heat flow Y/N?>
+#<Power Dissipation Y/N?>
+#<Specific heat capacity in J/(m^3K)>
+#<Resistivity in (m-K)/W>
+#<Thickness in m>
+#<floorplan file>
+
+0
+Y
+Y
+1750000
+0.01
+1e-05
+/home/user/ATLAS-MICRO-2026/project_frontier/experiments/../results/raw/thermal/bw24_c0.5_s64_env1000/L0_logic_die.flp
+
+3
+Y
+Y
+1750000
+0.01
+0.00032
+/home/user/ATLAS-MICRO-2026/project_frontier/experiments/../results/raw/thermal/bw24_c0.5_s64_env1000/L3_memory_die.flp
+
+2
+Y
+N
+2320000
+0.3333333333333333
+4e-05
+/home/user/ATLAS-MICRO-2026/project_frontier/experiments/../results/raw/thermal/bw24_c0.5_s64_env1000/L2_beol_die.flp
+
+1
+Y
+N
+2320000
+0.6153846153846154
+1.04e-05
+/home/user/ATLAS-MICRO-2026/project_frontier/experiments/../results/raw/thermal/bw24_c0.5_s64_env1000/L1_d2d.flp
+
+4
+Y
+N
+1750000
+0.01
+0.0003696
+/home/user/ATLAS-MICRO-2026/project_frontier/experiments/../results/raw/thermal/bw24_c0.5_s64_env1000/L4_dummy.flp

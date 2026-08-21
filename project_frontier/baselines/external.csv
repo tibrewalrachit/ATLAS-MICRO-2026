@@ -1,0 +1,12 @@
+date,provider,hardware,model,precision,context,batch,TPS_per_user,aggregate_TPS,power_W,input_price_per_1M,output_price_per_1M,source,measurement_methodology,comparison_class
+2026-08,DeepSeek official API,NVIDIA GPU pool (unspecified),DeepSeek-V4-Flash,fp8/fp4 (per model card),unspecified,production,107,,,0.22,0.66,artificialanalysis.ai/models/deepseek-v4-flash; deepseek pricing pages,API-measured median output speed (Artificial Analysis),same_model
+2026-08,Nebius,NVIDIA GPU (unspecified),DeepSeek-V4-Flash,unspecified,unspecified,production,305.7,,,,,artificialanalysis.ai/models/deepseek-v4-flash/providers,API-measured output speed (Artificial Analysis provider table),same_model
+2026-08,Wafer (FAST),unspecified accelerator,DeepSeek-V4-Flash,unspecified,unspecified,production,274.2,,,,,artificialanalysis.ai/models/deepseek-v4-flash/providers,API-measured output speed,same_model
+2026-08,Fireworks,NVIDIA GPU,DeepSeek-V4-Flash,unspecified,unspecified,production,247.1,,,,,artificialanalysis.ai/models/deepseek-v4-flash/providers,API-measured output speed,same_model
+2026-08,DeepInfra,NVIDIA GPU,DeepSeek-V4-Flash,unspecified,unspecified,production,,,,0.10,0.20,deepinfra.com via requesty.ai model page,listed API price,same_model
+2026-08,OpenRouter (cheapest route),mixed,DeepSeek-V4-Flash,unspecified,unspecified,production,,,,0.0679,0.168,openrouter.ai/deepseek/deepseek-v4-flash,listed API price (route minimum),same_model
+2026-08,MiniMax + providers,NVIDIA GPU,MiniMax-M3,unspecified,unspecified,production,89-107,,,,0.22,artificialanalysis.ai/models/minimax-m3 and model comparisons,API-measured output speed / blended price,same_model
+2026-08,Cerebras,CS-4 wafer-scale,undisclosed benchmark model,unspecified,unspecified,unspecified,4400,,,,,techtimes.com 2026-08-19 CS-4 SUPERNOVA report,vendor claim at launch; model unspecified -> market reference only,market_reference
+2025-2026,Cerebras,CS-3 wafer-scale,Llama-3.3-70B,fp16 (vendor),8K,production,1800,,,0.85,1.20,cerebras.ai inference pages/press,vendor-published speed; price from public Cerebras pricing (0.60-3.90 range mid),similar_size_dense
+2025,Cerebras,CS-3 wafer-scale,Llama-4-Scout (109B MoE 17B active),unspecified,unspecified,production,2600,,,,,businesswire 2025-04-09 Cerebras press release,vendor claim,similar_class_moe
+2025,Groq,LPU v1,Llama-3.3-70B,fp8 (vendor),8K,production,275,,,0.59,0.79,groq.com public pricing/speed pages (2025 snapshot),vendor-published,similar_size_dense

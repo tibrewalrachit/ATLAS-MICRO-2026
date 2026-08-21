@@ -1,0 +1,361 @@
+kind,series,series_label,panel,tM,tK,tN,context_tokens,block_size,x_order,x_label,bw_util_pct
+gemm,2ch,2 Channels,tM = 4,4,128,128,,,0,"(128,128)",24.6608
+gemm,2ch,2 Channels,tM = 4,4,128,512,,,1,"(128,512)",25.1942
+gemm,2ch,2 Channels,tM = 4,4,256,128,,,2,"(256,128)",21.2929
+gemm,2ch,2 Channels,tM = 4,4,256,512,,,3,"(256,512)",21.6466
+gemm,2ch,2 Channels,tM = 4,4,512,128,,,4,"(512,128)",14.4403
+gemm,2ch,2 Channels,tM = 4,4,512,512,,,5,"(512,512)",14.546600000000002
+gemm,2ch,2 Channels,tM = 4,4,1024,128,,,6,"(1K,128)",27.549699999999998
+gemm,2ch,2 Channels,tM = 4,4,1024,512,,,7,"(1K,512)",28.7041
+gemm,2ch,2 Channels,tM = 4,4,2048,128,,,8,"(2K,128)",40.400999999999996
+gemm,2ch,2 Channels,tM = 4,4,2048,512,,,9,"(2K,512)",42.2592
+gemm,2ch,2 Channels,tM = 16,16,128,128,,,0,"(128,128)",25.114399999999996
+gemm,2ch,2 Channels,tM = 16,16,128,512,,,1,"(128,512)",25.305699999999998
+gemm,2ch,2 Channels,tM = 16,16,256,128,,,2,"(256,128)",21.8586
+gemm,2ch,2 Channels,tM = 16,16,256,512,,,3,"(256,512)",21.7424
+gemm,2ch,2 Channels,tM = 16,16,512,128,,,4,"(512,128)",14.8317
+gemm,2ch,2 Channels,tM = 16,16,512,512,,,5,"(512,512)",14.591899999999999
+gemm,2ch,2 Channels,tM = 16,16,1024,128,,,6,"(1K,128)",28.346500000000002
+gemm,2ch,2 Channels,tM = 16,16,1024,512,,,7,"(1K,512)",28.8113
+gemm,2ch,2 Channels,tM = 16,16,2048,128,,,8,"(2K,128)",40.569300000000005
+gemm,2ch,2 Channels,tM = 16,16,2048,512,,,9,"(2K,512)",42.510799999999996
+gemm,2ch,2 Channels,tM = 64,64,128,128,,,0,"(128,128)",25.1294
+gemm,2ch,2 Channels,tM = 64,64,128,512,,,1,"(128,512)",25.2382
+gemm,2ch,2 Channels,tM = 64,64,256,128,,,2,"(256,128)",21.7775
+gemm,2ch,2 Channels,tM = 64,64,256,512,,,3,"(256,512)",21.6463
+gemm,2ch,2 Channels,tM = 64,64,512,128,,,4,"(512,128)",15.3247
+gemm,2ch,2 Channels,tM = 64,64,512,512,,,5,"(512,512)",14.5449
+gemm,2ch,2 Channels,tM = 64,64,1024,128,,,6,"(1K,128)",27.2858
+gemm,2ch,2 Channels,tM = 64,64,1024,512,,,7,"(1K,512)",28.303
+gemm,2ch,2 Channels,tM = 64,64,2048,128,,,8,"(2K,128)",37.515100000000004
+gemm,2ch,2 Channels,tM = 64,64,2048,512,,,9,"(2K,512)",40.6071
+attention,2ch,2 Channels,16K Tokens,,,,16384,1,0,1,1.9903
+attention,2ch,2 Channels,32K Tokens,,,,32768,1,0,1,2.20106
+attention,2ch,2 Channels,64K Tokens,,,,65536,1,0,1,2.82035
+attention,2ch,2 Channels,16K Tokens,,,,16384,2,1,2,3.56594
+attention,2ch,2 Channels,32K Tokens,,,,32768,2,1,2,3.89064
+attention,2ch,2 Channels,64K Tokens,,,,65536,2,1,2,4.351700000000001
+attention,2ch,2 Channels,16K Tokens,,,,16384,4,2,4,6.702799999999999
+attention,2ch,2 Channels,32K Tokens,,,,32768,4,2,4,6.8550499999999985
+attention,2ch,2 Channels,64K Tokens,,,,65536,4,2,4,7.191570000000001
+attention,2ch,2 Channels,16K Tokens,,,,16384,8,3,8,12.4306
+attention,2ch,2 Channels,32K Tokens,,,,32768,8,3,8,11.423999999999998
+attention,2ch,2 Channels,64K Tokens,,,,65536,8,3,8,12.792399999999999
+attention,2ch,2 Channels,16K Tokens,,,,16384,16,4,16,19.119400000000002
+attention,2ch,2 Channels,32K Tokens,,,,32768,16,4,16,19.8269
+attention,2ch,2 Channels,64K Tokens,,,,65536,16,4,16,19.8806
+attention,2ch,2 Channels,16K Tokens,,,,16384,32,5,32,27.247799999999998
+attention,2ch,2 Channels,32K Tokens,,,,32768,32,5,32,25.8029
+attention,2ch,2 Channels,64K Tokens,,,,65536,32,5,32,25.6847
+attention,2ch,2 Channels,16K Tokens,,,,16384,64,6,64,27.983400000000007
+attention,2ch,2 Channels,32K Tokens,,,,32768,64,6,64,27.170199999999994
+attention,2ch,2 Channels,64K Tokens,,,,65536,64,6,64,25.9715
+attention,2ch,2 Channels,16K Tokens,,,,16384,128,7,128,36.9641
+attention,2ch,2 Channels,32K Tokens,,,,32768,128,7,128,33.81819999999999
+attention,2ch,2 Channels,64K Tokens,,,,65536,128,7,128,33.217499999999994
+attention,2ch,2 Channels,16K Tokens,,,,16384,256,8,256,41.392100000000006
+attention,2ch,2 Channels,32K Tokens,,,,32768,256,8,256,38.1775
+attention,2ch,2 Channels,64K Tokens,,,,65536,256,8,256,38.3772
+attention,2ch,2 Channels,16K Tokens,,,,16384,512,9,512,44.98460000000001
+attention,2ch,2 Channels,32K Tokens,,,,32768,512,9,512,40.44420000000001
+attention,2ch,2 Channels,64K Tokens,,,,65536,512,9,512,40.65109999999999
+gemm,4ch,4 Channels,tM = 4,4,128,128,,,0,"(128,128)",20.8212
+gemm,4ch,4 Channels,tM = 4,4,128,512,,,1,"(128,512)",21.8965
+gemm,4ch,4 Channels,tM = 4,4,256,128,,,2,"(256,128)",14.419
+gemm,4ch,4 Channels,tM = 4,4,256,512,,,3,"(256,512)",14.755199999999999
+gemm,4ch,4 Channels,tM = 4,4,512,128,,,4,"(512,128)",26.254499999999997
+gemm,4ch,4 Channels,tM = 4,4,512,512,,,5,"(512,512)",28.719099999999997
+gemm,4ch,4 Channels,tM = 4,4,1024,128,,,6,"(1K,128)",38.4752
+gemm,4ch,4 Channels,tM = 4,4,1024,512,,,7,"(1K,512)",42.201
+gemm,4ch,4 Channels,tM = 4,4,2048,128,,,8,"(2K,128)",50.339299999999994
+gemm,4ch,4 Channels,tM = 4,4,2048,512,,,9,"(2K,512)",55.9902
+gemm,4ch,4 Channels,tM = 16,16,128,128,,,0,"(128,128)",22.672600000000003
+gemm,4ch,4 Channels,tM = 16,16,128,512,,,1,"(128,512)",22.3723
+gemm,4ch,4 Channels,tM = 16,16,256,128,,,2,"(256,128)",15.612200000000001
+gemm,4ch,4 Channels,tM = 16,16,256,512,,,3,"(256,512)",15.207699999999999
+gemm,4ch,4 Channels,tM = 16,16,512,128,,,4,"(512,128)",29.078799999999998
+gemm,4ch,4 Channels,tM = 16,16,512,512,,,5,"(512,512)",29.4913
+gemm,4ch,4 Channels,tM = 16,16,1024,128,,,6,"(1K,128)",42.5344
+gemm,4ch,4 Channels,tM = 16,16,1024,512,,,7,"(1K,512)",43.344100000000005
+gemm,4ch,4 Channels,tM = 16,16,2048,128,,,8,"(2K,128)",55.088899999999995
+gemm,4ch,4 Channels,tM = 16,16,2048,512,,,9,"(2K,512)",57.3557
+gemm,4ch,4 Channels,tM = 64,64,128,128,,,0,"(128,128)",22.4952
+gemm,4ch,4 Channels,tM = 64,64,128,512,,,1,"(128,512)",22.1412
+gemm,4ch,4 Channels,tM = 64,64,256,128,,,2,"(256,128)",15.864700000000001
+gemm,4ch,4 Channels,tM = 64,64,256,512,,,3,"(256,512)",15.312999999999999
+gemm,4ch,4 Channels,tM = 64,64,512,128,,,4,"(512,128)",28.4536
+gemm,4ch,4 Channels,tM = 64,64,512,512,,,5,"(512,512)",29.317
+gemm,4ch,4 Channels,tM = 64,64,1024,128,,,6,"(1K,128)",40.2841
+gemm,4ch,4 Channels,tM = 64,64,1024,512,,,7,"(1K,512)",42.8228
+gemm,4ch,4 Channels,tM = 64,64,2048,128,,,8,"(2K,128)",51.279300000000006
+gemm,4ch,4 Channels,tM = 64,64,2048,512,,,9,"(2K,512)",55.8817
+attention,4ch,4 Channels,16K Tokens,,,,16384,1,0,1,3.8429800000000007
+attention,4ch,4 Channels,32K Tokens,,,,32768,1,0,1,4.38269
+attention,4ch,4 Channels,64K Tokens,,,,65536,1,0,1,5.71713
+attention,4ch,4 Channels,16K Tokens,,,,16384,2,1,2,7.422750000000001
+attention,4ch,4 Channels,32K Tokens,,,,32768,2,1,2,8.012719999999998
+attention,4ch,4 Channels,64K Tokens,,,,65536,2,1,2,9.05416
+attention,4ch,4 Channels,16K Tokens,,,,16384,4,2,4,14.074300000000003
+attention,4ch,4 Channels,32K Tokens,,,,32768,4,2,4,14.8363
+attention,4ch,4 Channels,64K Tokens,,,,65536,4,2,4,15.955699999999998
+attention,4ch,4 Channels,16K Tokens,,,,16384,8,3,8,31.6205
+attention,4ch,4 Channels,32K Tokens,,,,32768,8,3,8,28.864199999999997
+attention,4ch,4 Channels,64K Tokens,,,,65536,8,3,8,27.523099999999996
+attention,4ch,4 Channels,16K Tokens,,,,16384,16,4,16,38.76720000000001
+attention,4ch,4 Channels,32K Tokens,,,,32768,16,4,16,39.7696
+attention,4ch,4 Channels,64K Tokens,,,,65536,16,4,16,41.572599999999994
+attention,4ch,4 Channels,16K Tokens,,,,16384,32,5,32,46.5661
+attention,4ch,4 Channels,32K Tokens,,,,32768,32,5,32,42.7273
+attention,4ch,4 Channels,64K Tokens,,,,65536,32,5,32,56.766299999999994
+attention,4ch,4 Channels,16K Tokens,,,,16384,64,6,64,64.26379999999999
+attention,4ch,4 Channels,32K Tokens,,,,32768,64,6,64,60.0551
+attention,4ch,4 Channels,64K Tokens,,,,65536,64,6,64,60.13079999999999
+attention,4ch,4 Channels,16K Tokens,,,,16384,128,7,128,64.26379999999999
+attention,4ch,4 Channels,32K Tokens,,,,32768,128,7,128,63.83359999999999
+attention,4ch,4 Channels,64K Tokens,,,,65536,128,7,128,60.13079999999999
+attention,4ch,4 Channels,16K Tokens,,,,16384,256,8,256,64.26379999999999
+attention,4ch,4 Channels,32K Tokens,,,,32768,256,8,256,63.83359999999999
+attention,4ch,4 Channels,64K Tokens,,,,65536,256,8,256,60.13079999999999
+attention,4ch,4 Channels,16K Tokens,,,,16384,512,9,512,64.26379999999999
+attention,4ch,4 Channels,32K Tokens,,,,32768,512,9,512,63.83359999999999
+attention,4ch,4 Channels,64K Tokens,,,,65536,512,9,512,60.13079999999999
+gemm,8ch,8 Channels,tM = 4,4,128,128,,,0,"(128,128)",15.059000000000001
+gemm,8ch,8 Channels,tM = 4,4,128,512,,,1,"(128,512)",15.4448
+gemm,8ch,8 Channels,tM = 4,4,256,128,,,2,"(256,128)",24.9871
+gemm,8ch,8 Channels,tM = 4,4,256,512,,,3,"(256,512)",29.3587
+gemm,8ch,8 Channels,tM = 4,4,512,128,,,4,"(512,128)",38.6183
+gemm,8ch,8 Channels,tM = 4,4,512,512,,,5,"(512,512)",44.1874
+gemm,8ch,8 Channels,tM = 4,4,1024,128,,,6,"(1K,128)",51.1898
+gemm,8ch,8 Channels,tM = 4,4,1024,512,,,7,"(1K,512)",58.2619
+gemm,8ch,8 Channels,tM = 4,4,2048,128,,,8,"(2K,128)",61.492999999999995
+gemm,8ch,8 Channels,tM = 4,4,2048,512,,,9,"(2K,512)",69.6429
+gemm,8ch,8 Channels,tM = 16,16,128,128,,,0,"(128,128)",16.619400000000002
+gemm,8ch,8 Channels,tM = 16,16,128,512,,,1,"(128,512)",15.962299999999999
+gemm,8ch,8 Channels,tM = 16,16,256,128,,,2,"(256,128)",27.3788
+gemm,8ch,8 Channels,tM = 16,16,256,512,,,3,"(256,512)",30.187599999999996
+gemm,8ch,8 Channels,tM = 16,16,512,128,,,4,"(512,128)",42.323499999999996
+gemm,8ch,8 Channels,tM = 16,16,512,512,,,5,"(512,512)",45.4619
+gemm,8ch,8 Channels,tM = 16,16,1024,128,,,6,"(1K,128)",56.2052
+gemm,8ch,8 Channels,tM = 16,16,1024,512,,,7,"(1K,512)",59.8025
+gemm,8ch,8 Channels,tM = 16,16,2048,128,,,8,"(2K,128)",67.2398
+gemm,8ch,8 Channels,tM = 16,16,2048,512,,,9,"(2K,512)",71.2289
+gemm,8ch,8 Channels,tM = 64,64,128,128,,,0,"(128,128)",17.9257
+gemm,8ch,8 Channels,tM = 64,64,128,512,,,1,"(128,512)",16.6519
+gemm,8ch,8 Channels,tM = 64,64,256,128,,,2,"(256,128)",30.3521
+gemm,8ch,8 Channels,tM = 64,64,256,512,,,3,"(256,512)",31.293
+gemm,8ch,8 Channels,tM = 64,64,512,128,,,4,"(512,128)",44.061699999999995
+gemm,8ch,8 Channels,tM = 64,64,512,512,,,5,"(512,512)",46.3752
+gemm,8ch,8 Channels,tM = 64,64,1024,128,,,6,"(1K,128)",56.8547
+gemm,8ch,8 Channels,tM = 64,64,1024,512,,,7,"(1K,512)",60.6371
+gemm,8ch,8 Channels,tM = 64,64,2048,128,,,8,"(2K,128)",67.1717
+gemm,8ch,8 Channels,tM = 64,64,2048,512,,,9,"(2K,512)",71.34819999999999
+attention,8ch,8 Channels,16K Tokens,,,,16384,1,0,1,8.09571
+attention,8ch,8 Channels,32K Tokens,,,,32768,1,0,1,9.070520000000002
+attention,8ch,8 Channels,64K Tokens,,,,65536,1,0,1,11.651499999999999
+attention,8ch,8 Channels,16K Tokens,,,,16384,2,1,2,15.332399999999998
+attention,8ch,8 Channels,32K Tokens,,,,32768,2,1,2,15.931699999999996
+attention,8ch,8 Channels,64K Tokens,,,,65536,2,1,2,18.089399999999998
+attention,8ch,8 Channels,16K Tokens,,,,16384,4,2,4,28.690600000000003
+attention,8ch,8 Channels,32K Tokens,,,,32768,4,2,4,30.1224
+attention,8ch,8 Channels,64K Tokens,,,,65536,4,2,4,30.684499999999996
+attention,8ch,8 Channels,16K Tokens,,,,16384,8,3,8,43.1137
+attention,8ch,8 Channels,32K Tokens,,,,32768,8,3,8,42.9196
+attention,8ch,8 Channels,64K Tokens,,,,65536,8,3,8,41.088899999999995
+attention,8ch,8 Channels,16K Tokens,,,,16384,16,4,16,42.650900000000014
+attention,8ch,8 Channels,32K Tokens,,,,32768,16,4,16,44.94220000000001
+attention,8ch,8 Channels,64K Tokens,,,,65536,16,4,16,46.703
+attention,8ch,8 Channels,16K Tokens,,,,16384,32,5,32,46.5661
+attention,8ch,8 Channels,32K Tokens,,,,32768,32,5,32,46.3399
+attention,8ch,8 Channels,64K Tokens,,,,65536,32,5,32,59.86659999999999
+attention,8ch,8 Channels,16K Tokens,,,,16384,64,6,64,64.26379999999999
+attention,8ch,8 Channels,32K Tokens,,,,32768,64,6,64,60.0551
+attention,8ch,8 Channels,64K Tokens,,,,65536,64,6,64,64.26379999999999
+attention,8ch,8 Channels,16K Tokens,,,,16384,128,7,128,64.26379999999999
+attention,8ch,8 Channels,32K Tokens,,,,32768,128,7,128,65.14170000000001
+attention,8ch,8 Channels,64K Tokens,,,,65536,128,7,128,63.620699999999985
+attention,8ch,8 Channels,16K Tokens,,,,16384,256,8,256,76.66190000000002
+attention,8ch,8 Channels,32K Tokens,,,,32768,256,8,256,76.05060000000002
+attention,8ch,8 Channels,64K Tokens,,,,65536,256,8,256,75.7486
+attention,8ch,8 Channels,16K Tokens,,,,16384,512,9,512,76.66190000000002
+attention,8ch,8 Channels,32K Tokens,,,,32768,512,9,512,76.05060000000002
+attention,8ch,8 Channels,64K Tokens,,,,65536,512,9,512,75.7486
+gemm,16ch,16 Channels,tM = 4,4,128,128,,,0,"(128,128)",20.948900000000002
+gemm,16ch,16 Channels,tM = 4,4,128,512,,,1,"(128,512)",27.8623
+gemm,16ch,16 Channels,tM = 4,4,256,128,,,2,"(256,128)",33.692
+gemm,16ch,16 Channels,tM = 4,4,256,512,,,3,"(256,512)",42.5574
+gemm,16ch,16 Channels,tM = 4,4,512,128,,,4,"(512,128)",48.2799
+gemm,16ch,16 Channels,tM = 4,4,512,512,,,5,"(512,512)",57.537400000000005
+gemm,16ch,16 Channels,tM = 4,4,1024,128,,,6,"(1K,128)",59.3399
+gemm,16ch,16 Channels,tM = 4,4,1024,512,,,7,"(1K,512)",69.1033
+gemm,16ch,16 Channels,tM = 4,4,2048,128,,,8,"(2K,128)",67.1484
+gemm,16ch,16 Channels,tM = 4,4,2048,512,,,9,"(2K,512)",77.013
+gemm,16ch,16 Channels,tM = 16,16,128,128,,,0,"(128,128)",22.9416
+gemm,16ch,16 Channels,tM = 16,16,128,512,,,1,"(128,512)",28.6132
+gemm,16ch,16 Channels,tM = 16,16,256,128,,,2,"(256,128)",36.9621
+gemm,16ch,16 Channels,tM = 16,16,256,512,,,3,"(256,512)",43.6808
+gemm,16ch,16 Channels,tM = 16,16,512,128,,,4,"(512,128)",52.8362
+gemm,16ch,16 Channels,tM = 16,16,512,512,,,5,"(512,512)",59.0849
+gemm,16ch,16 Channels,tM = 16,16,1024,128,,,6,"(1K,128)",65.0069
+gemm,16ch,16 Channels,tM = 16,16,1024,512,,,7,"(1K,512)",70.8438
+gemm,16ch,16 Channels,tM = 16,16,2048,128,,,8,"(2K,128)",73.3767
+gemm,16ch,16 Channels,tM = 16,16,2048,512,,,9,"(2K,512)",78.9387
+gemm,16ch,16 Channels,tM = 64,64,128,128,,,0,"(128,128)",30.8979
+gemm,16ch,16 Channels,tM = 64,64,128,512,,,1,"(128,512)",31.684099999999997
+gemm,16ch,16 Channels,tM = 64,64,256,128,,,2,"(256,128)",45.5387
+gemm,16ch,16 Channels,tM = 64,64,256,512,,,3,"(256,512)",47.0078
+gemm,16ch,16 Channels,tM = 64,64,512,128,,,4,"(512,128)",59.2419
+gemm,16ch,16 Channels,tM = 64,64,512,512,,,5,"(512,512)",61.4909
+gemm,16ch,16 Channels,tM = 64,64,1024,128,,,6,"(1K,128)",70.1905
+gemm,16ch,16 Channels,tM = 64,64,1024,512,,,7,"(1K,512)",72.5332
+gemm,16ch,16 Channels,tM = 64,64,2048,128,,,8,"(2K,128)",78.0082
+gemm,16ch,16 Channels,tM = 64,64,2048,512,,,9,"(2K,512)",80.9162
+attention,16ch,16 Channels,16K Tokens,,,,16384,1,0,1,14.8919
+attention,16ch,16 Channels,32K Tokens,,,,32768,1,0,1,17.214299999999998
+attention,16ch,16 Channels,64K Tokens,,,,65536,1,0,1,22.658000000000005
+attention,16ch,16 Channels,16K Tokens,,,,16384,2,1,2,27.658799999999996
+attention,16ch,16 Channels,32K Tokens,,,,32768,2,1,2,29.38
+attention,16ch,16 Channels,64K Tokens,,,,65536,2,1,2,32.099399999999996
+attention,16ch,16 Channels,16K Tokens,,,,16384,4,2,4,38.76720000000001
+attention,16ch,16 Channels,32K Tokens,,,,32768,4,2,4,40.07029999999999
+attention,16ch,16 Channels,64K Tokens,,,,65536,4,2,4,40.7902
+attention,16ch,16 Channels,16K Tokens,,,,16384,8,3,8,43.8269
+attention,16ch,16 Channels,32K Tokens,,,,32768,8,3,8,50.998599999999996
+attention,16ch,16 Channels,64K Tokens,,,,65536,8,3,8,50.009100000000004
+attention,16ch,16 Channels,16K Tokens,,,,16384,16,4,16,43.8269
+attention,16ch,16 Channels,32K Tokens,,,,32768,16,4,16,44.94220000000001
+attention,16ch,16 Channels,64K Tokens,,,,65536,16,4,16,49.9567
+attention,16ch,16 Channels,16K Tokens,,,,16384,32,5,32,46.5661
+attention,16ch,16 Channels,32K Tokens,,,,32768,32,5,32,47.0254
+attention,16ch,16 Channels,64K Tokens,,,,65536,32,5,32,59.86659999999999
+attention,16ch,16 Channels,16K Tokens,,,,16384,64,6,64,64.26379999999999
+attention,16ch,16 Channels,32K Tokens,,,,32768,64,6,64,61.211400000000005
+attention,16ch,16 Channels,64K Tokens,,,,65536,64,6,64,64.92000000000002
+attention,16ch,16 Channels,16K Tokens,,,,16384,128,7,128,64.26379999999999
+attention,16ch,16 Channels,32K Tokens,,,,32768,128,7,128,65.14170000000001
+attention,16ch,16 Channels,64K Tokens,,,,65536,128,7,128,65.58969999999998
+attention,16ch,16 Channels,16K Tokens,,,,16384,256,8,256,76.66190000000002
+attention,16ch,16 Channels,32K Tokens,,,,32768,256,8,256,76.05060000000002
+attention,16ch,16 Channels,64K Tokens,,,,65536,256,8,256,77.5976
+attention,16ch,16 Channels,16K Tokens,,,,16384,512,9,512,84.8465
+attention,16ch,16 Channels,32K Tokens,,,,32768,512,9,512,84.09829999999998
+attention,16ch,16 Channels,64K Tokens,,,,65536,512,9,512,83.72910000000002
+gemm,32ch,32 Channels,tM = 4,4,128,128,,,0,"(128,128)",21.5725
+gemm,32ch,32 Channels,tM = 4,4,128,512,,,1,"(128,512)",28.042
+gemm,32ch,32 Channels,tM = 4,4,256,128,,,2,"(256,128)",29.6534
+gemm,32ch,32 Channels,tM = 4,4,256,512,,,3,"(256,512)",34.9439
+gemm,32ch,32 Channels,tM = 4,4,512,128,,,4,"(512,128)",34.9123
+gemm,32ch,32 Channels,tM = 4,4,512,512,,,5,"(512,512)",39.3114
+gemm,32ch,32 Channels,tM = 4,4,1024,128,,,6,"(1K,128)",38.4146
+gemm,32ch,32 Channels,tM = 4,4,1024,512,,,7,"(1K,512)",41.9445
+gemm,32ch,32 Channels,tM = 4,4,2048,128,,,8,"(2K,128)",74.45920000000001
+gemm,32ch,32 Channels,tM = 4,4,2048,512,,,9,"(2K,512)",82.6322
+gemm,32ch,32 Channels,tM = 16,16,128,128,,,0,"(128,128)",23.6825
+gemm,32ch,32 Channels,tM = 16,16,128,512,,,1,"(128,512)",28.8495
+gemm,32ch,32 Channels,tM = 16,16,256,128,,,2,"(256,128)",32.5218
+gemm,32ch,32 Channels,tM = 16,16,256,512,,,3,"(256,512)",35.9357
+gemm,32ch,32 Channels,tM = 16,16,512,128,,,4,"(512,128)",38.366699999999994
+gemm,32ch,32 Channels,tM = 16,16,512,512,,,5,"(512,512)",40.4801
+gemm,32ch,32 Channels,tM = 16,16,1024,128,,,6,"(1K,128)",42.2129
+gemm,32ch,32 Channels,tM = 16,16,1024,512,,,7,"(1K,512)",43.2141
+gemm,32ch,32 Channels,tM = 16,16,2048,128,,,8,"(2K,128)",81.5731
+gemm,32ch,32 Channels,tM = 16,16,2048,512,,,9,"(2K,512)",84.8805
+gemm,32ch,32 Channels,tM = 64,64,128,128,,,0,"(128,128)",28.4509
+gemm,32ch,32 Channels,tM = 64,64,128,512,,,1,"(128,512)",30.6174
+gemm,32ch,32 Channels,tM = 64,64,256,128,,,2,"(256,128)",35.294599999999996
+gemm,32ch,32 Channels,tM = 64,64,256,512,,,3,"(256,512)",36.9533
+gemm,32ch,32 Channels,tM = 64,64,512,128,,,4,"(512,128)",40.367999999999995
+gemm,32ch,32 Channels,tM = 64,64,512,512,,,5,"(512,512)",41.2142
+gemm,32ch,32 Channels,tM = 64,64,1024,128,,,6,"(1K,128)",43.3778
+gemm,32ch,32 Channels,tM = 64,64,1024,512,,,7,"(1K,512)",43.614599999999996
+gemm,32ch,32 Channels,tM = 64,64,2048,128,,,8,"(2K,128)",83.3275
+gemm,32ch,32 Channels,tM = 64,64,2048,512,,,9,"(2K,512)",84.1906
+attention,32ch,32 Channels,16K Tokens,,,,16384,1,0,1,26.6092
+attention,32ch,32 Channels,32K Tokens,,,,32768,1,0,1,31.227100000000004
+attention,32ch,32 Channels,64K Tokens,,,,65536,1,0,1,36.344300000000004
+attention,32ch,32 Channels,16K Tokens,,,,16384,2,1,2,34.3543
+attention,32ch,32 Channels,32K Tokens,,,,32768,2,1,2,36.261399999999995
+attention,32ch,32 Channels,64K Tokens,,,,65536,2,1,2,44.5018
+attention,32ch,32 Channels,16K Tokens,,,,16384,4,2,4,42.650900000000014
+attention,32ch,32 Channels,32K Tokens,,,,32768,4,2,4,40.68580000000001
+attention,32ch,32 Channels,64K Tokens,,,,65536,4,2,4,43.4872
+attention,32ch,32 Channels,16K Tokens,,,,16384,8,3,8,43.8269
+attention,32ch,32 Channels,32K Tokens,,,,32768,8,3,8,50.998599999999996
+attention,32ch,32 Channels,64K Tokens,,,,65536,8,3,8,50.808400000000006
+attention,32ch,32 Channels,16K Tokens,,,,16384,16,4,16,43.8269
+attention,32ch,32 Channels,32K Tokens,,,,32768,16,4,16,44.94220000000001
+attention,32ch,32 Channels,64K Tokens,,,,65536,16,4,16,51.1628
+attention,32ch,32 Channels,16K Tokens,,,,16384,32,5,32,46.5661
+attention,32ch,32 Channels,32K Tokens,,,,32768,32,5,32,47.731399999999994
+attention,32ch,32 Channels,64K Tokens,,,,65536,32,5,32,60.4356
+attention,32ch,32 Channels,16K Tokens,,,,16384,64,6,64,64.26379999999999
+attention,32ch,32 Channels,32K Tokens,,,,32768,64,6,64,61.211400000000005
+attention,32ch,32 Channels,64K Tokens,,,,65536,64,6,64,65.58969999999998
+attention,32ch,32 Channels,16K Tokens,,,,16384,128,7,128,66.97149999999999
+attention,32ch,32 Channels,32K Tokens,,,,32768,128,7,128,65.14170000000001
+attention,32ch,32 Channels,64K Tokens,,,,65536,128,7,128,66.27340000000001
+attention,32ch,32 Channels,16K Tokens,,,,16384,256,8,256,76.66190000000002
+attention,32ch,32 Channels,32K Tokens,,,,32768,256,8,256,76.05060000000002
+attention,32ch,32 Channels,64K Tokens,,,,65536,256,8,256,77.5976
+attention,32ch,32 Channels,16K Tokens,,,,16384,512,9,512,84.8465
+attention,32ch,32 Channels,32K Tokens,,,,32768,512,9,512,84.09829999999998
+attention,32ch,32 Channels,64K Tokens,,,,65536,512,9,512,84.8465
+gemm,64ch,64 Channels,tM = 4,4,128,128,,,0,"(128,128)",15.1874
+gemm,64ch,64 Channels,tM = 4,4,128,512,,,1,"(128,512)",18.6325
+gemm,64ch,64 Channels,tM = 4,4,256,128,,,2,"(256,128)",17.7545
+gemm,64ch,64 Channels,tM = 4,4,256,512,,,3,"(256,512)",20.4499
+gemm,64ch,64 Channels,tM = 4,4,512,128,,,4,"(512,128)",19.4013
+gemm,64ch,64 Channels,tM = 4,4,512,512,,,5,"(512,512)",21.496399999999998
+gemm,64ch,64 Channels,tM = 4,4,1024,128,,,6,"(1K,128)",38.183099999999996
+gemm,64ch,64 Channels,tM = 4,4,1024,512,,,7,"(1K,512)",42.4914
+gemm,64ch,64 Channels,tM = 4,4,2048,128,,,8,"(2K,128)",73.9796
+gemm,64ch,64 Channels,tM = 4,4,2048,512,,,9,"(2K,512)",82.9257
+gemm,64ch,64 Channels,tM = 16,16,128,128,,,0,"(128,128)",16.6545
+gemm,64ch,64 Channels,tM = 16,16,128,512,,,1,"(128,512)",19.1541
+gemm,64ch,64 Channels,tM = 16,16,256,128,,,2,"(256,128)",19.473599999999998
+gemm,64ch,64 Channels,tM = 16,16,256,512,,,3,"(256,512)",21.0444
+gemm,64ch,64 Channels,tM = 16,16,512,128,,,4,"(512,128)",21.2808
+gemm,64ch,64 Channels,tM = 16,16,512,512,,,5,"(512,512)",22.1134
+gemm,64ch,64 Channels,tM = 16,16,1024,128,,,6,"(1K,128)",41.8998
+gemm,64ch,64 Channels,tM = 16,16,1024,512,,,7,"(1K,512)",43.7037
+gemm,64ch,64 Channels,tM = 16,16,2048,128,,,8,"(2K,128)",81.1328
+gemm,64ch,64 Channels,tM = 16,16,2048,512,,,9,"(2K,512)",84.93509999999999
+gemm,64ch,64 Channels,tM = 64,64,128,128,,,0,"(128,128)",18.1541
+gemm,64ch,64 Channels,tM = 64,64,128,512,,,1,"(128,512)",19.6689
+gemm,64ch,64 Channels,tM = 64,64,256,128,,,2,"(256,128)",20.4892
+gemm,64ch,64 Channels,tM = 64,64,256,512,,,3,"(256,512)",21.4041
+gemm,64ch,64 Channels,tM = 64,64,512,128,,,4,"(512,128)",21.9588
+gemm,64ch,64 Channels,tM = 64,64,512,512,,,5,"(512,512)",22.406599999999997
+gemm,64ch,64 Channels,tM = 64,64,1024,128,,,6,"(1K,128)",42.890499999999996
+gemm,64ch,64 Channels,tM = 64,64,1024,512,,,7,"(1K,512)",43.4642
+gemm,64ch,64 Channels,tM = 64,64,2048,128,,,8,"(2K,128)",80.7138
+gemm,64ch,64 Channels,tM = 64,64,2048,512,,,9,"(2K,512)",81.1843
+attention,64ch,64 Channels,16K Tokens,,,,16384,1,0,1,33.5801
+attention,64ch,64 Channels,32K Tokens,,,,32768,1,0,1,39.936099999999996
+attention,64ch,64 Channels,64K Tokens,,,,65536,1,0,1,44.98460000000001
+attention,64ch,64 Channels,16K Tokens,,,,16384,2,1,2,36.511300000000006
+attention,64ch,64 Channels,32K Tokens,,,,32768,2,1,2,43.6265
+attention,64ch,64 Channels,64K Tokens,,,,65536,2,1,2,44.668600000000005
+attention,64ch,64 Channels,16K Tokens,,,,16384,4,2,4,42.650900000000014
+attention,64ch,64 Channels,32K Tokens,,,,32768,4,2,4,41.21320000000001
+attention,64ch,64 Channels,64K Tokens,,,,65536,4,2,4,45.674099999999996
+attention,64ch,64 Channels,16K Tokens,,,,16384,8,3,8,43.8269
+attention,64ch,64 Channels,32K Tokens,,,,32768,8,3,8,50.998599999999996
+attention,64ch,64 Channels,64K Tokens,,,,65536,8,3,8,52.056500000000014
+attention,64ch,64 Channels,16K Tokens,,,,16384,16,4,16,43.8269
+attention,64ch,64 Channels,32K Tokens,,,,32768,16,4,16,44.94220000000001
+attention,64ch,64 Channels,64K Tokens,,,,65536,16,4,16,52.8644
+attention,64ch,64 Channels,16K Tokens,,,,16384,32,5,32,47.9715
+attention,64ch,64 Channels,32K Tokens,,,,32768,32,5,32,48.4591
+attention,64ch,64 Channels,64K Tokens,,,,65536,32,5,32,62.82440000000001
+attention,64ch,64 Channels,16K Tokens,,,,16384,64,6,64,64.26379999999999
+attention,64ch,64 Channels,32K Tokens,,,,32768,64,6,64,61.211400000000005
+attention,64ch,64 Channels,64K Tokens,,,,65536,64,6,64,67.6845
+attention,64ch,64 Channels,16K Tokens,,,,16384,128,7,128,66.97149999999999
+attention,64ch,64 Channels,32K Tokens,,,,32768,128,7,128,65.14170000000001
+attention,64ch,64 Channels,64K Tokens,,,,65536,128,7,128,69.15690000000001
+attention,64ch,64 Channels,16K Tokens,,,,16384,256,8,256,76.66190000000002
+attention,64ch,64 Channels,32K Tokens,,,,32768,256,8,256,76.05060000000002
+attention,64ch,64 Channels,64K Tokens,,,,65536,256,8,256,77.5976
+attention,64ch,64 Channels,16K Tokens,,,,16384,512,9,512,84.8465
+attention,64ch,64 Channels,32K Tokens,,,,32768,512,9,512,84.09829999999998
+attention,64ch,64 Channels,64K Tokens,,,,65536,512,9,512,84.8465
