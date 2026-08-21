@@ -148,6 +148,22 @@ DRAM-array-dominated (~55%) &mdash; the memory bill is paid, not hidden.</p>
 DRAM array pJ/bit, compute utilization. None at its pessimistic bound moves the V4-class verdict.</p>
 </section>
 
+<section>
+<p class="eyebrow">06 &mdash; addendum: the MLA boundary</p>
+<h2>The thesis is generation-dependent &mdash; and the algorithm side is moving toward it</h2>
+<p>A cross-validated DeepSeek-V3 (671B/37B) characterization draws the boundary sharply.
+V3's multi-head latent attention runs at <strong>484&nbsp;FLOP/byte</strong> on its shared latent
+stream: attention crosses over to dominate decode FLOPs at ~4,400 tokens of context and is 97% of
+them at 128K. On a bandwidth-first card that makes dense-MLA long context <em>compute</em>-bound
+&mdash; V3 reaches only ~520&nbsp;TPS/user at 128K even on 105&nbsp;TB/s &mdash; while at 2&nbsp;PFLOP/s
+that attention can consume just 4.1&nbsp;TB/s of the memory system. Two consequences: provision
+bandwidth per operator by arithmetic intensity, never byte share (experts get the vaults; attention
+gets the tile array); and the V4-Flash generation, whose compressed attention caps both KV reads and
+attention FLOPs, is exactly the workload Fabrik should be built for. Balance check: a
+128&nbsp;GB&nbsp;/&nbsp;105&nbsp;TB/s card (1.2&nbsp;GB per TB/s) is balanced for batch-16 serving;
+interactive B=1&ndash;4 wants 5&ndash;18&nbsp;GB per TB/s &mdash; the flagship's 256/50 sits there.</p>
+</section>
+
 <footer>
 Full report, per-parameter model provenance, and every reproduction script live in
 <span class="tagline">project_frontier/</span> on branch
