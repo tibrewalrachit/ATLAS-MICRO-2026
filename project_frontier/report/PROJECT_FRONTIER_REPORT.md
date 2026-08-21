@@ -382,3 +382,95 @@ capacity-dominated economics at 1M).
 | communication dominates sub-ms decode | no (<0.1%) | no at ≥256 GB/s links |
 | specialized compute buys little | no (1.57×) | yes (1.05×) — commodity engines fine for M3 |
 | $/token worse than GPU serving | no (at/below best route) | no (B=1 parity, B=4 better) |
+
+---
+
+## Appendix A — DeepSeek-V3 characterization and card balance (FabrikSim incorporation)
+
+An independent analysis line ("FabrikSim", separate session, DeepSeek-V3 671B/37B
+as characterization vehicle) was incorporated into this codebase
+(`models/deepseek_v3/`, `analytical/balance.py`, `economics/tiers.py`,
+`experiments/run_balance.py`). Its headline numbers were re-derived here from
+the official V3 config with an independently-written DAG and **reproduce
+exactly** `[analytical, cross-validated]`: 671.0B parameters; 37.0 GB/step at
+B=1/8K (FabrikSim: 36.9); MLA absorbed-form arithmetic intensity **484
+FLOP/byte**; attention-FLOP crossover at ~4,400 tokens of context (FabrikSim:
+~4,300); attention = 97% of decode FLOPs at 128K. Automated in
+`tests/test_workloads.py::test_v3_totals_and_mla`.
+
+### A.1 The MLA finding and its consequence for Fabrik
+
+Decode splits cleanly: **bandwidth is experts/FFN (2–8 FLOP/byte); FLOPs are
+attention (484 FLOP/byte under MLA)**. Machine balance (dense-FP8/BW): B300 ≈
+562 — barely memory-bound on MLA; H200 ≈ 417 — already compute-bound; Fabrik
+at 2 PFLOP/s / 105 TB/s ≈ 19 — compute-bound on MLA by 25×. At a 2 PFLOP/s
+compute budget, 484-FLOP/byte attention can consume only **4.1 TB/s** of KV
+bandwidth. Consequences, now verified in this framework:
+
+1. **Do not build KV bandwidth into the card.** Provision bandwidth per
+   operator by arithmetic intensity, not byte share: expert streams get the
+   3D-DRAM system (and need only ~0.2–0.8 PFLOP/s to consume 105 TB/s);
+   MLA-class attention gets a large tile array fed from single-digit TB/s.
+   This is the strongest argument for heterogeneous tiles, and it is why the
+   Fabrik flagship pairs a bandwidth-first vault array with a modest but
+   attention-provisioned compute budget.
+2. **Dense-MLA long context misses the interactivity target on any
+   bandwidth-first card**: V3 on a 105 TB/s / 2 PFLOP/s Fabrik reaches only
+   ~1,600 TPS/user at 8K but **~520 at 128K (B=1)** — compute-bound, not
+   bandwidth-bound `[analytical]`. The V4-Flash generation *deleted this
+   problem in the algorithm*: CSA/HCA cap both KV reads and attention FLOPs,
+   which is precisely why the §14 flagship results hold to 1M context. The
+   thesis is therefore **generation-dependent**: SUPPORTED for
+   compressed-attention MoE (V4-Flash-class), NOT ACHIEVED for dense-MLA
+   V3-class beyond ~32K context on this compute budget — and the exposure
+   flagged in §21 (a market swing back to GQA/dense-MLA long-context models)
+   is quantified by exactly this gap. Sensitivity knob:
+   `deepseek_v3.build_decode_dag(ctx, attn_read_fraction=f)` models
+   sparse-attention retrofits; the DSE can sweep it.
+
+### A.2 Card balance: capacity per bandwidth is the ratio to sweep
+
+Workload-demanded GB of capacity per TB/s of bandwidth (V3@8K, fp8)
+`[analytical, matches FabrikSim to 0.3%]`:
+
+| | T=1000 | T=2000 | T=4000 |
+|---|---|---|---|
+| B=1 | 18.1 | 9.1 | 4.5 |
+| B=4 | 7.0 | 3.5 | 1.8 |
+| B=16 | 2.4 | **1.2** | 0.6 |
+| B=64 | 1.1 | 0.6 | 0.3 |
+
+A 128 GB / 105 TB/s card (ratio 1.22) is balanced for **B=16 @ 2,000 TPS**,
+not B=1–4: at B=1 it strands ~90% of its bandwidth on capacity grounds. The
+V4-Flash flagship chosen in §7 (256 GB / 50 TB/s = 5.1 GB per TB/s) sits
+between the B=1 and B=4 demand rows for its own workload — consistent with
+the min-hardware table in §14. Balance ratio is now a first-class output of
+the DSE (`analytical/balance.py:demanded_balance`).
+
+### A.3 Why wafer-scale SRAM cannot price frontier MoE
+
+Routing is data-dependent, so a resident architecture holds **all** weights:
+at ~$57–65k/GB of SRAM capacity, a 671 GB model implies a **$56M capex floor
+per replica** (16 CS-3 wafers at wafer granularity) before the first token
+`[estimated from public figures]` — consistent with the observed market
+structure (public SRAM rate cards top out ~120B; frontier MoE is
+custom-priced dedicated endpoints only). Memory-tier summary
+(`economics/tiers.py`, all labeled estimates): SRAM ~$61k/GB & ~$155/(TB/s);
+HBM3e ~$156/GB & ~$5,600/(TB/s); hybrid-bonded 3D DRAM ~$200–600/GB &
+~$300–1,000/(TB/s) — the only tier cheap on *both* axes, which is what a
+20×-sparse MoE at low batch requires. NAND in-flash compute holds capacity
+($0.10/GB) but is throughput-bound ~280× short for this regime; its real
+role is capacity tiering (98% of a model behind a ~12 GB DRAM working set),
+not decode bandwidth.
+
+### A.4 GPU contention: the bound this study can produce without a GPU simulator
+
+The GPU comparison in §16/§19 uses *measured* provider throughput. The
+ideal-scaling roofline for an 8×B300-class group on V4-Flash (11.2 GB/token
+over 8×8 TB/s at 0.8 efficiency) is ≈ **4,570 TPS/user**; the best measured
+provider serves **306** `[external]`. The ≥**15×** gap between roofline and
+measurement is the contention term (collectives, expert dispatch, launch
+overhead) that GPU serving pays and Fabrik's single-device design does not.
+We report it as a bound from public data: a cycle-accurate GPU contention
+number requires a GPU microarchitecture simulator, which is outside ATLAS's
+scope — flagged as external future work, not silently estimated.

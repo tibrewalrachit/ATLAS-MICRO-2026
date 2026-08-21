@@ -1,0 +1,136 @@
+{
+  "demanded_gb_per_tbps_v3_8k": {
+    "B1_T1000": 18.13,
+    "B1_T2000": 9.07,
+    "B1_T4000": 4.53,
+    "B4_T1000": 7.04,
+    "B4_T2000": 3.52,
+    "B4_T4000": 1.76,
+    "B16_T1000": 2.4,
+    "B16_T2000": 1.2,
+    "B16_T4000": 0.6,
+    "B64_T1000": 1.14,
+    "B64_T2000": 0.57,
+    "B64_T4000": 0.29
+  },
+  "card_ratio_128gb_105tbps": 1.22,
+  "operator_split_v3_128k_2pf": {
+    "dense_proj": {
+      "bytes_per_step_gb": 12.6,
+      "flop_per_byte": 2.0,
+      "bw_consumable_tbps": 1000.0
+    },
+    "full_attn": {
+      "bytes_per_step_gb": 4.61,
+      "flop_per_byte": 484.22,
+      "bw_consumable_tbps": 4.13
+    },
+    "router": {
+      "bytes_per_step_gb": 0.21,
+      "flop_per_byte": 1.0,
+      "bw_consumable_tbps": 2000.0
+    },
+    "routed_expert": {
+      "bytes_per_step_gb": 20.43,
+      "flop_per_byte": 2.0,
+      "bw_consumable_tbps": 999.81
+    },
+    "shared_expert": {
+      "bytes_per_step_gb": 2.55,
+      "flop_per_byte": 2.0,
+      "bw_consumable_tbps": 1000.0
+    },
+    "head": {
+      "bytes_per_step_gb": 0.93,
+      "flop_per_byte": 2.0,
+      "bw_consumable_tbps": 1000.0
+    }
+  },
+  "mla_flop_per_byte": 483.6,
+  "machine_balance_flop_per_byte": {
+    "B300": 562.0,
+    "H200": 417.0,
+    "fabrik_2pf_105tbps": 19.0
+  },
+  "sram_capex_floor_671gb_usd_m": {
+    "per_gb_basis": 40.9,
+    "wafer_granularity": 56.0
+  },
+  "tiers": {
+    "sram_wafer": {
+      "usd_per_gb": 61000,
+      "usd_per_tbps": 155,
+      "src": "CS-3 44GB/wafer, Groq LPU 230MB/chip; public price estimates"
+    },
+    "hbm3e_gpu": {
+      "usd_per_gb": 156,
+      "usd_per_tbps": 5600,
+      "src": "B300-class card cost over 288GB / 8TB/s (estimate)"
+    },
+    "3d_dram": {
+      "usd_per_gb": [
+        200,
+        400,
+        600
+      ],
+      "usd_per_tbps": [
+        300,
+        650,
+        1000
+      ],
+      "src": "hybrid-bonded stack estimate \u2014 central study uncertainty"
+    },
+    "lpddr5x": {
+      "usd_per_gb": 6,
+      "usd_per_tbps": 12187.5,
+      "src": "commodity; ~0.55 TB/s per 64GB package"
+    },
+    "nand": {
+      "usd_per_gb": 0.1,
+      "usd_per_tbps": null,
+      "src": "in-flash compute ceiling ~7 tok/s for 671B (throughput-bound)"
+    }
+  },
+  "gpu_contention_bound_v4": {
+    "roofline_tps_8xB300_ideal": 4571.0,
+    "best_measured_provider_tps": 306.0,
+    "contention_factor_lower_bound": 14.9,
+    "note": "roofline assumes perfect TP/EP scaling and zero collectives; measured/ideal gap >= real contention. A cycle-accurate GPU number requires a GPU simulator (outside ATLAS scope) - this bound uses only public measurements + arithmetic."
+  },
+  "v3_on_f50": {
+    "B1_ctx8192": {
+      "tps_user": 841.0,
+      "fits": true
+    },
+    "B1_ctx131072": {
+      "tps_user": 263.0,
+      "fits": true
+    },
+    "B4_ctx8192": {
+      "tps_user": 318.0,
+      "fits": true
+    },
+    "B4_ctx131072": {
+      "tps_user": 74.0,
+      "fits": true
+    }
+  },
+  "v3_on_f105": {
+    "B1_ctx8192": {
+      "tps_user": 1608.0,
+      "fits": true
+    },
+    "B1_ctx131072": {
+      "tps_user": 519.0,
+      "fits": true
+    },
+    "B4_ctx8192": {
+      "tps_user": 638.0,
+      "fits": true
+    },
+    "B4_ctx131072": {
+      "tps_user": 147.0,
+      "fits": true
+    }
+  }
+}

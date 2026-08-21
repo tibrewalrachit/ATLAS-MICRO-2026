@@ -58,3 +58,17 @@ if __name__ == "__main__":
     for name, fn in sorted(globals().items()):
         if name.startswith("test_"):
             fn(); print(f"PASS {name}")
+
+
+def test_v3_totals_and_mla():
+    """FabrikSim cross-validation: independently-written V3 DAG must reproduce
+    the session-summary numbers from the official config."""
+    from deepseek_v3.dag import build_decode_dag, total_params, MLA_FLOP_PER_BYTE
+    p = total_params()
+    close(p["total"], 671e9, 0.005)
+    close(MLA_FLOP_PER_BYTE, 484, 0.01)
+    s = build_decode_dag(8192).summary()
+    close(s["bytes"], 36.9e9, 0.02)          # FabrikSim: 36.9 GB/step B=1 8K
+    t = build_decode_dag(131072).totals()
+    attn_frac = t["full_attn"]["flops"] / sum(c["flops"] for c in t.values())
+    assert attn_frac > 0.95                   # FabrikSim: 97% of FLOPs @128K
