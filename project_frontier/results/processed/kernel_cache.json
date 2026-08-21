@@ -1,0 +1,32 @@
+{
+ "deepseek_v4_flash|exact|decode_step_pulp_hetero|1|131072|pulp_hetero_16stacks|pulp_hetero": {
+  "latency_s": 0.006432512170490466,
+  "tps_per_user": 155.4602577493067,
+  "simulation_method": "pulp_tile_sim"
+ },
+ "deepseek_v4_flash|exact|decode_step_pulp_hetero|4|131072|pulp_hetero_16stacks|pulp_hetero": {
+  "latency_s": 0.024467691293976097,
+  "tps_per_user": 40.870223021254084,
+  "simulation_method": "pulp_tile_sim"
+ },
+ "deepseek_v4_flash|exact|decode_step_pulp_hetero|1|131072|pulp_hetero_32stacks|pulp_hetero": {
+  "latency_s": 0.003225256085245233,
+  "tps_per_user": 310.05289923326035,
+  "simulation_method": "pulp_tile_sim"
+ },
+ "deepseek_v4_flash|exact|decode_step_pulp_hetero|4|131072|pulp_hetero_32stacks|pulp_hetero": {
+  "latency_s": 0.012242845646988049,
+  "tps_per_user": 81.68035674337014,
+  "simulation_method": "pulp_tile_sim"
+ },
+ "deepseek_v4_flash|exact|decode_step_pulp_hetero|1|131072|pulp_hetero_48stacks|pulp_hetero": {
+  "latency_s": 0.0021561707234968213,
+  "tps_per_user": 463.7851674278492,
+  "simulation_method": "pulp_tile_sim"
+ },
+ "deepseek_v4_flash|exact|decode_step_pulp_hetero|4|131072|pulp_hetero_48stacks|pulp_hetero": {
+  "latency_s": 0.008167897097992033,
+  "tps_per_user": 122.43053358811737,
+  "simulation_method": "pulp_tile_sim"
+ }
+}

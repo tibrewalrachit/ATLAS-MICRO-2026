@@ -80,6 +80,14 @@ ORGS = {
     "pulp_redmule": ComputeOrg("pulp_redmule", {1: 0.75, 2: 0.80, 4: 0.85},
                                0.60, 0.15, False,
                                1.6 * ATLAS_AREA_PER_TFLOPS, 1.1 * ATLAS_W_PER_TFLOPS),
+    # Heterogeneous PULP tile: NEUREKA (36 PE, bit-serial int4 => 9216 MAC/clk
+    # for 4-bit weights) handles expert/low-bit GEMV; RedMulE handles FP16
+    # attention/dense. fp4_double=True models the bit-serial Qw=4 rate gain
+    # (2x vs 8-bit) on the expert stream (ASSUMPTION P8: int4-block proxy for
+    # FP4-e2m1). gemv_util high: HWPE streamers are shape-agnostic.
+    "pulp_hetero": ComputeOrg("pulp_hetero", {1: 0.80, 2: 0.85, 4: 0.88},
+                              0.60, 0.20, True,
+                              1.5 * ATLAS_AREA_PER_TFLOPS, 1.05 * ATLAS_W_PER_TFLOPS),
 }
 
 def op_util(org: ComputeOrg, engine: str, category: str, batch: int) -> float:

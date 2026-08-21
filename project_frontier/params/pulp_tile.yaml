@@ -50,3 +50,20 @@ atlas_mapping:  # 1 ATLAS core = 1 CUBE stack = 4 PULP tiles
   buffer_rw_bytes_per_clk: {value: 1024, source: "4 x 256 B/clk TCDM", kind: derived_exact}
   dram_config: {value: "configs/architecture/dram/cloud/cloud_0.25TBps.yaml", source: "4ch x 64GB/s HBDRAM = 256GB/s, verified vs stock preset math", kind: exact}
   noc_flit_bytes: {value: 64, source: "FlooNoC wide 512-bit link", kind: exact}
+
+neureka:  # repo b2a04aa
+  paradigm: {value: "HWPE BinConv (bit-serial weights), derivative of NE16", source: "neureka/README.md", kind: exact}
+  weight_bits: {value: "2-8", source: "README 'Weight bits: 2,3,4,5,6,7,8'", kind: exact}
+  activation_bits: {value: 8, source: "README 'Activation input bits: 8'", kind: exact}
+  tp_in: {value: 32, source: "rtl/neureka_package.sv NEUREKA_TP_IN", kind: exact}
+  tp_out: {value: 32, source: "rtl/neureka_package.sv NEUREKA_TP_OUT", kind: exact}
+  num_pe_max: {value: 36, source: "rtl/neureka_package.sv NEUREKA_NUM_PE_MAX", kind: exact}
+  num_pe_default: {value: 16, source: "package comments PE_H=PE_W=4 (commented defaults)", kind: inferred}
+  bit_serial_rate: {value: "MACs/cycle = TP_IN x TP_OUT x NUM_PE / Qw (pointwise)", source: "NE16/NEUREKA BinConv architecture (bit-serial over weight bits)", kind: inferred_arch}
+  int4_macs_per_cycle_16pe: {value: 4096, source: "32x32x16/4", kind: derived}
+  int4_macs_per_cycle_36pe: {value: 9216, source: "32x32x36/4", kind: derived}
+  fp4_caveat: {value: "NEUREKA is INTEGER; V4-Flash FP4-e2m1 experts require a decode stage or int4 blockwise requantization (accuracy not transferable) - ASSUMPTION P8", source: "README (no FP support)", kind: exact_limitation}
+
+banshee:  # repo 0e14490
+  role: {value: "fast binary-translation simulator for Snitch clusters (SSR/FREP modeled); cycle-approximate execution engine for the logic-die simulator", source: "banshee/README.md", kind: exact}
+  requirements: {value: "Rust 1.67.0 + LLVM 12", source: "README", kind: exact}

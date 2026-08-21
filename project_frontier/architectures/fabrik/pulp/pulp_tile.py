@@ -12,7 +12,11 @@ from model import FabrikPoint
 
 CUBE_STACK_TBPS = 0.256
 CUBE_STACK_GB = 4.0
-TILE_MATRIX_TFLOPS = {"default": 0.096, "scaled": 1.024}   # 48/512 CE x 2 x 1GHz
+TILE_MATRIX_TFLOPS = {"default": 0.096, "scaled": 1.024,   # 48/512 CE x 2 x 1GHz
+                      # hetero: NEUREKA 36PE int8-base 4608 MAC/clk = 9.2 TOPS-fp4eq
+                      # counted at its 8-bit base rate (fp4_double in the org
+                      # applies the bit-serial gain) + RedMulE 96 GFLOP fp16
+                      "hetero": 4.608 * 2 / 1000 * 1000 / 1000 + 0.096}
 V1 = {"S": 16, "M": 32, "L": 48}                            # stacks (=4 tiles each)
 
 
@@ -23,7 +27,8 @@ def make_pulp(size, variant="default", freq_ghz=1.0):
         f"pulp_{variant}_{size}", peak_bw_TBps=stacks * CUBE_STACK_TBPS,
         peak_pflops_fp8=tiles * TILE_MATRIX_TFLOPS[variant] * freq_ghz / 1000,
         capacity_GB=stacks * CUBE_STACK_GB,
-        sram_MB=tiles * 0.128, org="pulp_redmule")
+        sram_MB=tiles * 0.128,
+        org="pulp_hetero" if variant == "hetero" else "pulp_redmule")
 
 
 CHIP_TEMPLATE = """architecture:
@@ -38,7 +43,8 @@ CHIP_TEMPLATE = """architecture:
   noc: {{topology: mesh, config_path: configs/architecture/noc/4x4_mesh, flit_size: 64, power: 1.5, area: 1.5}}
 """
 
-VARIANT_MACS = {"default": 192, "scaled": 2048}
+VARIANT_MACS = {"default": 192, "scaled": 2048,
+                "hetero": 4 * (4608 + 48)}   # per-stack: 4 x (NEUREKA int8-base + RedMulE)
 
 
 def emit(out_dir, freq_mhz=1000):

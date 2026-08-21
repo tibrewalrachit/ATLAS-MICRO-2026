@@ -9,3 +9,5 @@
 | P5 | 4 PULP tiles per CUBE stack | 2 / 4 / 8 | Matches 64-tile/16-stack brief design point; area not modeled. |
 | P6 | ATLAS power fields carried from stock test chip | n/a | This study compares latency/utilization only; PULP-tile energy needs per-block numbers from the papers (future work). |
 | P7 | v4flash_proxy MLA mapping (kv_lora=448, rope=64) | n/a | Proxy reproduces V4's 512B/token/layer latent read + 64-head geometry; indexer/compressor NOT modeled in proxy (exact path exists analytically in models/deepseek_v4_flash). |
+| P8 | V4-Flash FP4 experts served on NEUREKA as int4-block (requantized) or via an added FP4-decode front-end | rate: Qw=4 bit-serial | NEUREKA is integer-only (sourced); accuracy equivalence NOT claimed; adds a design delta to the tile. |
+| P9 | Heterogeneous tile = 1 NEUREKA (36 PE) + 1 RedMulE (12x4) + Snitch cluster | n/a | NEUREKA runs expert/low-bit GEMV; RedMulE runs FP16 attention/dense; both HWPEs share TCDM via HCI (sourced integration path). Area not modeled. |
