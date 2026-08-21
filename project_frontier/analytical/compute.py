@@ -53,6 +53,24 @@ ORGS = {
     "hybrid": ComputeOrg("hybrid", {1: 0.85, 2: 0.88, 4: 0.90},
                          0.80, 0.90, True,
                          0.95 * ATLAS_AREA_PER_TFLOPS, 0.95 * ATLAS_W_PER_TFLOPS),
+    # --- Tensix-class logic die (Tenstorrent Blackhole-derived, spec-parameterized) ---
+    # Public Blackhole p150: 140 Tensix cores @1.35 GHz, 774 TFLOPS FP8 dense
+    #   => 4096 FP8 FLOP/cycle/core = 2048 MACs/core; 1.5 MB SRAM/core.
+    # The Tensix FPU operates on 32x32 tiles; at decode M=1-4 utilization is
+    # the "tiny tiles" question (tt-metal supports tile heights 1/2/4 for
+    # exactly this). ttsim (tenstorrent/ttsim) is a bit-exact FUNCTIONAL
+    # golden model with no timing - so no cycle numbers are taken from it;
+    # instead the two orgs below bracket the tile effect, and the ATLAS
+    # cycle run in experiments/run_tensix_die.py brackets the die-level
+    # behavior with mac_num set to each bound.
+    # area/power: ~745 mm2 N6 die / 140 cores and ~200 W logic share of the
+    # 300 W board are public-report ESTIMATES (labeled).
+    "tensix_tile32": ComputeOrg("tensix_tile32", {1: 1 / 32, 2: 2 / 32, 4: 4 / 32},
+                                0.25, 0.20, False,
+                                (745 / 774) * 1.0, (200 / 774) * 1.0),
+    "tensix_tinytile": ComputeOrg("tensix_tinytile", {1: 0.35, 2: 0.45, 4: 0.55},
+                                  0.55, 0.30, False,
+                                  (745 / 774) * 1.0, (200 / 774) * 1.0),
 }
 
 def op_util(org: ComputeOrg, engine: str, category: str, batch: int) -> float:

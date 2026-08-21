@@ -474,3 +474,46 @@ overhead) that GPU serving pays and Fabrik's single-device design does not.
 We report it as a bound from public data: a cycle-accurate GPU contention
 number requires a GPU microarchitecture simulator, which is outside ATLAS's
 scope — flagged as external future work, not silently estimated.
+
+---
+
+## Appendix B — Tensix-class logic die (Tenstorrent-derived compute tile)
+
+Can Fabrik's logic die be a proven, off-the-shelf compute-tile architecture
+instead of custom hybrid engines? We evaluated a **Tensix-class tile**
+(Tenstorrent Blackhole-derived: 2,048 FP8 MACs/core at 1.35 GHz — 774 TFLOPS
+/ 140 cores from the public spec — with 1.5 MB SRAM/core) as the per-vault
+compute die.
+
+**Tooling note `[measured constraint]`:** Tenstorrent's open-source
+simulators were evaluated for this study. `tenstorrent/ttsim` is explicitly a
+**bit-exact functional golden-reference model** ("the simulator reflects
+silicon"; no timing model), and `tensix-isa-simulator` is archived into it —
+so neither yields defensible cycle counts. We therefore (a) parameterize the
+Tensix tile from public silicon specs, (b) bracket the decode-critical
+**32×32 tile-granularity effect** (tt-metal's "tiny tiles" — tile heights
+1/2/4 — exist precisely for small-M decode), and (c) cycle-simulate the
+bracket by swapping the ATLAS chip's compute tile for the Tensix analog
+(mac_num 2048 = tiny-tile best case; mac_num 64 = 2048/32 = M=1 worst case)
+on the validated 16-vault memory system
+(`architectures/fabrik/tensix_logic_die.py`, `experiments` driver).
+
+**Analytical results, V4-Flash on the 50 TB/s flagship**
+(`results/processed/tensix_org_comparison.csv`) `[analytical]`:
+
+| org | B=1 @128K | B=1 @1M | B=4 @128K | B=4 @1M |
+|---|---|---|---|---|
+| hybrid (custom, index engine) | 2,562 | 2,184 | 1,484 | 1,059 |
+| tensix_tinytile | 2,355 (−8%) | 1,381 (−37%) | 1,233 (−17%) | 498 (−53%) |
+| tensix_tile32 (no tiny tiles) | **979** | 669 | 800 | 318 |
+
+Reading: **a Tensix-class logic die is viable for V4-class decode if and only
+if tiny-tile matmul is used** — with it, the die is within 8% of the custom
+hybrid at 128K and clears every interactivity target through B=4; without it,
+32-row tile granularity alone drops B=1 below the 1,000-TPS floor. The gap
+that remains at 1M context (−37%) is the indexer scan running on generic
+engines — consistent with §10: the index engine is the one custom block that
+pays for itself, and it could be added beside otherwise-standard Tensix
+tiles. Cycle-level bracket runs of the Tensix-analog chip (both mac_num
+bounds, opt-66B + Mixtral on the 16-vault system) are executing on Modal;
+results are appended here on completion.
