@@ -1,61 +1,396 @@
 {
   "_schema": {
-    "fields": ["value", "source", "source_ref", "confidence", "derivation"],
-    "confidence_levels": ["exact", "derived_exact", "inferred", "assumed", "unknown"],
+    "fields": [
+      "value",
+      "source",
+      "source_ref",
+      "confidence",
+      "derivation"
+    ],
+    "confidence_levels": [
+      "exact",
+      "derived_exact",
+      "inferred",
+      "assumed",
+      "unknown"
+    ],
     "notes": "source_ref pins the exact repository revision. derived_exact = arithmetic on exact values. inferred = strongly implied by official code but not a literal config field. assumed = modeling choice, must carry low/base/high in uncertainty analysis."
   },
   "deepseek_v4_flash": {
     "_sources": {
-      "config": {"url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash/raw/main/config.json", "revision": "60d8d70770c6776ff598c94bb586a859a38244f1", "archived": "source_of_truth/deepseek_v4_flash/config.json"},
-      "inference_config": {"url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash/resolve/main/inference/config.json", "revision": "60d8d70770c6776ff598c94bb586a859a38244f1", "archived": "source_of_truth/deepseek_v4_flash/inference_config.json"},
-      "model_py": {"url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash/resolve/main/inference/model.py", "revision": "60d8d70770c6776ff598c94bb586a859a38244f1", "archived": "source_of_truth/deepseek_v4_flash/inference_model.py"}
+      "config": {
+        "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash/raw/main/config.json",
+        "revision": "60d8d70770c6776ff598c94bb586a859a38244f1",
+        "archived": "source_of_truth/deepseek_v4_flash/config.json"
+      },
+      "inference_config": {
+        "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash/resolve/main/inference/config.json",
+        "revision": "60d8d70770c6776ff598c94bb586a859a38244f1",
+        "archived": "source_of_truth/deepseek_v4_flash/inference_config.json"
+      },
+      "model_py": {
+        "url": "https://huggingface.co/deepseek-ai/DeepSeek-V4-Flash/resolve/main/inference/model.py",
+        "revision": "60d8d70770c6776ff598c94bb586a859a38244f1",
+        "archived": "source_of_truth/deepseek_v4_flash/inference_model.py"
+      }
     },
-    "num_layers": {"value": 43, "source": "config", "confidence": "exact"},
-    "hidden_dim": {"value": 4096, "source": "config", "confidence": "exact"},
-    "vocab_size": {"value": 129280, "source": "config", "confidence": "exact"},
-    "n_heads": {"value": 64, "source": "config", "confidence": "exact"},
-    "attention_type": {"value": "MQA_shared_512d_kv + per-layer {sliding_window | CSA(4:1)+indexer | HCA(128:1)}", "source": "model_py Attention/Compressor/Indexer classes", "confidence": "exact"},
-    "num_kv_heads": {"value": 1, "source": "config num_key_value_heads", "confidence": "exact"},
-    "head_dim": {"value": 512, "source": "config", "confidence": "exact"},
-    "rope_head_dim": {"value": 64, "source": "config qk_rope_head_dim", "confidence": "exact"},
-    "q_lora_rank": {"value": 1024, "source": "config", "confidence": "exact"},
-    "o_groups": {"value": 8, "source": "config", "confidence": "exact"},
-    "o_lora_rank": {"value": 1024, "source": "config", "confidence": "exact"},
-    "window_size": {"value": 128, "source": "config sliding_window; model_py window attention", "confidence": "exact"},
-    "compress_ratios": {"value": "[0,0]+[4,128]*20+[4]+[0(MTP)] -> 2 SWA layers, 21 CSA layers, 20 HCA layers", "source": "inference_config compress_ratios (44 entries = 43 layers + 1 MTP)", "confidence": "exact"},
-    "indexer": {"value": {"n_heads": 64, "head_dim": 128, "topk": 512, "operates_on": "4:1 compressed KV, scans all t/4 entries, fp4 q/kv"}, "source": "config index_*; model_py Indexer", "confidence": "exact"},
-    "csa_attention_span": {"value": "window 128 raw KV + top-512 of t/4 compressed KV (head_dim 512)", "source": "model_py Attention.forward", "confidence": "exact"},
-    "hca_attention_span": {"value": "window 128 raw KV + ALL t/128 compressed KV", "source": "model_py get_compress_topk_idxs (no indexer for ratio=128)", "confidence": "exact"},
-    "moe": {"value": {"n_routed_experts": 256, "top_k": 6, "n_shared": 1, "inter_dim": 2048, "gated": true, "hash_routed_layers": 3, "all_layers_moe": true}, "source": "config + model_py MoE/Gate (Block always uses MoE ffn)", "confidence": "exact"},
-    "precision": {"value": {"routed_experts": "fp4 (+block scales)", "other_weights": "fp8_e4m3 block-128 scaled", "compressor_weights": "fp32 in code (stored bf16)", "kv_cache": "fp8 non-rope dims, bf16 rope dims", "indexer_kv": "fp4"}, "source": "config quantization_config + expert_dtype; model_py act_quant/fp4_act_quant calls", "confidence": "exact"},
-    "hyper_connections": {"value": {"hc_mult": 4, "sinkhorn_iters": 20, "residual_stream_width": "4 x 4096"}, "source": "config hc_*; model_py Block.hc_pre/hc_post", "confidence": "exact"},
-    "mtp_layers": {"value": 1, "source": "config num_nextn_predict_layers", "confidence": "exact", "derivation": "modeled OFF in baseline decode (speculative decoding disabled); sensitivity case only"},
-    "max_context": {"value": 1048576, "source": "config max_position_embeddings", "confidence": "exact"},
-    "total_params_reconstructed": {"value": "~285B (official: 284B)", "source": "derived from exact dims", "confidence": "derived_exact", "derivation": "routed 43*256*3*4096*2048=277.1B + shared 1.08B + attn/indexer/gate/hc ~5.5B + embed+head 1.06B + MTP"},
-    "active_params_reconstructed": {"value": "~13.6B (official: 13B)", "source": "derived", "confidence": "derived_exact", "derivation": "routed 6*25.17M*43=6.49B + shared 1.08B + attn ~5.5B + head 0.53B"},
-    "kv_bytes_per_user_1M": {"value": "~3.1 GB", "source": "derived", "confidence": "derived_exact", "derivation": "21 CSA layers*(1M/4*512B fp8 + idx 1M/4*128*0.5B fp4) + 20 HCA layers*(1M/128*512B) + windows"}
+    "num_layers": {
+      "value": 43,
+      "source": "config",
+      "confidence": "exact"
+    },
+    "hidden_dim": {
+      "value": 4096,
+      "source": "config",
+      "confidence": "exact"
+    },
+    "vocab_size": {
+      "value": 129280,
+      "source": "config",
+      "confidence": "exact"
+    },
+    "n_heads": {
+      "value": 64,
+      "source": "config",
+      "confidence": "exact"
+    },
+    "attention_type": {
+      "value": "MQA_shared_512d_kv + per-layer {sliding_window | CSA(4:1)+indexer | HCA(128:1)}",
+      "source": "model_py Attention/Compressor/Indexer classes",
+      "confidence": "exact"
+    },
+    "num_kv_heads": {
+      "value": 1,
+      "source": "config num_key_value_heads",
+      "confidence": "exact"
+    },
+    "head_dim": {
+      "value": 512,
+      "source": "config",
+      "confidence": "exact"
+    },
+    "rope_head_dim": {
+      "value": 64,
+      "source": "config qk_rope_head_dim",
+      "confidence": "exact"
+    },
+    "q_lora_rank": {
+      "value": 1024,
+      "source": "config",
+      "confidence": "exact"
+    },
+    "o_groups": {
+      "value": 8,
+      "source": "config",
+      "confidence": "exact"
+    },
+    "o_lora_rank": {
+      "value": 1024,
+      "source": "config",
+      "confidence": "exact"
+    },
+    "window_size": {
+      "value": 128,
+      "source": "config sliding_window; model_py window attention",
+      "confidence": "exact"
+    },
+    "compress_ratios": {
+      "value": "[0,0]+[4,128]*20+[4]+[0(MTP)] -> 2 SWA layers, 21 CSA layers, 20 HCA layers",
+      "source": "inference_config compress_ratios (44 entries = 43 layers + 1 MTP)",
+      "confidence": "exact"
+    },
+    "indexer": {
+      "value": {
+        "n_heads": 64,
+        "head_dim": 128,
+        "topk": 512,
+        "operates_on": "4:1 compressed KV, scans all t/4 entries, fp4 q/kv"
+      },
+      "source": "config index_*; model_py Indexer",
+      "confidence": "exact"
+    },
+    "csa_attention_span": {
+      "value": "window 128 raw KV + top-512 of t/4 compressed KV (head_dim 512)",
+      "source": "model_py Attention.forward",
+      "confidence": "exact"
+    },
+    "hca_attention_span": {
+      "value": "window 128 raw KV + ALL t/128 compressed KV",
+      "source": "model_py get_compress_topk_idxs (no indexer for ratio=128)",
+      "confidence": "exact"
+    },
+    "moe": {
+      "value": {
+        "n_routed_experts": 256,
+        "top_k": 6,
+        "n_shared": 1,
+        "inter_dim": 2048,
+        "gated": true,
+        "hash_routed_layers": 3,
+        "all_layers_moe": true
+      },
+      "source": "config + model_py MoE/Gate (Block always uses MoE ffn)",
+      "confidence": "exact"
+    },
+    "precision": {
+      "value": {
+        "routed_experts": "fp4 (+block scales)",
+        "other_weights": "fp8_e4m3 block-128 scaled",
+        "compressor_weights": "fp32 in code (stored bf16)",
+        "kv_cache": "fp8 non-rope dims, bf16 rope dims",
+        "indexer_kv": "fp4"
+      },
+      "source": "config quantization_config + expert_dtype; model_py act_quant/fp4_act_quant calls",
+      "confidence": "exact"
+    },
+    "hyper_connections": {
+      "value": {
+        "hc_mult": 4,
+        "sinkhorn_iters": 20,
+        "residual_stream_width": "4 x 4096"
+      },
+      "source": "config hc_*; model_py Block.hc_pre/hc_post",
+      "confidence": "exact"
+    },
+    "mtp_layers": {
+      "value": 1,
+      "source": "config num_nextn_predict_layers",
+      "confidence": "exact",
+      "derivation": "modeled OFF in baseline decode (speculative decoding disabled); sensitivity case only"
+    },
+    "max_context": {
+      "value": 1048576,
+      "source": "config max_position_embeddings",
+      "confidence": "exact"
+    },
+    "total_params_reconstructed": {
+      "value": "~285B (official: 284B)",
+      "source": "derived from exact dims",
+      "confidence": "derived_exact",
+      "derivation": "routed 43*256*3*4096*2048=277.1B + shared 1.08B + attn/indexer/gate/hc ~5.5B + embed+head 1.06B + MTP"
+    },
+    "active_params_reconstructed": {
+      "value": "~13.6B (official: 13B)",
+      "source": "derived",
+      "confidence": "derived_exact",
+      "derivation": "routed 6*25.17M*43=6.49B + shared 1.08B + attn ~5.5B + head 0.53B"
+    },
+    "kv_bytes_per_user_1M": {
+      "value": "~3.1 GB",
+      "source": "derived",
+      "confidence": "derived_exact",
+      "derivation": "21 CSA layers*(1M/4*512B fp8 + idx 1M/4*128*0.5B fp4) + 20 HCA layers*(1M/128*512B) + windows"
+    }
   },
   "minimax_m3": {
     "_sources": {
-      "config": {"url": "https://huggingface.co/MiniMaxAI/MiniMax-M3/raw/main/config.json", "revision": "f0e1c1e04d40177e4673a22097036854f536e9c0", "archived": "source_of_truth/minimax_m3/config.json"},
-      "msa_paper": {"url": "https://arxiv.org/abs/2606.13392", "note": "MSA mechanism paper; its 109B/6B model is an ablation model, NOT M3 — only mechanism semantics (max-pool block scoring, index-head structure, local-block inclusion, KV-outer-gather-Q) are taken from it; all M3 numbers come from the official config"},
-      "configuration_py": {"url": "https://huggingface.co/MiniMaxAI/MiniMax-M3/resolve/main/configuration_minimax_m3_vl.py", "revision": "f0e1c1e04d40177e4673a22097036854f536e9c0", "archived": "source_of_truth/minimax_m3/configuration_minimax_m3_vl.py"}
+      "config": {
+        "url": "https://huggingface.co/MiniMaxAI/MiniMax-M3/raw/main/config.json",
+        "revision": "f0e1c1e04d40177e4673a22097036854f536e9c0",
+        "archived": "source_of_truth/minimax_m3/config.json"
+      },
+      "msa_paper": {
+        "url": "https://arxiv.org/abs/2606.13392",
+        "note": "MSA mechanism paper; its 109B/6B model is an ablation model, NOT M3 \u2014 only mechanism semantics (max-pool block scoring, index-head structure, local-block inclusion, KV-outer-gather-Q) are taken from it; all M3 numbers come from the official config"
+      },
+      "configuration_py": {
+        "url": "https://huggingface.co/MiniMaxAI/MiniMax-M3/resolve/main/configuration_minimax_m3_vl.py",
+        "revision": "f0e1c1e04d40177e4673a22097036854f536e9c0",
+        "archived": "source_of_truth/minimax_m3/configuration_minimax_m3_vl.py"
+      }
     },
-    "num_layers": {"value": 60, "source": "config text_config.num_hidden_layers", "confidence": "exact"},
-    "hidden_dim": {"value": 6144, "source": "config", "confidence": "exact"},
-    "vocab_size": {"value": 200064, "source": "config", "confidence": "exact"},
-    "attention": {"value": {"q_heads": 64, "kv_heads": 4, "head_dim": 128, "gqa_groups": 4, "qk_norm": "per_head", "partial_rotary": 0.5}, "source": "config", "confidence": "exact"},
-    "layer_pattern": {"value": "layers 0-2: dense FFN (inter 12288) + FULL attention; layers 3-59 (57): MoE + MSA sparse attention", "source": "config moe_layer_freq + sparse_attention_freq (both [0,0,0]+[1]*57)", "confidence": "exact"},
-    "msa": {"value": {"block_size": 128, "topk_blocks": 16, "token_budget": 2048, "index_heads": 4, "index_dim": 128, "score": "max-pool", "local_block": 1, "init_block": 0, "kv_outer_gather_q": true}, "source": "config sparse_attention_config; mechanism per msa_paper", "confidence": "exact"},
-    "moe": {"value": {"n_experts": 128, "top_k": 4, "n_shared": 1, "expert_inter_dim": 3072, "shared_inter_dim": 3072, "scoring": "sigmoid + routing bias", "routed_scaling": 2.0}, "source": "config", "confidence": "exact"},
-    "mtp_modules": {"value": 7, "source": "config num_mtp_modules", "confidence": "exact", "derivation": "modeled OFF in baseline decode; sensitivity case only"},
-    "max_context": {"value": 1048576, "source": "config", "confidence": "exact"},
-    "precision_weights": {"value": "bf16 checkpoint (torch_dtype); serving precision not specified", "source": "config", "confidence": "exact", "derivation": "study models FP8 weight serving as base (labeled assumption), bf16 as high case"},
-    "precision_kv": {"value": "UNKNOWN serving default; MSA kernels support fp8 per paper", "source": "msa_paper", "confidence": "unknown", "derivation": "M3_exact runs both bf16 and fp8 KV variants, clearly labeled"},
-    "total_params_reconstructed": {"value": "~428B (official: 428B)", "source": "derived", "confidence": "derived_exact", "derivation": "experts 57*128*3*6144*3072=413B + dense 0.68B + attn ~6.6B + embed/head 2.46B + shared experts 3.2B + MTP"},
-    "active_params_reconstructed": {"value": "~24B (official: ~23B; delta from embed/MTP bookkeeping)", "source": "derived", "confidence": "derived_exact"},
-    "kv_bytes_per_user_1M": {"value": "60 GB (fp8) / 120 GB (bf16)", "source": "derived: 60 layers * 4 kv_heads * 128 * 2(K,V) per token", "confidence": "derived_exact", "derivation": "capacity is a first-class Fabrik constraint for M3 @ 1M"},
-    "full_attn_layer_traffic_1M": {"value": "~1 GB/token/layer fp8 x 3 layers", "source": "derived from layer_pattern", "confidence": "derived_exact", "derivation": "the 3 full-attention layers dominate M3 long-context decode traffic; central workload finding"},
-    "multimodality": {"value": "native (vision tower 32L/1280d)", "source": "config vision_config", "confidence": "exact", "derivation": "text decode only in this study; vision excluded (per project scope)"}
+    "num_layers": {
+      "value": 60,
+      "source": "config text_config.num_hidden_layers",
+      "confidence": "exact"
+    },
+    "hidden_dim": {
+      "value": 6144,
+      "source": "config",
+      "confidence": "exact"
+    },
+    "vocab_size": {
+      "value": 200064,
+      "source": "config",
+      "confidence": "exact"
+    },
+    "attention": {
+      "value": {
+        "q_heads": 64,
+        "kv_heads": 4,
+        "head_dim": 128,
+        "gqa_groups": 4,
+        "qk_norm": "per_head",
+        "partial_rotary": 0.5
+      },
+      "source": "config",
+      "confidence": "exact"
+    },
+    "layer_pattern": {
+      "value": "layers 0-2: dense FFN (inter 12288) + FULL attention; layers 3-59 (57): MoE + MSA sparse attention",
+      "source": "config moe_layer_freq + sparse_attention_freq (both [0,0,0]+[1]*57)",
+      "confidence": "exact"
+    },
+    "msa": {
+      "value": {
+        "block_size": 128,
+        "topk_blocks": 16,
+        "token_budget": 2048,
+        "index_heads": 4,
+        "index_dim": 128,
+        "score": "max-pool",
+        "local_block": 1,
+        "init_block": 0,
+        "kv_outer_gather_q": true
+      },
+      "source": "config sparse_attention_config; mechanism per msa_paper",
+      "confidence": "exact"
+    },
+    "moe": {
+      "value": {
+        "n_experts": 128,
+        "top_k": 4,
+        "n_shared": 1,
+        "expert_inter_dim": 3072,
+        "shared_inter_dim": 3072,
+        "scoring": "sigmoid + routing bias",
+        "routed_scaling": 2.0
+      },
+      "source": "config",
+      "confidence": "exact"
+    },
+    "mtp_modules": {
+      "value": 7,
+      "source": "config num_mtp_modules",
+      "confidence": "exact",
+      "derivation": "modeled OFF in baseline decode; sensitivity case only"
+    },
+    "max_context": {
+      "value": 1048576,
+      "source": "config",
+      "confidence": "exact"
+    },
+    "precision_weights": {
+      "value": "bf16 checkpoint (torch_dtype); serving precision not specified",
+      "source": "config",
+      "confidence": "exact",
+      "derivation": "study models FP8 weight serving as base (labeled assumption), bf16 as high case"
+    },
+    "precision_kv": {
+      "value": "UNKNOWN serving default; MSA kernels support fp8 per paper",
+      "source": "msa_paper",
+      "confidence": "unknown",
+      "derivation": "M3_exact runs both bf16 and fp8 KV variants, clearly labeled"
+    },
+    "total_params_reconstructed": {
+      "value": "~428B (official: 428B)",
+      "source": "derived",
+      "confidence": "derived_exact",
+      "derivation": "experts 57*128*3*6144*3072=413B + dense 0.68B + attn ~6.6B + embed/head 2.46B + shared experts 3.2B + MTP"
+    },
+    "active_params_reconstructed": {
+      "value": "~24B (official: ~23B; delta from embed/MTP bookkeeping)",
+      "source": "derived",
+      "confidence": "derived_exact"
+    },
+    "kv_bytes_per_user_1M": {
+      "value": "60 GB (fp8) / 120 GB (bf16)",
+      "source": "derived: 60 layers * 4 kv_heads * 128 * 2(K,V) per token",
+      "confidence": "derived_exact",
+      "derivation": "capacity is a first-class Fabrik constraint for M3 @ 1M"
+    },
+    "full_attn_layer_traffic_1M": {
+      "value": "~1 GB/token/layer fp8 x 3 layers",
+      "source": "derived from layer_pattern",
+      "confidence": "derived_exact",
+      "derivation": "the 3 full-attention layers dominate M3 long-context decode traffic; central workload finding"
+    },
+    "multimodality": {
+      "value": "native (vision tower 32L/1280d)",
+      "source": "config vision_config",
+      "confidence": "exact",
+      "derivation": "text decode only in this study; vision excluded (per project scope)"
+    }
+  },
+  "deepseek_v3": {
+    "_sources": {
+      "config": {
+        "url": "https://huggingface.co/deepseek-ai/DeepSeek-V3/raw/main/config.json",
+        "archived": "source_of_truth/deepseek_v3/config.json"
+      }
+    },
+    "role": "characterization vehicle (FabrikSim incorporation, report Appendix A)",
+    "num_layers": {
+      "value": 61,
+      "source": "config",
+      "confidence": "exact"
+    },
+    "mla": {
+      "value": {
+        "kv_lora_rank": 512,
+        "qk_rope": 64,
+        "latent_bytes_per_token_layer": 576,
+        "flop_per_byte_absorbed": 484
+      },
+      "source": "config + derived",
+      "confidence": "derived_exact"
+    },
+    "moe": {
+      "value": {
+        "n_experts": 256,
+        "top_k": 8,
+        "inter": 2048,
+        "first_dense": 3
+      },
+      "source": "config",
+      "confidence": "exact"
+    },
+    "total_params_reconstructed": {
+      "value": "671.0B (official 671B)",
+      "confidence": "derived_exact"
+    }
+  },
+  "gpt_oss_120b": {
+    "_sources": {
+      "config": {
+        "url": "https://huggingface.co/openai/gpt-oss-120b/raw/main/config.json",
+        "archived": "source_of_truth/gpt_oss_120b/config.json"
+      }
+    },
+    "role": "FabrikV1/CUBE v1-product workload (report Appendix C)",
+    "num_layers": {
+      "value": 36,
+      "source": "config",
+      "confidence": "exact"
+    },
+    "attention": {
+      "value": {
+        "q_heads": 64,
+        "kv_heads": 8,
+        "head_dim": 64,
+        "pattern": "alternating sliding_attention(128)/full_attention from layer_types"
+      },
+      "source": "config",
+      "confidence": "exact"
+    },
+    "moe": {
+      "value": {
+        "n_experts": 128,
+        "top_k": 4,
+        "inter": 2880,
+        "expert_precision": "MXFP4 per quantization_config"
+      },
+      "source": "config",
+      "confidence": "exact"
+    },
+    "serving_precision_non_expert": {
+      "value": "fp8",
+      "source": "modeling choice",
+      "confidence": "assumed"
+    },
+    "total_params_reconstructed": {
+      "value": "116.8B (official ~117B); 63.0GB serving footprint",
+      "confidence": "derived_exact"
+    }
   }
 }
