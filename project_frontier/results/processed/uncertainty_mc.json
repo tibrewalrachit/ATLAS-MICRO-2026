@@ -1,0 +1,89 @@
+{
+  "config": "fabrik 50TB/s 1PF 256GB 64MB hybrid, V4-Flash@128K B=1",
+  "n_samples": 2000,
+  "summary": {
+    "tps": {
+      "p5": 2102.692,
+      "p50": 2456.744,
+      "p95": 2689.178,
+      "base": 2562.414
+    },
+    "tpj": {
+      "p5": 3.386,
+      "p50": 4.492,
+      "p95": 5.821,
+      "base": 5.33
+    },
+    "cost": {
+      "p5": 0.138,
+      "p50": 0.214,
+      "p95": 0.351,
+      "base": 0.165
+    },
+    "watts": {
+      "p5": 399.64,
+      "p50": 539.226,
+      "p95": 738.905,
+      "base": 480.737
+    }
+  },
+  "sensitivity_by_cost_swing": [
+    {
+      "var": "hardware_cost",
+      "cost_swing": 0.232,
+      "tps_swing": 0.0
+    },
+    {
+      "var": "fleet_util",
+      "cost_swing": 0.1235,
+      "tps_swing": 0.0
+    },
+    {
+      "var": "eff_seq",
+      "cost_swing": 0.0634,
+      "tps_swing": 851.4
+    },
+    {
+      "var": "dram_pj_bit",
+      "cost_swing": 0.008,
+      "tps_swing": 0.0
+    },
+    {
+      "var": "compute_util_scale",
+      "cost_swing": 0.0025,
+      "tps_swing": 41.3
+    },
+    {
+      "var": "iface_pj_bit",
+      "cost_swing": 0.0023,
+      "tps_swing": 0.0
+    },
+    {
+      "var": "static_frac",
+      "cost_swing": 0.0009,
+      "tps_swing": 0.0
+    },
+    {
+      "var": "eff_block",
+      "cost_swing": 0.0,
+      "tps_swing": 0.0
+    },
+    {
+      "var": "eff_random",
+      "cost_swing": 0.0,
+      "tps_swing": 0.0
+    },
+    {
+      "var": "eff_scan",
+      "cost_swing": 0.0,
+      "tps_swing": 0.0
+    }
+  ],
+  "top5_assumptions": [
+    "hardware_cost",
+    "fleet_util",
+    "eff_seq",
+    "dram_pj_bit",
+    "compute_util_scale"
+  ]
+}
