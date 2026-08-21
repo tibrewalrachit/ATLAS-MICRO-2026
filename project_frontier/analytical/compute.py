@@ -71,6 +71,15 @@ ORGS = {
     "tensix_tinytile": ComputeOrg("tensix_tinytile", {1: 0.35, 2: 0.45, 4: 0.55},
                                   0.55, 0.30, False,
                                   (745 / 774) * 1.0, (200 / 774) * 1.0),
+    # --- PULP tile: Snitch cluster + RedMulE (params/pulp_tile.yaml) ---
+    # RedMulE is lock-step with SSR/FREP-fed streams: skinny GEMV keeps the
+    # 12x4 array busy when W-streaming (X reuse across Width) -> high M=1
+    # util at the *array* level; the small array size is the limiter, not
+    # shape. FP8 = FP16 rate (cast architecture) -> fp4_double False and no
+    # fp8 advantage. index_util low (no scan hardware; runs on Snitch cores).
+    "pulp_redmule": ComputeOrg("pulp_redmule", {1: 0.75, 2: 0.80, 4: 0.85},
+                               0.60, 0.15, False,
+                               1.6 * ATLAS_AREA_PER_TFLOPS, 1.1 * ATLAS_W_PER_TFLOPS),
 }
 
 def op_util(org: ComputeOrg, engine: str, category: str, batch: int) -> float:

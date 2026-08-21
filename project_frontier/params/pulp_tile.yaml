@@ -1,0 +1,52 @@
+# PULP tile (Snitch cluster + RedMulE + FlooNoC) — sourced parameters.
+# Every value carries {source, exact|inferred}. ASSUMED values -> ASSUMPTIONS.md.
+# Repo revisions: snitch_cluster f78a978, redmule 7fa9fbe, FlooNoC 2fa02eb (2026-08-21 clones).
+
+redmule:
+  array_height: {value: 4, source: "redmule/README.md 'default ARRAY_HEIGHT=4'", kind: exact}
+  pipe_regs: {value: 3, source: "redmule/README.md 'PIPE_REGS=3'", kind: exact}
+  array_width: {value: 12, source: "redmule/README.md 'ARRAY_WIDTH <= HEIGHTxPIPE_REGS = 12 (default)'", kind: exact}
+  n_ce_default: {value: 48, source: "12x4 CEs, README 'Hardware Architecture'", kind: derived_exact}
+  fma_per_ce: {value: 1, source: "README: each CE contains one FMA (cvfpu)", kind: exact}
+  formats: {value: "FP16 internal; FP8 via input/output cast modules", source: "redmule/README.md; rtl/redmule_pkg.sv fpu_fmt_e", kind: exact}
+  fp8_throughput_note: {value: "FP8 does NOT double rate - cast to FP16 internal precision", source: "README 'casting input matrices from FP8 to FP16'", kind: exact}
+  mem_port_bits: {value: 256, source: "README: HEIGHTx(PIPE_REGS+1)x16b = 256", kind: exact}
+  scaled_variant: {value: "HEIGHT=16, WIDTH=32 (<=48 bound), 512 CEs, 1024-bit port", source: "parametric bound WIDTH<=HEIGHTxPIPE_REGS, README", kind: inferred_parametric}
+  frequency_mhz: {value: 1000, source: "ASSUMED (sweep 800-1200); RedMulE paper reports GF22 @ 470MHz-1.19GHz corners", kind: assumed}
+
+snitch_cluster:
+  compute_cores: {value: 8, source: "cfg/default.json hives[0].cores: 8x compute_core_template", kind: exact}
+  dma_cores: {value: 1, source: "cfg/default.json dma_core_template entry", kind: exact}
+  tcdm_kib: {value: 128, source: "cfg/default.json tcdm.size=128", kind: exact}
+  tcdm_banks: {value: 32, source: "cfg/default.json tcdm.banks=32", kind: exact}
+  bank_bytes_per_clk: {value: 8, source: "cfg/default.json data_width=64", kind: exact}
+  tcdm_bw_bytes_per_clk: {value: 256, source: "32 banks x 8 B", kind: derived_exact}
+  dma_data_width_bits: {value: 512, source: "cfg/default.json dma_data_width=512", kind: exact}
+  ssr_per_core: {value: 3, source: "cfg/default.json ssrs list + ssr_intersection_triple [0,1,2]", kind: exact}
+  fpu_simd: {value: "64-bit SIMD FPU: 4xFP16 or 8xFP8 lanes (zfh, xf8, xfvec, xfdotp)", source: "cfg/default.json compute_core_template ISA flags", kind: exact_isa_inferred_rate}
+  fp16_flop_per_clk_per_core: {value: 8, source: "4xFP16 SIMD FMA (xfvec+xfdotp)", kind: inferred}
+
+floonoc:
+  wide_link_bits: {value: 512, source: "floogen/examples/nw_mesh_*.yml data_width: 512 (wide ch)", kind: exact}
+  narrow_link_bits: {value: 64, source: "same examples, narrow channel", kind: exact}
+  topology: {value: mesh, source: "floogen mesh examples; FlooNoC paper", kind: exact}
+  single_cycle_flit: {value: "entire AXI message per flit (no serialization)", source: "README 'Wide Physical Channels'", kind: exact}
+
+tile_composition:
+  tile: {value: "1 Snitch cluster (8+1 cores, 128KiB TCDM) + 1 RedMulE", source: "brief", kind: spec}
+  tile_fp16_matrix_flop_per_clk: {value: 96, source: "48 FMA x 2", kind: derived_exact}
+  tile_fp16_vector_flop_per_clk: {value: 64, source: "8 cores x 8", kind: derived}
+  tiles_per_cube_stack: {value: 4, source: "64 tiles / 16 stacks (brief design points)", kind: spec}
+
+cube_stack:
+  bw_gbps: {value: 256, source: "1024 I/O x 2 GT/s (brief; matches cloud_0.25TBps 4x64GB/s HBDRAM channels)", kind: spec}
+  capacity_gb: {value: 4, source: "brief / FabrikV1 study", kind: spec}
+
+atlas_mapping:  # 1 ATLAS core = 1 CUBE stack = 4 PULP tiles
+  mac_num_default: {value: 192, source: "4 tiles x 48 CE (MACs)", kind: derived_exact}
+  mac_num_scaled: {value: 2048, source: "4 tiles x 512 CE (scaled RedMulE)", kind: derived_parametric}
+  vec_num: {value: 128, source: "4 tiles x 8 cores x 4 fp16 lanes", kind: derived}
+  buffer_kb: {value: 512, source: "4 x 128 KiB TCDM", kind: derived_exact}
+  buffer_rw_bytes_per_clk: {value: 1024, source: "4 x 256 B/clk TCDM", kind: derived_exact}
+  dram_config: {value: "configs/architecture/dram/cloud/cloud_0.25TBps.yaml", source: "4ch x 64GB/s HBDRAM = 256GB/s, verified vs stock preset math", kind: exact}
+  noc_flit_bytes: {value: 64, source: "FlooNoC wide 512-bit link", kind: exact}
