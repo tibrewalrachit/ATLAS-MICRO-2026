@@ -4,3 +4,26 @@ tools      : yosys 0.33, OpenSTA 3.1.0
 
 block                     cells     area_um2   setup_ns    hold_ns     power_mW params
 ----------------------------------------------------------------------------------------------
+atlas_dot_unit            24570  2349.712800    -0.2658    -0.0068   1.5189e-02 
+atlas_fp32_add             1692   143.817120    -0.3544    -0.0030   7.3728e-04 
+atlas_fp32_mul             3477   343.038240    -0.1817    -0.0030   5.2562e-03 
+atlas_exp_f32              6470   562.773420    -0.3890    -0.0068   5.4044e-02 
+atlas_recip_f32            3390   281.641860    -0.3255    -0.0030   2.4196e-03 
+atlas_rsqrt_f32            4638   361.044540    -0.3171    -0.0030   2.0359e-03 
+atlas_silu_f32            15029  1353.723840    -0.4518    -0.0068   5.9005e-02 
+atlas_vec_lane             5883   548.572500    -0.2700    -0.0068   6.0515e-03 
+atlas_sfu                 25809  2250.423000    -0.3073    -0.0068   1.0214e-01 
+atlas_pe                  27449  2595.823200    -0.3962    -0.0068   1.4917e-02 
+atlas_rmsnorm             20015  1852.680600    -0.3078    -0.0068   2.9770e-02 
+atlas_moe_router          24928  2364.292800    -0.3455    -0.0068   2.8129e-03 
+atlas_hbdram_ctrl        118563 12111.955920    -1.4557     0.0020   7.2952e-02 
+atlas_dma                  9725   948.866400     0.3012     0.0178   3.5547e-03 
+atlas_noc_router          25119  2418.136740    -0.0571     0.0103   2.2755e-02 
+atlas_matrix_unit        110268 10755.184860    -0.5133    -0.0077   6.2239e-02 ROWS=2 COLS=2
+atlas_vector_unit         73178  6591.501360    -0.4266    -0.0068   1.4207e-01 VEC_N=8 SFU_RATIO=8
+
+Excluded: atlas_buffer and atlas_core contain compiled SRAM macros, whose
+timing belongs to the memory compiler's Liberty rather than to standard-cell
+synthesis; mapping a 4 MB scratchpad to flip-flops would report a meaningless
+area.  atlas_chip at full geometry is roughly 90 million gates and does not
+elaborate on a 16 GB machine.

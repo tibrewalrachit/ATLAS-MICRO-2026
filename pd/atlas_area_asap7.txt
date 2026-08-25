@@ -1,0 +1,9 @@
+# ATLAS area roll-up (asap7)
+# block  area_mm2
+matrix       0.622998
+buffer       1.509949
+vector       0.398340
+controller   0.013061
+noc          0.002418
+core         2.546766
+chip         40.748258

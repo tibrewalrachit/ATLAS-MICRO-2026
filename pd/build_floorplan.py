@@ -21,7 +21,8 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, "pyta"))
 
-from pyta.floorplan import Block, GroupFloorplan, visualize_floorplan   # noqa: E402
+from pyta.floorplan import (Block, GroupFloorplan, StackFloorplan,       # noqa: E402
+                            ArrayFloorplan, visualize_floorplan)
 from pyta.material import SILICON                                       # noqa: E402
 
 
@@ -145,30 +146,26 @@ def main(tech="asap7"):
     core_h = math.sqrt(core_um2 / 1.6)           # aspect ratio 1.6:1
     order = ["matrix", "buffer", "vector", "controller", "noc"]
 
-    blocks, offsets, x = [], [], 0.0
+    # Each block becomes a single-block floorplan; the core is those stacked
+    # along X, and the chip is that array tiled over the mesh.  Building the
+    # chip with StackFloorplan/ArrayFloorplan rather than one flat
+    # GroupFloorplan matters: GroupFloorplan validates that its children
+    # exactly tile it to within 1e-6, and at metre-scale coordinates a whole
+    # core is only 2.5e-6 m^2, so that tolerance is the size of the thing being
+    # checked.
+    strips, core_w = [], 0.0
     for k in order:
         w = per_core[k] / core_h
-        blocks.append(Block("core_" + k, SILICON, (w * 1e-6, core_h * 1e-6)))
-        offsets.append((x * 1e-6, 0.0))
-        x += w
-    core_w = x
+        blk = Block("core_" + k, SILICON, (w * 1e-6, core_h * 1e-6))
+        strips.append(GroupFloorplan("fp_" + k, [blk], [(0.0, 0.0)]))
+        core_w += w
 
-    core_flp = GroupFloorplan("atlas_core", blocks, offsets)
+    core_flp = StackFloorplan("atlas_core", strips, "X")
     print("Core outline : %.3f mm x %.3f mm   (%.2f mm^2)"
           % (core_w * 1e-3, core_h * 1e-3, core_um2 * 1e-6))
 
-    # Chip: MESH_X by MESH_Y cores.  GroupFloorplan takes blocks, so the core's
-    # blocks are replicated per tile rather than nesting floorplans.
-    chip_blocks, chip_offsets = [], []
-    for gy in range(MESH_Y):
-        for gx in range(MESH_X):
-            cid = gy * MESH_X + gx
-            for b, off in zip(blocks, offsets):
-                chip_blocks.append(
-                    Block("c%02d_%s" % (cid, b.name[5:]), SILICON, b.get_shape()))
-                chip_offsets.append((off[0] + gx * core_w * 1e-6,
-                                     off[1] + gy * core_h * 1e-6))
-    chip_flp = GroupFloorplan("atlas_chip", chip_blocks, chip_offsets)
+    row_flp  = ArrayFloorplan("core_row", core_flp, MESH_X, "X")
+    chip_flp = ArrayFloorplan("atlas_chip", row_flp, MESH_Y, "Y")
 
     chip_w = MESH_X * core_w
     chip_h = MESH_Y * core_h
@@ -181,12 +178,86 @@ def main(tech="asap7"):
     print("channel without the die growing to hold the interface.")
     print()
 
+    # pyta's own visualiser draws every leaf block with its full hierarchical
+    # name, which at 16 cores x 5 blocks is unreadable, so the figure is drawn
+    # directly: one panel for a core's composition, one for the die.
     out_png = os.path.join(ROOT, "pd", "atlas_floorplan_%s.png" % tech)
     try:
-        visualize_floorplan(chip_flp.flatten(), save_path=out_png,
-                            title="ATLAS chip floorplan (%d cores, %s)" % (CORE_NUM, tech))
+        import matplotlib
+        matplotlib.use("Agg")
+        import matplotlib.pyplot as plt
+        from matplotlib.patches import Rectangle
+
+        colours = {"matrix": "#7fa8d4", "buffer": "#e0b76a", "vector": "#8fbf8f",
+                   "controller": "#c98a8a", "noc": "#b39ddb"}
+
+        fig, (axc, axd) = plt.subplots(1, 2, figsize=(15, 5.5))
+
+        # --- one core -----------------------------------------------------
+        x = 0.0
+        narrow = 0          # stagger the callouts for the very small blocks
+        for k in order:
+            w = per_core[k] / core_h
+            axc.add_patch(Rectangle((x * 1e-3, 0.0), w * 1e-3, core_h * 1e-3,
+                                    facecolor=colours[k], edgecolor="black", lw=1.2))
+            # Narrow blocks get their label outside the rectangle.
+            if w / core_w > 0.10:
+                axc.text((x + w / 2) * 1e-3, core_h * 0.5e-3,
+                         "%s\n%.3f mm2" % (k, per_core[k] * 1e-6),
+                         ha="center", va="center", fontsize=10)
+            else:
+                narrow += 1
+                axc.annotate("%s (%.4f mm2)" % (k, per_core[k] * 1e-6),
+                             xy=((x + w / 2) * 1e-3, core_h * 1e-3),
+                             xytext=(core_w * (0.55 + 0.0) * 1e-3,
+                                     core_h * (1.06 + 0.10 * narrow) * 1e-3),
+                             ha="left", fontsize=8,
+                             arrowprops=dict(arrowstyle="-", lw=0.8))
+            x += w
+        axc.set_xlim(-0.05 * core_w * 1e-3, core_w * 1.05e-3)
+        axc.set_ylim(-0.05 * core_h * 1e-3, core_h * 1.30e-3)
+        axc.set_aspect("equal")
+        axc.set_xlabel("mm"); axc.set_ylabel("mm")
+        axc.set_title("ATLAS core: %.2f x %.2f mm  (%.2f mm2)"
+                      % (core_w * 1e-3, core_h * 1e-3, core_um2 * 1e-6))
+
+        # --- the die ------------------------------------------------------
+        for gy in range(MESH_Y):
+            for gx in range(MESH_X):
+                cx = gx * core_w * 1e-3
+                cy = gy * core_h * 1e-3
+                xx = cx
+                for k in order:
+                    w = per_core[k] / core_h
+                    axd.add_patch(Rectangle((xx, cy), w * 1e-3, core_h * 1e-3,
+                                            facecolor=colours[k],
+                                            edgecolor="none"))
+                    xx += w * 1e-3
+                axd.add_patch(Rectangle((cx, cy), core_w * 1e-3, core_h * 1e-3,
+                                        facecolor="none", edgecolor="black", lw=1.4))
+                axd.text(cx + core_w * 0.5e-3, cy + core_h * 0.5e-3,
+                         "%d" % (gy * MESH_X + gx), ha="center", va="center",
+                         fontsize=9, weight="bold")
+        axd.set_xlim(-0.3, chip_w * 1e-3 + 0.3)
+        axd.set_ylim(-0.3, chip_h * 1e-3 + 0.3)
+        axd.set_aspect("equal")
+        axd.set_xlabel("mm"); axd.set_ylabel("mm")
+        axd.set_title("Die: %d cores on a %dx%d mesh, %.2f x %.2f mm (%.1f mm2)"
+                      % (CORE_NUM, MESH_X, MESH_Y, chip_w * 1e-3, chip_h * 1e-3,
+                         chip_w * chip_h * 1e-6))
+
+        handles = [Rectangle((0, 0), 1, 1, facecolor=colours[k], edgecolor="black")
+                   for k in order]
+        axd.legend(handles, order, loc="upper left", bbox_to_anchor=(1.02, 1.0),
+                   frameon=False, fontsize=9)
+
+        fig.suptitle("ATLAS floorplan, areas from yosys/OpenSTA on %s "
+                     "(scratchpad estimated from SRAM bitcell density)" % tech,
+                     fontsize=10)
+        fig.tight_layout()
+        fig.savefig(out_png, dpi=130, bbox_inches="tight")
         print("floorplan image: %s" % out_png)
-    except Exception as exc:                      # matplotlib may be headless
+    except Exception as exc:
         print("floorplan image skipped: %s" % exc)
 
     # A machine-readable copy for downstream steps.

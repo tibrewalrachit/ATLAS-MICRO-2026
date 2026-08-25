@@ -233,7 +233,35 @@ $ sta/run_fmax.sh atlas_dot_unit  # frequency sweep for one block
   at each boundary and apply 5% clock uncertainty — nothing has been placed,
   so that is the honest way to keep the report from being optimistic.
 
-Results are written to `sta/out/summary_asap7.txt`.
+Results, at a 1 ns target on ASAP7:
+
+| block | cells | area (µm²) | setup slack (ns) | hold slack (ns) | power (mW) |
+|---|---:|---:|---:|---:|---:|
+| `atlas_dot_unit` | 24570 | 2349.712800 | -0.2658 | -0.0068 | 1.5189e-02 |
+| `atlas_fp32_add` | 1692 | 143.817120 | -0.3544 | -0.0030 | 7.3728e-04 |
+| `atlas_fp32_mul` | 3477 | 343.038240 | -0.1817 | -0.0030 | 5.2562e-03 |
+| `atlas_exp_f32` | 6470 | 562.773420 | -0.3890 | -0.0068 | 5.4044e-02 |
+| `atlas_recip_f32` | 3390 | 281.641860 | -0.3255 | -0.0030 | 2.4196e-03 |
+| `atlas_rsqrt_f32` | 4638 | 361.044540 | -0.3171 | -0.0030 | 2.0359e-03 |
+| `atlas_silu_f32` | 15029 | 1353.723840 | -0.4518 | -0.0068 | 5.9005e-02 |
+| `atlas_vec_lane` | 5883 | 548.572500 | -0.2700 | -0.0068 | 6.0515e-03 |
+| `atlas_sfu` | 25809 | 2250.423000 | -0.3073 | -0.0068 | 1.0214e-01 |
+| `atlas_pe` | 27449 | 2595.823200 | -0.3962 | -0.0068 | 1.4917e-02 |
+| `atlas_rmsnorm` | 20015 | 1852.680600 | -0.3078 | -0.0068 | 2.9770e-02 |
+| `atlas_moe_router` | 24928 | 2364.292800 | -0.3455 | -0.0068 | 2.8129e-03 |
+| `atlas_hbdram_ctrl` | 118563 | 12111.955920 | -1.4557 | 0.0020 | 7.2952e-02 |
+| `atlas_dma` | 9725 | 948.866400 | 0.3012 | 0.0178 | 3.5547e-03 |
+| `atlas_noc_router` | 25119 | 2418.136740 | -0.0571 | 0.0103 | 2.2755e-02 |
+| `atlas_matrix_unit` (ROWS=2 COLS=2) | 110268 | 10755.184860 | -0.5133 | -0.0077 | 6.2239e-02 |
+| `atlas_vector_unit` (VEC_N=8 SFU_RATIO=8) | 73178 | 6591.501360 | -0.4266 | -0.0068 | 1.4207e-01 |
+
+`atlas_dma` meets timing; `atlas_noc_router` is 57 ps short; most of the rest
+sit between −0.2 and −0.5 ns, i.e. roughly 700–800 MHz. The HBDRAM controller
+is the outlier at −1.46 ns, and its area is dominated by 16 × 1024-bit
+write-data registers that belong in a macro rather than in flip-flops.
+
+Regenerate with `syn/run_all.sh`; the table above is a copy of
+`sta/out/summary_asap7.txt`.
 
 ### What the open flow does and does not do
 
@@ -289,6 +317,29 @@ Areas are scaled from synthesised blocks (`atlas_pe` × 240 for the matrix
 engine, and so on). The scratchpad is the one number that is estimated rather
 than measured — no memory compiler is available, so it uses a 7nm bitcell
 density of 0.027 µm² at 60% array efficiency.
+
+| block | area (mm²) | how |
+|---|---:|---|
+| matrix | 0.623 | `atlas_pe` × 240 (15 × 16 × 32 lanes = 7680 MACs) |
+| buffer | 1.510 | 4 MB SRAM estimate |
+| vector | 0.398 | `atlas_vec_lane` × 480 + `atlas_sfu` × 60 |
+| controller | 0.013 | `atlas_dma` + `atlas_hbdram_ctrl` |
+| noc | 0.002 | `atlas_noc_router` |
+| **core** | **2.55** | 2.02 × 1.26 mm |
+| **die** | **40.7** | 8.07 × 5.05 mm, 16 cores on a 4×4 mesh |
+
+![ATLAS floorplan](../../pd/atlas_floorplan_asap7.png)
+
+Against the area model published with ATLAS, the matrix engine comes out about
+20× smaller. Both reasons are real rather than an error: the model's MACs are
+not FP4/FP8 — these multiply 4-bit integer significands, which is most of the
+saving — and ASAP7 is a 7nm library while the model's numbers are not stated
+for a node. The SRAM estimate lands closer, as expected for a figure driven by
+bitcell density rather than by logic style.
+
+The HBDRAM die bonds face to face above this, so its area does not add to the
+logic die's footprint. That is the point of the stack, and why every core can
+carry a full 1024-bit channel without the die growing to hold the interface.
 
 ---
 
