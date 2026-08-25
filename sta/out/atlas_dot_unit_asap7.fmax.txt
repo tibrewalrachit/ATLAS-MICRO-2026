@@ -1,0 +1,7 @@
+# Fmax sweep: atlas_dot_unit on asap7
+# period_ns  slack_ns  met  cells  area_um2
+     0.500   -0.7322   no    24253  2338.544520
+     0.617   -0.6429   no    24078  2329.665300
+     0.733   -0.5323   no    24078  2329.665300
+     0.850   -0.4164   no    23983  2327.288760
+# no swept period met timing; widen the range

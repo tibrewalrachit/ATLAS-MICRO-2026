@@ -139,3 +139,50 @@ def _pack_f32(acc, exp_off):
 def f32_to_float(bits):
     import struct
     return struct.unpack('<f', struct.pack('<I', bits & 0xFFFFFFFF))[0]
+
+
+# ---------------------------------------------------------------------------
+# binary32 helpers, used by the GEMM reference to accumulate block results in
+# exactly the order and precision the hardware does.
+# ---------------------------------------------------------------------------
+import math as _math
+import struct as _struct
+
+
+def f32_add(ua, ub):
+    """Bit pattern of the binary32 sum of two binary32 bit patterns.
+
+    Adding in Python floats (binary64) and rounding once to binary32 is
+    correctly rounded here: binary64 has 53 significand bits and the safe
+    double-rounding bound for binary32 addition is 2*24 + 2 = 50.
+    """
+    fa = _struct.unpack('<f', _struct.pack('<I', ua & 0xFFFFFFFF))[0]
+    fb = _struct.unpack('<f', _struct.pack('<I', ub & 0xFFFFFFFF))[0]
+    if _math.isnan(fa) or _math.isnan(fb):
+        return 0x7FC00000
+    if _math.isinf(fa) and _math.isinf(fb) and fa != fb:
+        return 0x7FC00000
+    r = fa + fb
+    if _math.isnan(r):
+        return 0x7FC00000
+    try:
+        u = _struct.unpack('<I', _struct.pack('<f', r))[0]
+    except OverflowError:
+        return 0xFF800000 if r < 0 else 0x7F800000
+    # The hardware flushes binary32 subnormal results to a signed zero.
+    if ((u >> 23) & 0xFF) == 0 and (u & 0x7FFFFF) != 0:
+        return u & 0x80000000
+    return u
+
+
+def gemm_block_accumulate(fmt_a, fmt_b, a_blocks, b_blocks, scales_a, scales_b):
+    """Reference for one output element: accumulate MX block dot products.
+
+    Sums in binary32 in issue order, starting from +0, which is what atlas_pe
+    does (the first block is added to zero rather than special-cased).
+    """
+    acc = 0x00000000
+    for k in range(len(a_blocks)):
+        d = dot(fmt_a, fmt_b, a_blocks[k], b_blocks[k], scales_a[k], scales_b[k])
+        acc = f32_add(acc, d)
+    return acc
