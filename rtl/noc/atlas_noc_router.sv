@@ -79,18 +79,36 @@ module atlas_noc_router #(
   //=========================================================================
   // Route computation: XY, evaluated on each buffer's head flit
   //=========================================================================
-  logic [PORTS-1:0][2:0] want;      // desired output port per input
-  logic [PORTS-1:0]      req;
+  // Flat packed vectors rather than multi-dimensional ones: yosys' Verilog
+  // front end does not accept [A-1:0][B-1:0] declarations, and these sources
+  // are read by Verilator, Icarus and yosys unmodified.
+  logic [PORTS*3-1:0] want;         // desired output port per input, 3 bits each
+  logic [PORTS-1:0]   req;
+
+  // The destination coordinates of each buffer's head flit.  Declared at
+  // module scope rather than as procedural `automatic` variables, which yosys'
+  // Verilog front end does not accept.
+  logic [PORTS*XW-1:0] hd_dx;
+  logic [PORTS*YW-1:0] hd_dy;
+
+  genvar gh;
+  generate
+    for (gh = 0; gh < PORTS; gh++) begin : g_head
+      assign hd_dx[gh*XW +: XW] = head[gh][FLIT_W    +: XW];
+      assign hd_dy[gh*YW +: YW] = head[gh][FLIT_W+XW +: YW];
+    end
+  endgenerate
 
   integer rp;
   always_comb begin
     for (rp = 0; rp < PORTS; rp = rp + 1) begin
-      automatic logic [XW-1:0] dx = head[rp][FLIT_W +: XW];
-      automatic logic [YW-1:0] dy = head[rp][FLIT_W+XW +: YW];
-      req[rp]  = ~f_empty[rp];
-      if (dx != my_x)      want[rp] = (dx > my_x) ? 3'(P_E) : 3'(P_W);
-      else if (dy != my_y) want[rp] = (dy > my_y) ? 3'(P_S) : 3'(P_N);
-      else                 want[rp] = 3'(P_L);
+      req[rp] = ~f_empty[rp];
+      if (hd_dx[rp*XW +: XW] != my_x)
+        want[rp*3 +: 3] = (hd_dx[rp*XW +: XW] > my_x) ? 3'(P_E) : 3'(P_W);
+      else if (hd_dy[rp*YW +: YW] != my_y)
+        want[rp*3 +: 3] = (hd_dy[rp*YW +: YW] > my_y) ? 3'(P_S) : 3'(P_N);
+      else
+        want[rp*3 +: 3] = 3'(P_L);
     end
   end
 
@@ -103,30 +121,32 @@ module atlas_noc_router #(
   //=========================================================================
   logic [2:0] rr_ptr [0:PORTS-1];
 
-  logic [PORTS-1:0][2:0] grant_src;   // which input each output takes
-  logic [PORTS-1:0]      grant_vld;
-  logic [PORTS-1:0]      src_granted;
+  logic [PORTS*3-1:0] grant_src;      // which input each output takes
+  logic [PORTS-1:0]   grant_vld;
+  logic [PORTS-1:0]   src_granted;
 
   integer o, s, si;
   always_comb begin
     src_granted = '0;
     for (o = 0; o < PORTS; o = o + 1) begin
-      grant_vld[o] = 1'b0;
-      grant_src[o] = 3'd0;
+      grant_vld[o]      = 1'b0;
+      grant_src[o*3 +: 3] = 3'd0;
       for (s = 0; s < PORTS; s = s + 1) begin
         // Walk the inputs starting from this output's rotating pointer.
-        si = (int'(rr_ptr[o]) + s) % PORTS;
+        // rr_ptr is unsigned, so a plain integer add suffices; an int' cast
+        // here is not accepted by yosys' Verilog front end.
+        si = ({29'd0, rr_ptr[o]} + s) % PORTS;
         // An output can take a new flit only when its register is free:
         // either empty, or being consumed this cycle.  Granting on out_ready
         // alone would let a new flit overwrite one the neighbour has not yet
         // accepted, and the old flit would simply vanish.
-        if (!grant_vld[o] && req[si] && (want[si] == 3'(o)) &&
+        if (!grant_vld[o] && req[si] && (want[si*3 +: 3] == 3'(o)) &&
             (!out_valid[o] || out_ready[o])) begin
-          grant_vld[o] = 1'b1;
-          grant_src[o] = 3'(si);
+          grant_vld[o]        = 1'b1;
+          grant_src[o*3 +: 3] = 3'(si);
         end
       end
-      if (grant_vld[o]) src_granted[grant_src[o]] = 1'b1;
+      if (grant_vld[o]) src_granted[grant_src[o*3 +: 3]] = 1'b1;
     end
   end
 
@@ -161,11 +181,12 @@ module atlas_noc_router #(
       for (q = 0; q < PORTS; q = q + 1) begin
         if (!out_valid[q] || out_ready[q]) out_valid[q] <= grant_vld[q];
         if (grant_vld[q]) begin
-          out_flit[q*FLIT_W +: FLIT_W] <= head[grant_src[q]][FLIT_W-1:0];
-          out_dx  [q*XW     +: XW]     <= head[grant_src[q]][FLIT_W    +: XW];
-          out_dy  [q*YW     +: YW]     <= head[grant_src[q]][FLIT_W+XW +: YW];
+          out_flit[q*FLIT_W +: FLIT_W] <= head[grant_src[q*3 +: 3]][FLIT_W-1:0];
+          out_dx  [q*XW     +: XW]     <= head[grant_src[q*3 +: 3]][FLIT_W    +: XW];
+          out_dy  [q*YW     +: YW]     <= head[grant_src[q*3 +: 3]][FLIT_W+XW +: YW];
           // Next time, start the search after the input just served.
-          rr_ptr[q] <= (grant_src[q] == 3'(PORTS-1)) ? 3'd0 : (grant_src[q] + 3'd1);
+          rr_ptr[q] <= (grant_src[q*3 +: 3] == 3'(PORTS-1)) ? 3'd0
+                                                            : (grant_src[q*3 +: 3] + 3'd1);
         end
       end
     end

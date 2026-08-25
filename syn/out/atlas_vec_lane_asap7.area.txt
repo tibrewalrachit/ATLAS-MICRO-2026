@@ -1,0 +1,58 @@
+
+42. Printing statistics.
+
+=== atlas_vec_lane ===
+
+   Number of wires:               5488
+   Number of wire bits:           5488
+   Number of public wires:         273
+   Number of public wire bits:     273
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               5418
+     AND2x2_ASAP7_75t_R            120
+     AND3x1_ASAP7_75t_R             41
+     AND3x2_ASAP7_75t_R              2
+     AND4x1_ASAP7_75t_R             14
+     AND5x1_ASAP7_75t_R              3
+     BUFx2_ASAP7_75t_R              23
+     DFFASRHQNx1_ASAP7_75t_R         2
+     DFFHQNx1_ASAP7_75t_R          237
+     HB1xp67_ASAP7_75t_R           232
+     INVx1_ASAP7_75t_R              51
+     INVx2_ASAP7_75t_R               4
+     INVxp33_ASAP7_75t_R           209
+     INVxp67_ASAP7_75t_R             5
+     MAJIxp5_ASAP7_75t_R           493
+     MAJx2_ASAP7_75t_R              42
+     MAJx3_ASAP7_75t_R               1
+     NAND2x1_ASAP7_75t_R             6
+     NAND2xp33_ASAP7_75t_R        1339
+     NAND2xp5_ASAP7_75t_R           78
+     NAND3x1_ASAP7_75t_R             2
+     NAND3xp33_ASAP7_75t_R         236
+     NAND4xp25_ASAP7_75t_R          33
+     NAND5xp2_ASAP7_75t_R           11
+     NOR2x1_ASAP7_75t_R              1
+     NOR2x1p5_ASAP7_75t_R            1
+     NOR2xp33_ASAP7_75t_R          616
+     NOR2xp67_ASAP7_75t_R            2
+     NOR3x1_ASAP7_75t_R              1
+     NOR3xp33_ASAP7_75t_R          109
+     NOR4xp25_ASAP7_75t_R           21
+     NOR5xp2_ASAP7_75t_R            14
+     OR2x2_ASAP7_75t_R              36
+     OR2x4_ASAP7_75t_R               1
+     OR3x1_ASAP7_75t_R              50
+     OR4x1_ASAP7_75t_R               9
+     OR5x1_ASAP7_75t_R               3
+     XNOR2x1_ASAP7_75t_R             8
+     XNOR2x2_ASAP7_75t_R            49
+     XNOR2xp5_ASAP7_75t_R          849
+     XOR2x1_ASAP7_75t_R              7
+     XOR2x2_ASAP7_75t_R              9
+     XOR2xp5_ASAP7_75t_R           448
+
+   Chip area for module '\atlas_vec_lane': 512.341200
+

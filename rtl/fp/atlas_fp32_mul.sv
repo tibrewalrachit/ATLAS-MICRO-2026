@@ -41,7 +41,11 @@ module atlas_fp32_mul (
   wire inf_out  = (a_inf | b_inf) & ~nan_out;
   wire zero_out = (a_zero | b_zero) & ~nan_out & ~inf_out;
 
-  wire [47:0] prod = {1'b1, ma} * {1'b1, mb};
+  // Structural multiplier, not `*`: see atlas_mul_csa for why.
+  wire [47:0] prod;
+  atlas_mul_csa #(.W(24)) u_mul (
+    .a({1'b1, ma}), .b({1'b1, mb}), .p(prod)
+  );
   wire signed [10:0] esum = $signed({3'b000, ea}) + $signed({3'b000, eb})
                           - $signed(11'sd127);
 
@@ -73,7 +77,13 @@ module atlas_fp32_mul (
   wire        sticky  = |aligned[22:0];
   wire        inc     = rnd_bit & (sticky | signif[0]);
 
-  wire [24:0] signif_r = {1'b0, signif} + {24'd0, inc};
+  /* verilator lint_off UNUSEDSIGNAL */
+  wire        round_cout;
+  /* verilator lint_on UNUSEDSIGNAL */
+  wire [24:0] signif_r;
+  atlas_cpa #(.W(25)) u_round (
+    .a({1'b0, signif}), .b(25'd0), .cin(inc), .sum(signif_r), .cout(round_cout)
+  );
   wire        carry    = signif_r[24];
   /* verilator lint_off UNUSEDSIGNAL */
   wire [23:0] signif_f = carry ? signif_r[24:1] : signif_r[23:0];

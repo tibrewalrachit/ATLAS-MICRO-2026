@@ -1,0 +1,650 @@
+Warning 1212: /home/user/ATLAS-MICRO-2026/syn/lib/asap7_simple.lib line 71029, timing group from output port.
+Warning 1212: /home/user/ATLAS-MICRO-2026/syn/lib/asap7_simple.lib line 71505, timing group from output port.
+Warning 1212: /home/user/ATLAS-MICRO-2026/syn/lib/asap7_simple.lib line 71981, timing group from output port.
+Warning 1212: /home/user/ATLAS-MICRO-2026/syn/lib/asap7_simple.lib line 72457, timing group from output port.
+Warning 1212: /home/user/ATLAS-MICRO-2026/syn/lib/asap7_simple.lib line 72933, timing group from output port.
+Warning 1212: /home/user/ATLAS-MICRO-2026/syn/lib/asap7_simple.lib line 73409, timing group from output port.
+Warning 1212: /home/user/ATLAS-MICRO-2026/syn/lib/asap7_simple.lib line 73885, timing group from output port.
+Warning 1212: /home/user/ATLAS-MICRO-2026/syn/lib/asap7_simple.lib line 81795, timing group from output port.
+Warning 1212: /home/user/ATLAS-MICRO-2026/syn/lib/asap7_simple.lib line 82271, timing group from output port.
+Warning 1212: /home/user/ATLAS-MICRO-2026/syn/lib/asap7_simple.lib line 82747, timing group from output port.
+==========================================================
+  ATLAS static timing analysis
+==========================================================
+ time 1ns
+ capacitance 1fF
+ resistance 1kohm
+ voltage 1v
+ current 1mA
+ power 1pW
+ distance 1um
+
+---------- clocks ----------
+Clock                   Period          Waveform
+----------------------------------------------------
+clk                       1.00        0.00      0.50
+
+---------- setup (max) : critical path ----------
+Warning 503: atlas_rmsnorm_asap7.tcl line 1, report_checks -group_count is deprecated. Use -group_path_count instead.
+Startpoint: mul_w[5] (input port clocked by clk)
+Endpoint: _36229_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.1500    0.1500 v input external delay
+   0.0100    0.1600 v mul_w[5] (in)
+   0.0215    0.1815 ^ _28585_/Y (NAND2x1_ASAP7_75t_R)
+   0.0275    0.2090 ^ _28586_/Y (XOR2x1_ASAP7_75t_R)
+   0.0278    0.2368 ^ _28587_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0274    0.2643 ^ _28588_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0267    0.2910 ^ _28589_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0416    0.3326 v _28595_/Y (XNOR2x2_ASAP7_75t_R)
+   0.0139    0.3466 ^ _28609_/Y (NAND2x1p5_ASAP7_75t_R)
+   0.0263    0.3729 ^ _28611_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0271    0.4000 ^ _28612_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0275    0.4275 ^ _28635_/Y (XOR2x1_ASAP7_75t_R)
+   0.0226    0.4501 ^ _28636_/Y (XNOR2xp5_ASAP7_75t_R)
+   0.0252    0.4753 ^ _28637_/Y (XNOR2xp5_ASAP7_75t_R)
+   0.0299    0.5052 ^ _28638_/Y (XOR2xp5_ASAP7_75t_R)
+   0.0271    0.5323 ^ _28639_/Y (AND2x2_ASAP7_75t_R)
+   0.0108    0.5431 v _28643_/Y (NOR2x1p5_ASAP7_75t_R)
+   0.0254    0.5685 ^ _28688_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0122    0.5807 v _28735_/Y (INVx1_ASAP7_75t_R)
+   0.0235    0.6042 ^ _28736_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0125    0.6167 v _28789_/Y (INVx1_ASAP7_75t_R)
+   0.0236    0.6404 ^ _28790_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0126    0.6529 v _28843_/Y (INVx1_ASAP7_75t_R)
+   0.0235    0.6764 ^ _28844_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0344    0.7108 ^ _28903_/Y (MAJx2_ASAP7_75t_R)
+   0.0070    0.7177 v _28967_/Y (INVx2_ASAP7_75t_R)
+   0.0213    0.7390 ^ _28968_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0266    0.7656 v _29037_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0346    0.8002 v _29107_/Y (MAJx2_ASAP7_75t_R)
+   0.0235    0.8237 ^ _29182_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0125    0.8362 v _29263_/Y (INVx1_ASAP7_75t_R)
+   0.0234    0.8597 ^ _29264_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0266    0.8863 v _29348_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0298    0.9161 ^ _29436_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0267    0.9428 v _29526_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0298    0.9726 ^ _29620_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0267    0.9994 v _29714_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0299    1.0292 ^ _29812_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0329    1.0621 ^ _29907_/Y (MAJx2_ASAP7_75t_R)
+   0.0187    1.0808 v _30000_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0298    1.1106 ^ _30095_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0267    1.1373 v _30182_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0296    1.1668 ^ _30266_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0267    1.1935 v _30343_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0338    1.2273 ^ _30418_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0339    1.2612 v _30489_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0381    1.2993 ^ _30558_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0341    1.3334 v _30621_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0391    1.3725 v _30683_/Y (MAJx2_ASAP7_75t_R)
+   0.0264    1.3988 v _30737_/Y (OR2x2_ASAP7_75t_R)
+   0.0126    1.4114 ^ _30789_/Y (NOR2x1p5_ASAP7_75t_R)
+   0.0135    1.4249 v _30791_/Y (NOR2x1p5_ASAP7_75t_R)
+   0.0322    1.4571 ^ _30837_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0125    1.4696 v _30879_/Y (INVx2_ASAP7_75t_R)
+   0.0302    1.4998 ^ _30880_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0384    1.5382 ^ _30922_/Y (MAJx2_ASAP7_75t_R)
+   0.0244    1.5625 v _30955_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0383    1.6008 ^ _30984_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0302    1.6311 v _31011_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0167    1.6478 ^ _31031_/Y (INVx1_ASAP7_75t_R)
+   0.0303    1.6781 ^ _31032_/Y (MAJx2_ASAP7_75t_R)
+   0.0193    1.6974 v _31054_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0176    1.7150 ^ _31071_/Y (NOR2xp33_ASAP7_75t_R)
+   0.0241    1.7391 ^ _31073_/Y (OR5x1_ASAP7_75t_R)
+   0.0159    1.7550 ^ _31074_/Y (BUFx3_ASAP7_75t_R)
+   0.0000    1.7550 ^ _36229_/D (DFFHQNx1_ASAP7_75t_R)
+             1.7550   data arrival time
+
+   1.0000    1.0000   clock clk (rise edge)
+   0.0000    1.0000   clock network delay (ideal)
+  -0.0500    0.9500   clock uncertainty
+   0.0000    0.9500   clock reconvergence pessimism
+             0.9500 ^ _36229_/CLK (DFFHQNx1_ASAP7_75t_R)
+  -0.0077    0.9423   library setup time
+             0.9423   data required time
+-------------------------------------------------------------
+             0.9423   data required time
+            -1.7550   data arrival time
+-------------------------------------------------------------
+            -0.8128   slack (VIOLATED)
+
+
+Startpoint: mul_w[5] (input port clocked by clk)
+Endpoint: _36228_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.1500    0.1500 v input external delay
+   0.0100    0.1600 v mul_w[5] (in)
+   0.0215    0.1815 ^ _28585_/Y (NAND2x1_ASAP7_75t_R)
+   0.0275    0.2090 ^ _28586_/Y (XOR2x1_ASAP7_75t_R)
+   0.0278    0.2368 ^ _28587_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0274    0.2643 ^ _28588_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0267    0.2910 ^ _28589_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0416    0.3326 v _28595_/Y (XNOR2x2_ASAP7_75t_R)
+   0.0139    0.3466 ^ _28609_/Y (NAND2x1p5_ASAP7_75t_R)
+   0.0263    0.3729 ^ _28611_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0271    0.4000 ^ _28612_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0275    0.4275 ^ _28635_/Y (XOR2x1_ASAP7_75t_R)
+   0.0226    0.4501 ^ _28636_/Y (XNOR2xp5_ASAP7_75t_R)
+   0.0252    0.4753 ^ _28637_/Y (XNOR2xp5_ASAP7_75t_R)
+   0.0299    0.5052 ^ _28638_/Y (XOR2xp5_ASAP7_75t_R)
+   0.0271    0.5323 ^ _28639_/Y (AND2x2_ASAP7_75t_R)
+   0.0108    0.5431 v _28643_/Y (NOR2x1p5_ASAP7_75t_R)
+   0.0254    0.5685 ^ _28688_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0122    0.5807 v _28735_/Y (INVx1_ASAP7_75t_R)
+   0.0235    0.6042 ^ _28736_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0125    0.6167 v _28789_/Y (INVx1_ASAP7_75t_R)
+   0.0236    0.6404 ^ _28790_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0126    0.6529 v _28843_/Y (INVx1_ASAP7_75t_R)
+   0.0235    0.6764 ^ _28844_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0344    0.7108 ^ _28903_/Y (MAJx2_ASAP7_75t_R)
+   0.0070    0.7177 v _28967_/Y (INVx2_ASAP7_75t_R)
+   0.0213    0.7390 ^ _28968_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0266    0.7656 v _29037_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0346    0.8002 v _29107_/Y (MAJx2_ASAP7_75t_R)
+   0.0235    0.8237 ^ _29182_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0125    0.8362 v _29263_/Y (INVx1_ASAP7_75t_R)
+   0.0234    0.8597 ^ _29264_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0266    0.8863 v _29348_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0298    0.9161 ^ _29436_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0267    0.9428 v _29526_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0298    0.9726 ^ _29620_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0267    0.9994 v _29714_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0299    1.0292 ^ _29812_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0329    1.0621 ^ _29907_/Y (MAJx2_ASAP7_75t_R)
+   0.0187    1.0808 v _30000_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0298    1.1106 ^ _30095_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0267    1.1373 v _30182_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0296    1.1668 ^ _30266_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0267    1.1935 v _30343_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0338    1.2273 ^ _30418_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0339    1.2612 v _30489_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0381    1.2993 ^ _30558_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0341    1.3334 v _30621_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0391    1.3725 v _30683_/Y (MAJx2_ASAP7_75t_R)
+   0.0264    1.3988 v _30737_/Y (OR2x2_ASAP7_75t_R)
+   0.0126    1.4114 ^ _30789_/Y (NOR2x1p5_ASAP7_75t_R)
+   0.0135    1.4249 v _30791_/Y (NOR2x1p5_ASAP7_75t_R)
+   0.0322    1.4571 ^ _30837_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0125    1.4696 v _30879_/Y (INVx2_ASAP7_75t_R)
+   0.0302    1.4998 ^ _30880_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0384    1.5382 ^ _30922_/Y (MAJx2_ASAP7_75t_R)
+   0.0244    1.5625 v _30955_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0383    1.6008 ^ _30984_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0302    1.6311 v _31011_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0167    1.6478 ^ _31031_/Y (INVx1_ASAP7_75t_R)
+   0.0303    1.6781 ^ _31032_/Y (MAJx2_ASAP7_75t_R)
+   0.0193    1.6974 v _31054_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0375    1.7349 ^ _31067_/Y (XOR2x2_ASAP7_75t_R)
+   0.0000    1.7349 ^ _36228_/D (DFFHQNx1_ASAP7_75t_R)
+             1.7349   data arrival time
+
+   1.0000    1.0000   clock clk (rise edge)
+   0.0000    1.0000   clock network delay (ideal)
+  -0.0500    0.9500   clock uncertainty
+   0.0000    0.9500   clock reconvergence pessimism
+             0.9500 ^ _36228_/CLK (DFFHQNx1_ASAP7_75t_R)
+  -0.0082    0.9418   library setup time
+             0.9418   data required time
+-------------------------------------------------------------
+             0.9418   data required time
+            -1.7349   data arrival time
+-------------------------------------------------------------
+            -0.7932   slack (VIOLATED)
+
+
+Startpoint: mul_w[5] (input port clocked by clk)
+Endpoint: _36227_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.1500    0.1500 v input external delay
+   0.0100    0.1600 v mul_w[5] (in)
+   0.0215    0.1815 ^ _28585_/Y (NAND2x1_ASAP7_75t_R)
+   0.0275    0.2090 ^ _28586_/Y (XOR2x1_ASAP7_75t_R)
+   0.0278    0.2368 ^ _28587_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0274    0.2643 ^ _28588_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0267    0.2910 ^ _28589_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0416    0.3326 v _28595_/Y (XNOR2x2_ASAP7_75t_R)
+   0.0139    0.3466 ^ _28609_/Y (NAND2x1p5_ASAP7_75t_R)
+   0.0263    0.3729 ^ _28611_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0271    0.4000 ^ _28612_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0275    0.4275 ^ _28635_/Y (XOR2x1_ASAP7_75t_R)
+   0.0226    0.4501 ^ _28636_/Y (XNOR2xp5_ASAP7_75t_R)
+   0.0252    0.4753 ^ _28637_/Y (XNOR2xp5_ASAP7_75t_R)
+   0.0299    0.5052 ^ _28638_/Y (XOR2xp5_ASAP7_75t_R)
+   0.0271    0.5323 ^ _28639_/Y (AND2x2_ASAP7_75t_R)
+   0.0108    0.5431 v _28643_/Y (NOR2x1p5_ASAP7_75t_R)
+   0.0254    0.5685 ^ _28688_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0122    0.5807 v _28735_/Y (INVx1_ASAP7_75t_R)
+   0.0235    0.6042 ^ _28736_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0125    0.6167 v _28789_/Y (INVx1_ASAP7_75t_R)
+   0.0236    0.6404 ^ _28790_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0126    0.6529 v _28843_/Y (INVx1_ASAP7_75t_R)
+   0.0235    0.6764 ^ _28844_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0344    0.7108 ^ _28903_/Y (MAJx2_ASAP7_75t_R)
+   0.0070    0.7177 v _28967_/Y (INVx2_ASAP7_75t_R)
+   0.0213    0.7390 ^ _28968_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0266    0.7656 v _29037_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0346    0.8002 v _29107_/Y (MAJx2_ASAP7_75t_R)
+   0.0235    0.8237 ^ _29182_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0125    0.8362 v _29263_/Y (INVx1_ASAP7_75t_R)
+   0.0234    0.8597 ^ _29264_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0266    0.8863 v _29348_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0298    0.9161 ^ _29436_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0267    0.9428 v _29526_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0298    0.9726 ^ _29620_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0267    0.9994 v _29714_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0299    1.0292 ^ _29812_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0329    1.0621 ^ _29907_/Y (MAJx2_ASAP7_75t_R)
+   0.0187    1.0808 v _30000_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0298    1.1106 ^ _30095_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0267    1.1373 v _30182_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0296    1.1668 ^ _30266_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0267    1.1935 v _30343_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0338    1.2273 ^ _30418_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0339    1.2612 v _30489_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0381    1.2993 ^ _30558_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0341    1.3334 v _30621_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0391    1.3725 v _30683_/Y (MAJx2_ASAP7_75t_R)
+   0.0264    1.3988 v _30737_/Y (OR2x2_ASAP7_75t_R)
+   0.0126    1.4114 ^ _30789_/Y (NOR2x1p5_ASAP7_75t_R)
+   0.0135    1.4249 v _30791_/Y (NOR2x1p5_ASAP7_75t_R)
+   0.0322    1.4571 ^ _30837_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0125    1.4696 v _30879_/Y (INVx2_ASAP7_75t_R)
+   0.0302    1.4998 ^ _30880_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0384    1.5382 ^ _30922_/Y (MAJx2_ASAP7_75t_R)
+   0.0244    1.5625 v _30955_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0383    1.6008 ^ _30984_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0302    1.6311 v _31011_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0167    1.6478 ^ _31031_/Y (INVx1_ASAP7_75t_R)
+   0.0303    1.6781 ^ _31032_/Y (MAJx2_ASAP7_75t_R)
+   0.0188    1.6969 ^ _31052_/Y (XNOR2xp5_ASAP7_75t_R)
+   0.0000    1.6969 ^ _36227_/D (DFFHQNx1_ASAP7_75t_R)
+             1.6969   data arrival time
+
+   1.0000    1.0000   clock clk (rise edge)
+   0.0000    1.0000   clock network delay (ideal)
+  -0.0500    0.9500   clock uncertainty
+   0.0000    0.9500   clock reconvergence pessimism
+             0.9500 ^ _36227_/CLK (DFFHQNx1_ASAP7_75t_R)
+  -0.0104    0.9396   library setup time
+             0.9396   data required time
+-------------------------------------------------------------
+             0.9396   data required time
+            -1.6969   data arrival time
+-------------------------------------------------------------
+            -0.7573   slack (VIOLATED)
+
+
+
+---------- hold (min) : critical path ----------
+Warning 503: atlas_rmsnorm_asap7.tcl line 1, report_checks -group_count is deprecated. Use -group_path_count instead.
+Startpoint: _36100_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _36105_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ _36100_/CLK (DFFHQNx1_ASAP7_75t_R)
+   0.0501    0.0501 ^ _36100_/QN (DFFHQNx1_ASAP7_75t_R)
+   0.0080    0.0581 v _33247_/Y (INVx1_ASAP7_75t_R)
+   0.0000    0.0581 v _36105_/D (DFFHQNx1_ASAP7_75t_R)
+             0.0581   data arrival time
+
+   0.0000    0.0000   clock clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0500    0.0500   clock uncertainty
+   0.0000    0.0500   clock reconvergence pessimism
+             0.0500 ^ _36105_/CLK (DFFHQNx1_ASAP7_75t_R)
+   0.0149    0.0649   library hold time
+             0.0649   data required time
+-------------------------------------------------------------
+             0.0649   data required time
+            -0.0581   data arrival time
+-------------------------------------------------------------
+            -0.0068   slack (VIOLATED)
+
+
+Startpoint: _36164_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _36101_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ _36164_/CLK (DFFASRHQNx1_ASAP7_75t_R)
+   0.0544    0.0544 ^ _36164_/QN (DFFASRHQNx1_ASAP7_75t_R)
+   0.0083    0.0627 v _18411_/Y (INVx1_ASAP7_75t_R)
+   0.0000    0.0627 v _36101_/D (DFFASRHQNx1_ASAP7_75t_R)
+             0.0627   data arrival time
+
+   0.0000    0.0000   clock clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0500    0.0500   clock uncertainty
+   0.0000    0.0500   clock reconvergence pessimism
+             0.0500 ^ _36101_/CLK (DFFASRHQNx1_ASAP7_75t_R)
+   0.0158    0.0658   library hold time
+             0.0658   data required time
+-------------------------------------------------------------
+             0.0658   data required time
+            -0.0627   data arrival time
+-------------------------------------------------------------
+            -0.0030   slack (VIOLATED)
+
+
+Startpoint: _36167_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _36164_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+    Delay      Time   Description
+-------------------------------------------------------------
+   0.0000    0.0000   clock clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0000    0.0000 ^ _36167_/CLK (DFFASRHQNx1_ASAP7_75t_R)
+   0.0544    0.0544 ^ _36167_/QN (DFFASRHQNx1_ASAP7_75t_R)
+   0.0083    0.0627 v _33261_/Y (INVx1_ASAP7_75t_R)
+   0.0000    0.0627 v _36164_/D (DFFASRHQNx1_ASAP7_75t_R)
+             0.0627   data arrival time
+
+   0.0000    0.0000   clock clk (rise edge)
+   0.0000    0.0000   clock network delay (ideal)
+   0.0500    0.0500   clock uncertainty
+   0.0000    0.0500   clock reconvergence pessimism
+             0.0500 ^ _36164_/CLK (DFFASRHQNx1_ASAP7_75t_R)
+   0.0158    0.0658   library hold time
+             0.0658   data required time
+-------------------------------------------------------------
+             0.0658   data required time
+            -0.0627   data arrival time
+-------------------------------------------------------------
+            -0.0030   slack (VIOLATED)
+
+
+
+---------- slack summary ----------
+setup WNS : -0.8128 ns
+hold  WNS : -0.0068 ns
+tns max -73.41
+wns max -0.81
+
+---------- design rule checks ----------
+max slew
+
+Pin                                    Limit    Slew   Slack
+------------------------------------------------------------
+rst_n                                   0.32    1.07   -0.75 (VIOLATED)
+_31547_/A                               0.32    1.07   -0.75 (VIOLATED)
+_35094_/A                               0.32    1.07   -0.75 (VIOLATED)
+_36101_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36164_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36167_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36230_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36240_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36243_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36299_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36341_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36342_/RESETN                          0.32    1.07   -0.75 (VIOLATED)
+_36343_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36344_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36345_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36346_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36347_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36348_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36349_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36351_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36414_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36430_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36431_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36432_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36433_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36434_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36435_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36436_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36437_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36438_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36439_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36440_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36441_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36442_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36443_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36444_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36445_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36446_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36447_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36448_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36449_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36450_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36451_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36452_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36453_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36454_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36455_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36456_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36457_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36458_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36459_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36460_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36461_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36462_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36463_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36464_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36465_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36466_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36467_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36468_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36469_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36470_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36471_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36472_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36473_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36474_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36475_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36476_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36477_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36478_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36479_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36480_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36481_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36482_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36483_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36484_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36485_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36486_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36487_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36488_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36489_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36490_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36491_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36492_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36493_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36494_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36495_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36496_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36497_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36498_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36499_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36500_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36501_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36502_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36503_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36504_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36505_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36506_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36507_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36508_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36509_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36510_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36511_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36512_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36513_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36514_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36515_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36516_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36517_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36518_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36519_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36520_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36521_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36522_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36523_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36524_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36525_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36526_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36527_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36528_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36529_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36530_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36531_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36532_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36533_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36534_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36535_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36536_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36537_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36538_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36539_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36540_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36541_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36542_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36543_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36544_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36545_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36546_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36547_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36548_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36549_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36550_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36551_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36552_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36553_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36554_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36555_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36556_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36557_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36622_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36687_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36720_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36721_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36722_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36723_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36724_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36725_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36726_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36727_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36728_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36729_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36730_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36731_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36732_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36733_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36734_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36735_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36736_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36737_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36738_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36739_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36740_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36741_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36742_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36743_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36744_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36745_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36746_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36747_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36748_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36749_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36750_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36751_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36752_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36753_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36754_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36755_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36756_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36757_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36758_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36759_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36760_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36761_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36762_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36763_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36764_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36765_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36768_/RESETN                          0.32    1.07   -0.75 (VIOLATED)
+_36769_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36770_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36771_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36772_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36773_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36774_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36775_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36776_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36777_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36778_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36779_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36780_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36781_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36782_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36783_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36784_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36785_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36786_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36787_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36788_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36789_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36790_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36791_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36792_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+_36793_/RESETN                          0.32    1.07   -0.75 (VIOLATED)
+_36794_/RESETN                          0.32    1.07   -0.75 (VIOLATED)
+_36795_/RESETN                          0.32    1.07   -0.75 (VIOLATED)
+_36796_/RESETN                          0.32    1.07   -0.75 (VIOLATED)
+_36797_/RESETN                          0.32    1.07   -0.75 (VIOLATED)
+_36798_/RESETN                          0.32    1.07   -0.75 (VIOLATED)
+_36799_/RESETN                          0.32    1.07   -0.75 (VIOLATED)
+_36800_/SETN                            0.32    1.07   -0.75 (VIOLATED)
+
+max capacitance
+
+Pin                                    Limit     Cap   Slack
+------------------------------------------------------------
+rst_n                                  92.16  242.87 -150.71 (VIOLATED)
+
+
+---------- power ----------
+Group                  Internal  Switching    Leakage      Total
+                          Power      Power      Power      Power (Watts)
+----------------------------------------------------------------
+Sequential           2.5417e-03 2.2265e-04 1.8583e-07 2.7646e-03   9.0%
+Combinational        1.2705e-02 1.5186e-02 8.1726e-07 2.7891e-02  91.0%
+Clock                0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00   0.0%
+Macro                0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00   0.0%
+Pad                  0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00   0.0%
+----------------------------------------------------------------
+Total                1.5246e-02 1.5409e-02 1.0031e-06 3.0656e-02 100.0%
+                          49.7%      50.3%       0.0%
+
+RESULT: TIMING NOT MET (setup WNS -0.8128 ns)

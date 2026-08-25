@@ -1,0 +1,58 @@
+
+42. Printing statistics.
+
+=== atlas_fp32_add ===
+
+   Number of wires:               1684
+   Number of wire bits:           1684
+   Number of public wires:         142
+   Number of public wire bits:     142
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               1617
+     AND2x2_ASAP7_75t_R             46
+     AND3x1_ASAP7_75t_R             35
+     AND3x2_ASAP7_75t_R              1
+     AND4x1_ASAP7_75t_R              6
+     AND5x1_ASAP7_75t_R              4
+     BUFx2_ASAP7_75t_R              19
+     BUFx3_ASAP7_75t_R               3
+     BUFx6f_ASAP7_75t_R              1
+     DFFASRHQNx1_ASAP7_75t_R         2
+     DFFHQNx1_ASAP7_75t_R           73
+     HB1xp67_ASAP7_75t_R            47
+     INVx1_ASAP7_75t_R              37
+     INVx2_ASAP7_75t_R               1
+     INVxp33_ASAP7_75t_R            52
+     INVxp67_ASAP7_75t_R             4
+     MAJIxp5_ASAP7_75t_R            38
+     MAJx2_ASAP7_75t_R               1
+     NAND2x1_ASAP7_75t_R             2
+     NAND2x1p5_ASAP7_75t_R           2
+     NAND2xp33_ASAP7_75t_R         378
+     NAND2xp5_ASAP7_75t_R           44
+     NAND2xp67_ASAP7_75t_R           1
+     NAND3x2_ASAP7_75t_R             1
+     NAND3xp33_ASAP7_75t_R         115
+     NAND4xp25_ASAP7_75t_R          24
+     NAND4xp75_ASAP7_75t_R           1
+     NAND5xp2_ASAP7_75t_R           12
+     NOR2x1_ASAP7_75t_R              3
+     NOR2xp33_ASAP7_75t_R          303
+     NOR2xp67_ASAP7_75t_R            2
+     NOR3x2_ASAP7_75t_R              1
+     NOR3xp33_ASAP7_75t_R          116
+     NOR4xp25_ASAP7_75t_R           14
+     NOR5xp2_ASAP7_75t_R            13
+     OR2x2_ASAP7_75t_R              30
+     OR3x1_ASAP7_75t_R              29
+     OR4x1_ASAP7_75t_R              14
+     OR5x1_ASAP7_75t_R               1
+     XNOR2x2_ASAP7_75t_R             6
+     XNOR2xp5_ASAP7_75t_R           72
+     XOR2x2_ASAP7_75t_R              7
+     XOR2xp5_ASAP7_75t_R            56
+
+   Chip area for module '\atlas_fp32_add': 135.287820
+

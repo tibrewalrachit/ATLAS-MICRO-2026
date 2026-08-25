@@ -1,0 +1,65 @@
+
+42. Printing statistics.
+
+=== atlas_pe ===
+
+   Number of wires:              27752
+   Number of wire bits:          27752
+   Number of public wires:        2202
+   Number of public wire bits:    2202
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:              27213
+     AND2x2_ASAP7_75t_R            780
+     AND2x4_ASAP7_75t_R              1
+     AND3x1_ASAP7_75t_R            438
+     AND3x2_ASAP7_75t_R              1
+     AND3x4_ASAP7_75t_R              1
+     AND4x1_ASAP7_75t_R            103
+     AND5x1_ASAP7_75t_R             37
+     BUFx2_ASAP7_75t_R              16
+     BUFx3_ASAP7_75t_R               3
+     BUFx4f_ASAP7_75t_R              9
+     BUFx6f_ASAP7_75t_R              6
+     DFFASRHQNx1_ASAP7_75t_R         9
+     DFFHQNx1_ASAP7_75t_R         2192
+     HB1xp67_ASAP7_75t_R           849
+     INVx1_ASAP7_75t_R            1085
+     INVx3_ASAP7_75t_R               2
+     INVx4_ASAP7_75t_R               1
+     INVxp33_ASAP7_75t_R           930
+     INVxp67_ASAP7_75t_R           113
+     MAJIxp5_ASAP7_75t_R          1258
+     MAJx2_ASAP7_75t_R             233
+     NAND2x1_ASAP7_75t_R             3
+     NAND2x1p5_ASAP7_75t_R           3
+     NAND2xp33_ASAP7_75t_R        4438
+     NAND2xp5_ASAP7_75t_R           99
+     NAND3x1_ASAP7_75t_R             3
+     NAND3xp33_ASAP7_75t_R        1103
+     NAND4xp25_ASAP7_75t_R         271
+     NAND5xp2_ASAP7_75t_R           87
+     NOR2x1_ASAP7_75t_R             18
+     NOR2x1p5_ASAP7_75t_R            6
+     NOR2x2_ASAP7_75t_R              1
+     NOR2xp33_ASAP7_75t_R         6300
+     NOR2xp67_ASAP7_75t_R           12
+     NOR3x1_ASAP7_75t_R              3
+     NOR3x2_ASAP7_75t_R              2
+     NOR3xp33_ASAP7_75t_R         1115
+     NOR4xp25_ASAP7_75t_R          184
+     NOR5xp2_ASAP7_75t_R            31
+     OR2x2_ASAP7_75t_R             868
+     OR3x1_ASAP7_75t_R             317
+     OR3x2_ASAP7_75t_R               1
+     OR4x1_ASAP7_75t_R             165
+     OR5x1_ASAP7_75t_R               3
+     XNOR2x2_ASAP7_75t_R             3
+     XNOR2xp5_ASAP7_75t_R         2526
+     XOR2x1_ASAP7_75t_R              1
+     XOR2x2_ASAP7_75t_R              5
+     XOR2xp5_ASAP7_75t_R          1578
+
+   Chip area for module '\atlas_pe': 2581.695180
+

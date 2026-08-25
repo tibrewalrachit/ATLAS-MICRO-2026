@@ -38,11 +38,18 @@ module atlas_noc_mesh #(
   localparam int unsigned P_N = 0, P_E = 1, P_S = 2, P_W = 3, P_L = 4;
   localparam int unsigned PORTS = 5;
 
-  // Per-node port bundles
-  logic [NODES-1:0][PORTS-1:0]           iv, ir, ov, orr;
-  logic [NODES-1:0][PORTS*FLIT_W-1:0]    ifl, ofl;
-  logic [NODES-1:0][PORTS*XW-1:0]        idx, odx;
-  logic [NODES-1:0][PORTS*YW-1:0]        idy, ody;
+  // Per-node port bundles, held as flat packed vectors: yosys' Verilog front
+  // end does not accept multi-dimensional packed declarations, and these
+  // sources are read by Verilator, Icarus and yosys unmodified.
+  //
+  // Edge routers keep the full five-port bundle but their outward-facing ports
+  // connect to nothing, so those bits are legitimately unread.
+  /* verilator lint_off UNUSEDSIGNAL */
+  logic [NODES*PORTS-1:0]        iv, ir, ov, orr;
+  logic [NODES*PORTS*FLIT_W-1:0] ifl, ofl;
+  logic [NODES*PORTS*XW-1:0]     idx, odx;
+  logic [NODES*PORTS*YW-1:0]     idy, ody;
+  /* verilator lint_on UNUSEDSIGNAL */
 
   genvar gx, gy;
   generate
@@ -53,85 +60,91 @@ module atlas_noc_mesh #(
         atlas_noc_router #(.FLIT_W(FLIT_W), .XW(XW), .YW(YW)) u_rt (
           .clk(clk), .rst_n(rst_n),
           .my_x(XW'(gx)), .my_y(YW'(gy)),
-          .in_valid(iv[NID]),  .in_flit(ifl[NID]),
-          .in_dx(idx[NID]),    .in_dy(idy[NID]), .in_ready(ir[NID]),
-          .out_valid(ov[NID]), .out_flit(ofl[NID]),
-          .out_dx(odx[NID]),   .out_dy(ody[NID]), .out_ready(orr[NID])
+          .in_valid(iv[NID*PORTS +: PORTS]),
+          .in_flit(ifl[NID*PORTS*FLIT_W +: PORTS*FLIT_W]),
+          .in_dx(idx[NID*PORTS*XW +: PORTS*XW]),
+          .in_dy(idy[NID*PORTS*YW +: PORTS*YW]),
+          .in_ready(ir[NID*PORTS +: PORTS]),
+          .out_valid(ov[NID*PORTS +: PORTS]),
+          .out_flit(ofl[NID*PORTS*FLIT_W +: PORTS*FLIT_W]),
+          .out_dx(odx[NID*PORTS*XW +: PORTS*XW]),
+          .out_dy(ody[NID*PORTS*YW +: PORTS*YW]),
+          .out_ready(orr[NID*PORTS +: PORTS])
         );
 
         // ---- local port ----
-        assign iv [NID][P_L]                 = inj_valid[NID];
-        assign ifl[NID][P_L*FLIT_W +: FLIT_W] = inj_flit[NID*FLIT_W +: FLIT_W];
-        assign idx[NID][P_L*XW +: XW]        = inj_dx[NID*XW +: XW];
-        assign idy[NID][P_L*YW +: YW]        = inj_dy[NID*YW +: YW];
-        assign inj_ready[NID]                = ir[NID][P_L];
+        assign iv[NID*PORTS + P_L]                 = inj_valid[NID];
+        assign ifl[(NID*PORTS + P_L)*FLIT_W +: FLIT_W] = inj_flit[NID*FLIT_W +: FLIT_W];
+        assign idx[(NID*PORTS + P_L)*XW +: XW]        = inj_dx[NID*XW +: XW];
+        assign idy[(NID*PORTS + P_L)*YW +: YW]        = inj_dy[NID*YW +: YW];
+        assign inj_ready[NID]                = ir[NID*PORTS + P_L];
 
-        assign ej_valid[NID]                 = ov[NID][P_L];
-        assign ej_flit[NID*FLIT_W +: FLIT_W] = ofl[NID][P_L*FLIT_W +: FLIT_W];
-        assign orr[NID][P_L]                 = ej_ready[NID];
+        assign ej_valid[NID]                 = ov[NID*PORTS + P_L];
+        assign ej_flit[NID*FLIT_W +: FLIT_W] = ofl[(NID*PORTS + P_L)*FLIT_W +: FLIT_W];
+        assign orr[NID*PORTS + P_L]                 = ej_ready[NID];
 
         // ---- north neighbour ----
         if (gy > 0) begin : g_north
           localparam int unsigned UP = NID - MESH_X;
-          assign iv [NID][P_N]                  = ov [UP][P_S];
-          assign ifl[NID][P_N*FLIT_W +: FLIT_W] = ofl[UP][P_S*FLIT_W +: FLIT_W];
-          assign idx[NID][P_N*XW +: XW]         = odx[UP][P_S*XW +: XW];
-          assign idy[NID][P_N*YW +: YW]         = ody[UP][P_S*YW +: YW];
-          assign orr[NID][P_N]                  = ir [UP][P_S];
+          assign iv[NID*PORTS + P_N]                  = ov[UP*PORTS + P_S];
+          assign ifl[(NID*PORTS + P_N)*FLIT_W +: FLIT_W] = ofl[(UP*PORTS + P_S)*FLIT_W +: FLIT_W];
+          assign idx[(NID*PORTS + P_N)*XW +: XW]         = odx[(UP*PORTS + P_S)*XW +: XW];
+          assign idy[(NID*PORTS + P_N)*YW +: YW]         = ody[(UP*PORTS + P_S)*YW +: YW];
+          assign orr[NID*PORTS + P_N]                  = ir[UP*PORTS + P_S];
         end else begin : g_north_edge
-          assign iv [NID][P_N]                  = 1'b0;
-          assign ifl[NID][P_N*FLIT_W +: FLIT_W] = '0;
-          assign idx[NID][P_N*XW +: XW]         = '0;
-          assign idy[NID][P_N*YW +: YW]         = '0;
-          assign orr[NID][P_N]                  = 1'b1;
+          assign iv[NID*PORTS + P_N]                  = 1'b0;
+          assign ifl[(NID*PORTS + P_N)*FLIT_W +: FLIT_W] = '0;
+          assign idx[(NID*PORTS + P_N)*XW +: XW]         = '0;
+          assign idy[(NID*PORTS + P_N)*YW +: YW]         = '0;
+          assign orr[NID*PORTS + P_N]                  = 1'b1;
         end
 
         // ---- south neighbour ----
         if (gy < MESH_Y-1) begin : g_south
           localparam int unsigned DN = NID + MESH_X;
-          assign iv [NID][P_S]                  = ov [DN][P_N];
-          assign ifl[NID][P_S*FLIT_W +: FLIT_W] = ofl[DN][P_N*FLIT_W +: FLIT_W];
-          assign idx[NID][P_S*XW +: XW]         = odx[DN][P_N*XW +: XW];
-          assign idy[NID][P_S*YW +: YW]         = ody[DN][P_N*YW +: YW];
-          assign orr[NID][P_S]                  = ir [DN][P_N];
+          assign iv[NID*PORTS + P_S]                  = ov[DN*PORTS + P_N];
+          assign ifl[(NID*PORTS + P_S)*FLIT_W +: FLIT_W] = ofl[(DN*PORTS + P_N)*FLIT_W +: FLIT_W];
+          assign idx[(NID*PORTS + P_S)*XW +: XW]         = odx[(DN*PORTS + P_N)*XW +: XW];
+          assign idy[(NID*PORTS + P_S)*YW +: YW]         = ody[(DN*PORTS + P_N)*YW +: YW];
+          assign orr[NID*PORTS + P_S]                  = ir[DN*PORTS + P_N];
         end else begin : g_south_edge
-          assign iv [NID][P_S]                  = 1'b0;
-          assign ifl[NID][P_S*FLIT_W +: FLIT_W] = '0;
-          assign idx[NID][P_S*XW +: XW]         = '0;
-          assign idy[NID][P_S*YW +: YW]         = '0;
-          assign orr[NID][P_S]                  = 1'b1;
+          assign iv[NID*PORTS + P_S]                  = 1'b0;
+          assign ifl[(NID*PORTS + P_S)*FLIT_W +: FLIT_W] = '0;
+          assign idx[(NID*PORTS + P_S)*XW +: XW]         = '0;
+          assign idy[(NID*PORTS + P_S)*YW +: YW]         = '0;
+          assign orr[NID*PORTS + P_S]                  = 1'b1;
         end
 
         // ---- west neighbour ----
         if (gx > 0) begin : g_west
           localparam int unsigned LF = NID - 1;
-          assign iv [NID][P_W]                  = ov [LF][P_E];
-          assign ifl[NID][P_W*FLIT_W +: FLIT_W] = ofl[LF][P_E*FLIT_W +: FLIT_W];
-          assign idx[NID][P_W*XW +: XW]         = odx[LF][P_E*XW +: XW];
-          assign idy[NID][P_W*YW +: YW]         = ody[LF][P_E*YW +: YW];
-          assign orr[NID][P_W]                  = ir [LF][P_E];
+          assign iv[NID*PORTS + P_W]                  = ov[LF*PORTS + P_E];
+          assign ifl[(NID*PORTS + P_W)*FLIT_W +: FLIT_W] = ofl[(LF*PORTS + P_E)*FLIT_W +: FLIT_W];
+          assign idx[(NID*PORTS + P_W)*XW +: XW]         = odx[(LF*PORTS + P_E)*XW +: XW];
+          assign idy[(NID*PORTS + P_W)*YW +: YW]         = ody[(LF*PORTS + P_E)*YW +: YW];
+          assign orr[NID*PORTS + P_W]                  = ir[LF*PORTS + P_E];
         end else begin : g_west_edge
-          assign iv [NID][P_W]                  = 1'b0;
-          assign ifl[NID][P_W*FLIT_W +: FLIT_W] = '0;
-          assign idx[NID][P_W*XW +: XW]         = '0;
-          assign idy[NID][P_W*YW +: YW]         = '0;
-          assign orr[NID][P_W]                  = 1'b1;
+          assign iv[NID*PORTS + P_W]                  = 1'b0;
+          assign ifl[(NID*PORTS + P_W)*FLIT_W +: FLIT_W] = '0;
+          assign idx[(NID*PORTS + P_W)*XW +: XW]         = '0;
+          assign idy[(NID*PORTS + P_W)*YW +: YW]         = '0;
+          assign orr[NID*PORTS + P_W]                  = 1'b1;
         end
 
         // ---- east neighbour ----
         if (gx < MESH_X-1) begin : g_east
           localparam int unsigned RT = NID + 1;
-          assign iv [NID][P_E]                  = ov [RT][P_W];
-          assign ifl[NID][P_E*FLIT_W +: FLIT_W] = ofl[RT][P_W*FLIT_W +: FLIT_W];
-          assign idx[NID][P_E*XW +: XW]         = odx[RT][P_W*XW +: XW];
-          assign idy[NID][P_E*YW +: YW]         = ody[RT][P_W*YW +: YW];
-          assign orr[NID][P_E]                  = ir [RT][P_W];
+          assign iv[NID*PORTS + P_E]                  = ov[RT*PORTS + P_W];
+          assign ifl[(NID*PORTS + P_E)*FLIT_W +: FLIT_W] = ofl[(RT*PORTS + P_W)*FLIT_W +: FLIT_W];
+          assign idx[(NID*PORTS + P_E)*XW +: XW]         = odx[(RT*PORTS + P_W)*XW +: XW];
+          assign idy[(NID*PORTS + P_E)*YW +: YW]         = ody[(RT*PORTS + P_W)*YW +: YW];
+          assign orr[NID*PORTS + P_E]                  = ir[RT*PORTS + P_W];
         end else begin : g_east_edge
-          assign iv [NID][P_E]                  = 1'b0;
-          assign ifl[NID][P_E*FLIT_W +: FLIT_W] = '0;
-          assign idx[NID][P_E*XW +: XW]         = '0;
-          assign idy[NID][P_E*YW +: YW]         = '0;
-          assign orr[NID][P_E]                  = 1'b1;
+          assign iv[NID*PORTS + P_E]                  = 1'b0;
+          assign ifl[(NID*PORTS + P_E)*FLIT_W +: FLIT_W] = '0;
+          assign idx[(NID*PORTS + P_E)*XW +: XW]         = '0;
+          assign idy[(NID*PORTS + P_E)*YW +: YW]         = '0;
+          assign orr[NID*PORTS + P_E]                  = 1'b1;
         end
       end
     end

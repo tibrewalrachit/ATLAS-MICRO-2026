@@ -11,9 +11,10 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-TOP="${1:?usage: run_synth.sh <top> [period_ps] [tech]}"
+TOP="${1:?usage: run_synth.sh <top> [period_ps] [tech] [\"PARAM=VAL ...\"]}"
 PERIOD_PS="${2:-1000}"
 TECH="${3:-asap7}"
+PARAMS="${4:-}"      # e.g. "ROWS=2 COLS=2" -- applied with yosys chparam
 
 case "$TECH" in
   asap7)  LIB="$ROOT/syn/lib/asap7_merged.lib"; CONSTR="$ROOT/syn/lib/asap7.constr"  ;;
@@ -38,8 +39,19 @@ ABC_D="$PERIOD_PS"
 
 SRC=$(find "$ROOT/rtl" -name '*.sv' | sort | tr '\n' ' ')
 
+# Parameter overrides let one source tree serve both the full ATLAS geometry
+# and the scaled instances that fit in this environment.  chparam has to run
+# after `hierarchy` reads the design but before it resolves, so it is issued
+# against the top module and hierarchy is re-run.
+CHPARAM=""
+for kv in $PARAMS; do
+  CHPARAM="$CHPARAM chparam -set ${kv%%=*} ${kv##*=} $TOP;"
+done
+
 yosys -l "$LOG" -p "
   read_verilog -sv -I $ROOT/rtl/include $SRC
+  hierarchy -top $TOP
+  $CHPARAM
   hierarchy -check -top $TOP
   synth -top $TOP -flatten
   dfflibmap -liberty $LIB

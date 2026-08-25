@@ -78,9 +78,23 @@ module atlas_fp32_add (
   // operands) gives +0 under round-to-nearest.
   wire        zero_sgn = z_big & z_sml & s_big & s_sml;
 
-  wire        subtract = s_big ^ s_sml;
-  wire [27:0] raw      = subtract ? ({1'b0, sig_big} - {1'b0, sml_eff})
-                                  : ({1'b0, sig_big} + {1'b0, sml_eff});
+  wire subtract = s_big ^ s_sml;
+
+  // Both the significand add/subtract and the rounding increment go through
+  // the carry-select adder rather than being written as `+`.  yosys maps a
+  // plain `+` to a ripple chain before ABC ever sees it, and ABC's rewriting
+  // works on small windows, so it cannot rediscover a fast structure: the
+  // 28-bit chain measured as this block's critical path, 66 majority gates
+  // deep.  Subtraction is folded in as a + ~b + 1.
+  wire [27:0] add_b = subtract ? ~{1'b0, sml_eff} : {1'b0, sml_eff};
+  /* verilator lint_off UNUSEDSIGNAL */
+  wire        raw_cout;
+  /* verilator lint_on UNUSEDSIGNAL */
+  wire [27:0] raw;
+
+  atlas_cpa #(.W(28)) u_sig_add (
+    .a({1'b0, sig_big}), .b(add_b), .cin(subtract), .sum(raw), .cout(raw_cout)
+  );
 
   // Special-case resolution, decided here and carried to S1.
   //   NaN in, or Inf - Inf  -> quiet NaN
@@ -123,7 +137,7 @@ module atlas_fp32_add (
   logic [27:0]      shifted;
   logic [23:0]      signif;
   logic             rnd_bit, sticky, inc;
-  logic [24:0]      signif_r;
+  wire  [24:0]      signif_r;
   logic             carry;
   // signif_f[23] is the implicit leading one and is intentionally dropped.
   /* verilator lint_off UNUSEDSIGNAL */
@@ -136,7 +150,12 @@ module atlas_fp32_add (
   assign rnd_bit  = shifted[3];
   assign sticky   = |shifted[2:0];
   assign inc      = rnd_bit & (sticky | signif[0]);
-  assign signif_r = {1'b0, signif} + {24'd0, inc};
+  /* verilator lint_off UNUSEDSIGNAL */
+  wire signif_cout;
+  /* verilator lint_on UNUSEDSIGNAL */
+  atlas_cpa #(.W(25)) u_round (
+    .a({1'b0, signif}), .b(25'd0), .cin(inc), .sum(signif_r), .cout(signif_cout)
+  );
   assign carry    = signif_r[24];
   assign signif_f = carry ? signif_r[24:1] : signif_r[23:0];
 

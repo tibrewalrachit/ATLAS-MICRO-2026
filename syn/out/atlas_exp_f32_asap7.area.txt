@@ -1,0 +1,54 @@
+
+42. Printing statistics.
+
+=== atlas_exp_f32 ===
+
+   Number of wires:               6331
+   Number of wire bits:           6331
+   Number of public wires:         136
+   Number of public wire bits:     136
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               6295
+     AND2x2_ASAP7_75t_R            135
+     AND3x1_ASAP7_75t_R             51
+     AND4x1_ASAP7_75t_R              3
+     BUFx2_ASAP7_75t_R              27
+     BUFx3_ASAP7_75t_R              11
+     BUFx4f_ASAP7_75t_R              1
+     BUFx6f_ASAP7_75t_R              2
+     DFFASRHQNx1_ASAP7_75t_R         3
+     DFFHQNx1_ASAP7_75t_R          137
+     HB1xp67_ASAP7_75t_R           233
+     INVx1_ASAP7_75t_R              61
+     INVxp33_ASAP7_75t_R           274
+     INVxp67_ASAP7_75t_R            23
+     MAJIxp5_ASAP7_75t_R           475
+     MAJx2_ASAP7_75t_R             147
+     NAND2x1_ASAP7_75t_R             1
+     NAND2xp33_ASAP7_75t_R        1018
+     NAND2xp5_ASAP7_75t_R           59
+     NAND3xp33_ASAP7_75t_R         336
+     NAND4xp25_ASAP7_75t_R           9
+     NAND5xp2_ASAP7_75t_R            1
+     NOR2x1_ASAP7_75t_R              9
+     NOR2xp33_ASAP7_75t_R         1288
+     NOR2xp67_ASAP7_75t_R            1
+     NOR3x1_ASAP7_75t_R              1
+     NOR3xp33_ASAP7_75t_R          312
+     NOR4xp25_ASAP7_75t_R           22
+     NOR5xp2_ASAP7_75t_R             4
+     OR2x2_ASAP7_75t_R              85
+     OR3x1_ASAP7_75t_R              50
+     OR4x1_ASAP7_75t_R               7
+     OR5x1_ASAP7_75t_R               1
+     XNOR2x1_ASAP7_75t_R             4
+     XNOR2x2_ASAP7_75t_R            10
+     XNOR2xp5_ASAP7_75t_R          919
+     XOR2x1_ASAP7_75t_R              3
+     XOR2x2_ASAP7_75t_R              8
+     XOR2xp5_ASAP7_75t_R           564
+
+   Chip area for module '\atlas_exp_f32': 558.880560
+

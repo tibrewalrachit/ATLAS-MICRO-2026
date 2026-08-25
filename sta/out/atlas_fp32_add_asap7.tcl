@@ -3,8 +3,8 @@ read_liberty /home/user/ATLAS-MICRO-2026/syn/lib/asap7_simple.lib
 read_liberty /home/user/ATLAS-MICRO-2026/syn/lib/asap7_seq.lib
 read_liberty /home/user/ATLAS-MICRO-2026/syn/lib/asap7_invbuf.lib
 set_cmd_units -time ns -capacitance fF -resistance kOhm -voltage V -current mA -power mW -distance um
-read_verilog /home/user/ATLAS-MICRO-2026/syn/out/atlas_dot_unit_asap7.v
-link_design atlas_dot_unit
+read_verilog /home/user/ATLAS-MICRO-2026/syn/out/atlas_fp32_add_asap7.v
+link_design atlas_fp32_add
 set CLK_PERIOD_NS 1.0
 set DRIVE_CELL BUFx2_ASAP7_75t_R
 set DRIVE_PIN  Y

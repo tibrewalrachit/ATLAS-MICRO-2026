@@ -1,0 +1,57 @@
+
+42. Printing statistics.
+
+=== atlas_sfu ===
+
+   Number of wires:              27370
+   Number of wire bits:          27370
+   Number of public wires:         553
+   Number of public wire bits:     553
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:              27333
+     AND2x2_ASAP7_75t_R            504
+     AND3x1_ASAP7_75t_R            302
+     AND4x1_ASAP7_75t_R             44
+     AND5x1_ASAP7_75t_R              6
+     BUFx2_ASAP7_75t_R              18
+     BUFx3_ASAP7_75t_R               7
+     BUFx6f_ASAP7_75t_R              1
+     DFFASRHQNx1_ASAP7_75t_R        16
+     DFFHQNx1_ASAP7_75t_R         1009
+     HB1xp67_ASAP7_75t_R          1243
+     INVx1_ASAP7_75t_R             320
+     INVx2_ASAP7_75t_R               5
+     INVx3_ASAP7_75t_R               3
+     INVxp33_ASAP7_75t_R          1166
+     INVxp67_ASAP7_75t_R            35
+     MAJIxp5_ASAP7_75t_R          1771
+     MAJx2_ASAP7_75t_R             387
+     NAND2x1_ASAP7_75t_R             4
+     NAND2x1p5_ASAP7_75t_R           2
+     NAND2xp33_ASAP7_75t_R        4569
+     NAND2xp5_ASAP7_75t_R          411
+     NAND3xp33_ASAP7_75t_R        1426
+     NAND4xp25_ASAP7_75t_R          55
+     NAND4xp75_ASAP7_75t_R           1
+     NAND5xp2_ASAP7_75t_R           26
+     NOR2x1_ASAP7_75t_R              1
+     NOR2xp33_ASAP7_75t_R         6279
+     NOR3x1_ASAP7_75t_R              1
+     NOR3xp33_ASAP7_75t_R         1363
+     NOR4xp25_ASAP7_75t_R          206
+     NOR5xp2_ASAP7_75t_R            29
+     OR2x2_ASAP7_75t_R             502
+     OR3x1_ASAP7_75t_R             303
+     OR4x1_ASAP7_75t_R              84
+     OR5x1_ASAP7_75t_R               9
+     XNOR2x1_ASAP7_75t_R             9
+     XNOR2x2_ASAP7_75t_R             6
+     XNOR2xp5_ASAP7_75t_R         3512
+     XOR2x1_ASAP7_75t_R              3
+     XOR2x2_ASAP7_75t_R              3
+     XOR2xp5_ASAP7_75t_R          1692
+
+   Chip area for module '\atlas_sfu': 2405.000160
+

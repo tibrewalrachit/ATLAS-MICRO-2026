@@ -1,0 +1,56 @@
+
+42. Printing statistics.
+
+=== atlas_fp32_mul ===
+
+   Number of wires:               3209
+   Number of wire bits:           3209
+   Number of public wires:         162
+   Number of public wire bits:     162
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               3142
+     AND2x2_ASAP7_75t_R             70
+     AND3x1_ASAP7_75t_R             14
+     AND4x1_ASAP7_75t_R              6
+     AND5x1_ASAP7_75t_R              1
+     BUFx2_ASAP7_75t_R               7
+     BUFx3_ASAP7_75t_R               4
+     DFFASRHQNx1_ASAP7_75t_R         2
+     DFFHQNx1_ASAP7_75t_R           94
+     HB1xp67_ASAP7_75t_R            93
+     INVx1_ASAP7_75t_R              35
+     INVxp33_ASAP7_75t_R           117
+     INVxp67_ASAP7_75t_R             2
+     MAJIxp5_ASAP7_75t_R           429
+     MAJx2_ASAP7_75t_R              40
+     NAND2x1_ASAP7_75t_R             3
+     NAND2x1p5_ASAP7_75t_R           6
+     NAND2xp33_ASAP7_75t_R         588
+     NAND2xp5_ASAP7_75t_R           51
+     NAND3xp33_ASAP7_75t_R          29
+     NAND4xp25_ASAP7_75t_R          12
+     NAND5xp2_ASAP7_75t_R            5
+     NOR2x1_ASAP7_75t_R              3
+     NOR2x1p5_ASAP7_75t_R            1
+     NOR2xp33_ASAP7_75t_R          247
+     NOR2xp67_ASAP7_75t_R            1
+     NOR3x1_ASAP7_75t_R              1
+     NOR3xp33_ASAP7_75t_R           41
+     NOR4xp25_ASAP7_75t_R           11
+     NOR4xp75_ASAP7_75t_R            2
+     NOR5xp2_ASAP7_75t_R             7
+     OR2x2_ASAP7_75t_R              15
+     OR3x1_ASAP7_75t_R               4
+     OR4x1_ASAP7_75t_R               5
+     OR5x1_ASAP7_75t_R               3
+     XNOR2x1_ASAP7_75t_R             6
+     XNOR2x2_ASAP7_75t_R             3
+     XNOR2xp5_ASAP7_75t_R          785
+     XOR2x1_ASAP7_75t_R              5
+     XOR2x2_ASAP7_75t_R              9
+     XOR2xp5_ASAP7_75t_R           385
+
+   Chip area for module '\atlas_fp32_mul': 320.205960
+
