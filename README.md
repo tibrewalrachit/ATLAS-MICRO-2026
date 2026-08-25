@@ -12,7 +12,8 @@ written by TileLang-style domain-specific languages.
 2. [Kick-the-Tires](#2-kick-the-tires)
 3. [Instructions for Artifact Evaluation](#3-instructions-for-artifact-evaluation)
 4. [Usage and Framework Extension](#4-usage-and-framework-extension)
-5. [Developer Documentation](#5-developer-documentation)
+5. [RTL Implementation](#5-rtl-implementation)
+6. [Developer Documentation](#6-developer-documentation)
 
 ## 1. Installation
 
@@ -171,8 +172,27 @@ or the generated performance CSV. The three inference scripts show the full
 path from hardware/model loading through frontend generation to simulator
 execution.
 
-## 5. Developer Documentation
+## 5. RTL Implementation
+
+Alongside the simulator, `rtl/` holds a synthesisable SystemVerilog
+implementation of the ATLAS architecture with a low-precision (MXFP4 / FP8)
+datapath sized for Qwen3-235B-A22B, the HBDRAM memory system, and an
+open-source synthesis and static-timing flow that measures it.  It reads its
+geometry from the same configuration files as the simulator.
+
+```bash
+tb/run_all.sh                        # regression: 9 self-checking testbenches
+syn/run_all.sh 1.0 asap7             # synthesise and time every block
+python3 pd/build_floorplan.py asap7  # area roll-up and chip floorplan
+```
+
+See [docs/rtl/README.md](docs/rtl/README.md) for the architecture, the numeric
+design and its measured accuracy, the synthesis and timing results, and the
+limits of what this flow does.
+
+## 6. Developer Documentation
 
 - [Artifact evaluation instructions](docs/ae_instructions.md)
 - [Common TileLang/ATLang programming interface](docs/programming_interface.md)
 - [ATLang implementation architecture](docs/atlang_architecture.md)
+- [RTL implementation, synthesis and timing](docs/rtl/README.md)

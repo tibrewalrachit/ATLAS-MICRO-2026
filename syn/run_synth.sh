@@ -17,10 +17,14 @@ TECH="${3:-asap7}"
 PARAMS="${4:-}"      # e.g. "ROWS=2 COLS=2" -- applied with yosys chparam
 
 case "$TECH" in
-  asap7)  LIB="$ROOT/syn/lib/asap7_merged.lib"; CONSTR="$ROOT/syn/lib/asap7.constr"  ;;
-  sky130) LIB="$ROOT/syn/lib/sky130hd_tt.lib";  CONSTR="$ROOT/syn/lib/sky130.constr" ;;
+  asap7)  LIB="$ROOT/syn/lib/asap7_merged.lib"; CONSTR="$ROOT/syn/scripts/asap7.constr"  ;;
+  sky130) LIB="$ROOT/syn/lib/sky130hd_tt.lib";  CONSTR="$ROOT/syn/scripts/sky130.constr" ;;
   *) echo "unknown tech: $TECH" >&2; exit 1 ;;
 esac
+
+# Liberty is not vendored -- it is staged out of an OpenSTA checkout.  Do it
+# on demand so the flow works from a fresh clone.
+[[ -f "$LIB" ]] || "$ROOT/syn/setup_libs.sh" >/dev/null
 
 OUT="$ROOT/syn/out"
 mkdir -p "$OUT"
