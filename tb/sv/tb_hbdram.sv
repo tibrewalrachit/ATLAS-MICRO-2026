@@ -22,6 +22,9 @@ module tb_hbdram;
   localparam int unsigned MROWS = 16;
   localparam int unsigned MCOLS = 32;
   localparam int unsigned NREQ  = 2000;
+  // Overridable so the queue depth can be swept: scheduler quality and area
+  // trade against each other here.
+  parameter  int unsigned QDEPTH = 16;
 
   logic clk = 1'b0, rst_n = 1'b0;
   always #0.5 clk = ~clk;
@@ -46,7 +49,8 @@ module tb_hbdram;
   logic [31:0]      stat_row_hit, stat_row_miss, stat_refresh;
   int               violations;
 
-  atlas_hbdram_ctrl #(.DQ_W(DQ_W), .ROW_W(ROW_W), .COL_W(COL_W), .ID_W(ID_W)) dut (
+  atlas_hbdram_ctrl #(.DQ_W(DQ_W), .ROW_W(ROW_W), .COL_W(COL_W),
+                     .ID_W(ID_W), .QDEPTH(QDEPTH)) dut (
     .clk(clk), .rst_n(rst_n), .dram_tick(dram_tick),
     .req_valid(req_valid), .req_ready(req_ready), .req_we(req_we),
     .req_row(req_row), .req_col(req_col), .req_id(req_id), .req_wdata(req_wdata),

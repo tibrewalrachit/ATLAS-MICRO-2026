@@ -40,9 +40,9 @@ ABC_D="$PERIOD_PS"
 SRC=$(find "$ROOT/rtl" -name '*.sv' | sort | tr '\n' ' ')
 
 # Parameter overrides let one source tree serve both the full ATLAS geometry
-# and the scaled instances that fit in this environment.  chparam has to run
-# after `hierarchy` reads the design but before it resolves, so it is issued
-# against the top module and hierarchy is re-run.
+# and the scaled instances that fit in this environment.  chparam runs before
+# `hierarchy`: an earlier hierarchy pass would already have elaborated and
+# pruned the design, and the submodules the new parameters need would be gone.
 CHPARAM=""
 for kv in $PARAMS; do
   CHPARAM="$CHPARAM chparam -set ${kv%%=*} ${kv##*=} $TOP;"
@@ -50,7 +50,6 @@ done
 
 yosys -l "$LOG" -p "
   read_verilog -sv -I $ROOT/rtl/include $SRC
-  hierarchy -top $TOP
   $CHPARAM
   hierarchy -check -top $TOP
   synth -top $TOP -flatten

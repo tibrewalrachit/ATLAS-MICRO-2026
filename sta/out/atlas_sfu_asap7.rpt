@@ -26,8 +26,8 @@ clk                       1.00        0.00      0.50
 
 ---------- setup (max) : critical path ----------
 Warning 503: atlas_sfu_asap7.tcl line 1, report_checks -group_count is deprecated. Use -group_path_count instead.
-Startpoint: _53631_ (rising edge-triggered flip-flop clocked by clk)
-Endpoint: _53595_ (rising edge-triggered flip-flop clocked by clk)
+Startpoint: _54082_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _54117_ (rising edge-triggered flip-flop clocked by clk)
 Path Group: clk
 Path Type: max
 
@@ -35,91 +35,90 @@ Path Type: max
 -------------------------------------------------------------
    0.0000    0.0000   clock clk (rise edge)
    0.0000    0.0000   clock network delay (ideal)
-   0.0000    0.0000 ^ _53631_/CLK (DFFHQNx1_ASAP7_75t_R)
-   0.0752    0.0752 ^ _53631_/QN (DFFHQNx1_ASAP7_75t_R)
-   0.0346    0.1098 v _32257_/Y (NOR2xp33_ASAP7_75t_R)
-   0.0264    0.1363 ^ _32258_/Y (XNOR2xp5_ASAP7_75t_R)
-   0.0455    0.1818 v _32259_/Y (XNOR2x2_ASAP7_75t_R)
-   0.0286    0.2104 v _32947_/Y (XOR2x1_ASAP7_75t_R)
-   0.0314    0.2418 v _32948_/Y (XNOR2x1_ASAP7_75t_R)
-   0.0302    0.2720 v _32970_/Y (XOR2x1_ASAP7_75t_R)
-   0.0270    0.2989 v _32971_/Y (XNOR2x1_ASAP7_75t_R)
-   0.0268    0.3257 v _32974_/Y (XNOR2x1_ASAP7_75t_R)
-   0.0292    0.3550 v _32982_/Y (XOR2x1_ASAP7_75t_R)
-   0.0386    0.3936 ^ _33009_/Y (XOR2x2_ASAP7_75t_R)
-   0.0117    0.4054 v _33025_/Y (NOR2xp33_ASAP7_75t_R)
-   0.0140    0.4194 ^ _33043_/Y (NOR2xp33_ASAP7_75t_R)
-   0.0149    0.4343 v _33047_/Y (NOR2xp33_ASAP7_75t_R)
-   0.0171    0.4514 ^ _33048_/Y (NOR3xp33_ASAP7_75t_R)
-   0.0157    0.4671 v _33049_/Y (NOR2xp33_ASAP7_75t_R)
-   0.0465    0.5136 v _33050_/Y (OR5x1_ASAP7_75t_R)
-   0.0143    0.5279 ^ _33051_/Y (NAND2xp5_ASAP7_75t_R)
-   0.0169    0.5449 v _33052_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0224    0.5673 ^ _33053_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0187    0.5860 v _33054_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0224    0.6084 ^ _33055_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0187    0.6271 v _33056_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0224    0.6495 ^ _33057_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0207    0.6701 v _33058_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0172    0.6874 ^ _33060_/Y (NOR3x1_ASAP7_75t_R)
-   0.0180    0.7054 v _33061_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0239    0.7293 ^ _33062_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0188    0.7481 v _33063_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0188    0.7669 ^ _33064_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0149    0.7818 v _33074_/Y (NAND3xp33_ASAP7_75t_R)
-   0.0259    0.8077 v _33078_/Y (AND2x2_ASAP7_75t_R)
-   0.0262    0.8338 ^ _33079_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0283    0.8621 v _33080_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0337    0.8958 ^ _33081_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0274    0.9232 v _33082_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0327    0.9559 ^ _33083_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0283    0.9841 v _33084_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0330    1.0172 ^ _33085_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0277    1.0449 v _33086_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0332    1.0782 ^ _33087_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0283    1.1065 v _33088_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0336    1.1401 ^ _33089_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0283    1.1684 v _33090_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0343    1.2027 ^ _33091_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0286    1.2314 v _33092_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0408    1.2722 ^ _33093_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0374    1.3096 v _33094_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0440    1.3535 ^ _33095_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0374    1.3910 v _33096_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0415    1.4325 ^ _33097_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0301    1.4626 v _38804_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0309    1.4935 ^ _38838_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0268    1.5203 v _38865_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0298    1.5501 ^ _38896_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0268    1.5770 v _38926_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0299    1.6069 ^ _38953_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0268    1.6337 v _38978_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0296    1.6633 ^ _38999_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0267    1.6900 v _39023_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0298    1.7198 ^ _39051_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0248    1.7446 v _39074_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0174    1.7620 ^ _39089_/Y (NOR2xp33_ASAP7_75t_R)
-   0.0241    1.7861 ^ _39093_/Y (OR5x1_ASAP7_75t_R)
-   0.0166    1.8027 ^ _39094_/Y (BUFx3_ASAP7_75t_R)
-   0.0000    1.8027 ^ _53595_/D (DFFHQNx1_ASAP7_75t_R)
-             1.8027   data arrival time
+   0.0000    0.0000 ^ _54082_/CLK (DFFHQNx1_ASAP7_75t_R)
+   0.0799    0.0799 ^ _54082_/QN (DFFHQNx1_ASAP7_75t_R)
+   0.0370    0.1168 ^ _28178_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0241    0.1410 ^ _28226_/Y (XNOR2xp5_ASAP7_75t_R)
+   0.0450    0.1860 v _28227_/Y (XNOR2x2_ASAP7_75t_R)
+   0.0287    0.2147 v _28917_/Y (XOR2x1_ASAP7_75t_R)
+   0.0314    0.2461 v _28918_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0302    0.2762 v _28940_/Y (XOR2x1_ASAP7_75t_R)
+   0.0253    0.3015 v _28941_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0283    0.3298 v _28944_/Y (XNOR2xp5_ASAP7_75t_R)
+   0.0417    0.3715 ^ _28953_/Y (XOR2x2_ASAP7_75t_R)
+   0.0213    0.3928 ^ _28979_/Y (XOR2x1_ASAP7_75t_R)
+   0.0203    0.4132 ^ _28981_/Y (OR2x2_ASAP7_75t_R)
+   0.0090    0.4222 v _28992_/Y (NAND2xp33_ASAP7_75t_R)
+   0.0149    0.4371 ^ _28993_/Y (NAND2xp33_ASAP7_75t_R)
+   0.0155    0.4526 v _29015_/Y (NAND3xp33_ASAP7_75t_R)
+   0.0123    0.4649 ^ _29016_/Y (NAND2xp5_ASAP7_75t_R)
+   0.0242    0.4891 v _29017_/Y (NAND5xp2_ASAP7_75t_R)
+   0.0203    0.5094 ^ _29018_/Y (NAND2xp5_ASAP7_75t_R)
+   0.0176    0.5270 v _29019_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0224    0.5495 ^ _29020_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0187    0.5682 v _29021_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0224    0.5906 ^ _29022_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0187    0.6093 v _29023_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0224    0.6316 ^ _29024_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0154    0.6470 v _29025_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0241    0.6711 ^ _29027_/Y (NOR3xp33_ASAP7_75t_R)
+   0.0296    0.7007 ^ _29028_/Y (MAJx2_ASAP7_75t_R)
+   0.0149    0.7157 v _29029_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0224    0.7381 ^ _29030_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0163    0.7543 v _29031_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0332    0.7875 v _29042_/Y (OR4x1_ASAP7_75t_R)
+   0.0236    0.8112 v _29044_/Y (AND2x2_ASAP7_75t_R)
+   0.0262    0.8374 ^ _29045_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0282    0.8656 v _29046_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0337    0.8993 ^ _29047_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0277    0.9271 v _29048_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0324    0.9594 ^ _29049_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0277    0.9872 v _29050_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0324    1.0195 ^ _29051_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0277    1.0472 v _29052_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0332    1.0805 ^ _29053_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0283    1.1088 v _29054_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0336    1.1424 ^ _29055_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0283    1.1707 v _29056_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0343    1.2051 ^ _29057_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0286    1.2337 v _29058_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0408    1.2745 ^ _29059_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0374    1.3119 v _29060_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0440    1.3558 ^ _29061_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0374    1.3933 v _29062_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0403    1.4336 ^ _29063_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0297    1.4633 v _39197_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0307    1.4940 ^ _39231_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0268    1.5208 v _39258_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0298    1.5506 ^ _39289_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0268    1.5774 v _39319_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0299    1.6073 ^ _39346_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0268    1.6342 v _39371_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0296    1.6638 ^ _39392_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0268    1.6906 v _39416_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0299    1.7205 ^ _39442_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0262    1.7467 v _39465_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0327    1.7794 v _39479_/Y (OR2x2_ASAP7_75t_R)
+   0.0141    1.7935 ^ _39485_/Y (NAND3x2_ASAP7_75t_R)
+   0.0000    1.7935 ^ _54117_/D (DFFHQNx1_ASAP7_75t_R)
+             1.7935   data arrival time
 
    1.0000    1.0000   clock clk (rise edge)
    0.0000    1.0000   clock network delay (ideal)
   -0.0500    0.9500   clock uncertainty
    0.0000    0.9500   clock reconvergence pessimism
-             0.9500 ^ _53595_/CLK (DFFHQNx1_ASAP7_75t_R)
-  -0.0078    0.9422   library setup time
-             0.9422   data required time
+             0.9500 ^ _54117_/CLK (DFFHQNx1_ASAP7_75t_R)
+  -0.0107    0.9393   library setup time
+             0.9393   data required time
 -------------------------------------------------------------
-             0.9422   data required time
-            -1.8027   data arrival time
+             0.9393   data required time
+            -1.7935   data arrival time
 -------------------------------------------------------------
-            -0.8605   slack (VIOLATED)
+            -0.8542   slack (VIOLATED)
 
 
-Startpoint: _53631_ (rising edge-triggered flip-flop clocked by clk)
-Endpoint: _53594_ (rising edge-triggered flip-flop clocked by clk)
+Startpoint: _54082_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _54116_ (rising edge-triggered flip-flop clocked by clk)
 Path Group: clk
 Path Type: max
 
@@ -127,89 +126,89 @@ Path Type: max
 -------------------------------------------------------------
    0.0000    0.0000   clock clk (rise edge)
    0.0000    0.0000   clock network delay (ideal)
-   0.0000    0.0000 ^ _53631_/CLK (DFFHQNx1_ASAP7_75t_R)
-   0.0752    0.0752 ^ _53631_/QN (DFFHQNx1_ASAP7_75t_R)
-   0.0346    0.1098 v _32257_/Y (NOR2xp33_ASAP7_75t_R)
-   0.0264    0.1363 ^ _32258_/Y (XNOR2xp5_ASAP7_75t_R)
-   0.0455    0.1818 v _32259_/Y (XNOR2x2_ASAP7_75t_R)
-   0.0286    0.2104 v _32947_/Y (XOR2x1_ASAP7_75t_R)
-   0.0314    0.2418 v _32948_/Y (XNOR2x1_ASAP7_75t_R)
-   0.0302    0.2720 v _32970_/Y (XOR2x1_ASAP7_75t_R)
-   0.0270    0.2989 v _32971_/Y (XNOR2x1_ASAP7_75t_R)
-   0.0268    0.3257 v _32974_/Y (XNOR2x1_ASAP7_75t_R)
-   0.0292    0.3550 v _32982_/Y (XOR2x1_ASAP7_75t_R)
-   0.0386    0.3936 ^ _33009_/Y (XOR2x2_ASAP7_75t_R)
-   0.0117    0.4054 v _33025_/Y (NOR2xp33_ASAP7_75t_R)
-   0.0140    0.4194 ^ _33043_/Y (NOR2xp33_ASAP7_75t_R)
-   0.0149    0.4343 v _33047_/Y (NOR2xp33_ASAP7_75t_R)
-   0.0171    0.4514 ^ _33048_/Y (NOR3xp33_ASAP7_75t_R)
-   0.0157    0.4671 v _33049_/Y (NOR2xp33_ASAP7_75t_R)
-   0.0465    0.5136 v _33050_/Y (OR5x1_ASAP7_75t_R)
-   0.0143    0.5279 ^ _33051_/Y (NAND2xp5_ASAP7_75t_R)
-   0.0169    0.5449 v _33052_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0224    0.5673 ^ _33053_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0187    0.5860 v _33054_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0224    0.6084 ^ _33055_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0187    0.6271 v _33056_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0224    0.6495 ^ _33057_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0207    0.6701 v _33058_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0172    0.6874 ^ _33060_/Y (NOR3x1_ASAP7_75t_R)
-   0.0180    0.7054 v _33061_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0239    0.7293 ^ _33062_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0188    0.7481 v _33063_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0188    0.7669 ^ _33064_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0149    0.7818 v _33074_/Y (NAND3xp33_ASAP7_75t_R)
-   0.0259    0.8077 v _33078_/Y (AND2x2_ASAP7_75t_R)
-   0.0262    0.8338 ^ _33079_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0283    0.8621 v _33080_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0337    0.8958 ^ _33081_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0274    0.9232 v _33082_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0327    0.9559 ^ _33083_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0283    0.9841 v _33084_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0330    1.0172 ^ _33085_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0277    1.0449 v _33086_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0332    1.0782 ^ _33087_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0283    1.1065 v _33088_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0336    1.1401 ^ _33089_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0283    1.1684 v _33090_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0343    1.2027 ^ _33091_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0286    1.2314 v _33092_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0408    1.2722 ^ _33093_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0374    1.3096 v _33094_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0440    1.3535 ^ _33095_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0374    1.3910 v _33096_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0415    1.4325 ^ _33097_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0301    1.4626 v _38804_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0309    1.4935 ^ _38838_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0268    1.5203 v _38865_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0298    1.5501 ^ _38896_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0268    1.5770 v _38926_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0299    1.6069 ^ _38953_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0268    1.6337 v _38978_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0296    1.6633 ^ _38999_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0267    1.6900 v _39023_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0298    1.7198 ^ _39051_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0248    1.7446 v _39074_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0373    1.7819 ^ _39086_/Y (XOR2x2_ASAP7_75t_R)
-   0.0000    1.7819 ^ _53594_/D (DFFHQNx1_ASAP7_75t_R)
-             1.7819   data arrival time
+   0.0000    0.0000 ^ _54082_/CLK (DFFHQNx1_ASAP7_75t_R)
+   0.0799    0.0799 ^ _54082_/QN (DFFHQNx1_ASAP7_75t_R)
+   0.0370    0.1168 ^ _28178_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0241    0.1410 ^ _28226_/Y (XNOR2xp5_ASAP7_75t_R)
+   0.0450    0.1860 v _28227_/Y (XNOR2x2_ASAP7_75t_R)
+   0.0287    0.2147 v _28917_/Y (XOR2x1_ASAP7_75t_R)
+   0.0314    0.2461 v _28918_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0302    0.2762 v _28940_/Y (XOR2x1_ASAP7_75t_R)
+   0.0253    0.3015 v _28941_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0283    0.3298 v _28944_/Y (XNOR2xp5_ASAP7_75t_R)
+   0.0417    0.3715 ^ _28953_/Y (XOR2x2_ASAP7_75t_R)
+   0.0213    0.3928 ^ _28979_/Y (XOR2x1_ASAP7_75t_R)
+   0.0203    0.4132 ^ _28981_/Y (OR2x2_ASAP7_75t_R)
+   0.0090    0.4222 v _28992_/Y (NAND2xp33_ASAP7_75t_R)
+   0.0149    0.4371 ^ _28993_/Y (NAND2xp33_ASAP7_75t_R)
+   0.0155    0.4526 v _29015_/Y (NAND3xp33_ASAP7_75t_R)
+   0.0123    0.4649 ^ _29016_/Y (NAND2xp5_ASAP7_75t_R)
+   0.0242    0.4891 v _29017_/Y (NAND5xp2_ASAP7_75t_R)
+   0.0203    0.5094 ^ _29018_/Y (NAND2xp5_ASAP7_75t_R)
+   0.0176    0.5270 v _29019_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0224    0.5495 ^ _29020_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0187    0.5682 v _29021_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0224    0.5906 ^ _29022_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0187    0.6093 v _29023_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0224    0.6316 ^ _29024_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0154    0.6470 v _29025_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0241    0.6711 ^ _29027_/Y (NOR3xp33_ASAP7_75t_R)
+   0.0296    0.7007 ^ _29028_/Y (MAJx2_ASAP7_75t_R)
+   0.0149    0.7157 v _29029_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0224    0.7381 ^ _29030_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0163    0.7543 v _29031_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0332    0.7875 v _29042_/Y (OR4x1_ASAP7_75t_R)
+   0.0236    0.8112 v _29044_/Y (AND2x2_ASAP7_75t_R)
+   0.0262    0.8374 ^ _29045_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0282    0.8656 v _29046_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0337    0.8993 ^ _29047_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0277    0.9271 v _29048_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0324    0.9594 ^ _29049_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0277    0.9872 v _29050_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0324    1.0195 ^ _29051_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0277    1.0472 v _29052_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0332    1.0805 ^ _29053_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0283    1.1088 v _29054_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0336    1.1424 ^ _29055_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0283    1.1707 v _29056_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0343    1.2051 ^ _29057_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0286    1.2337 v _29058_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0408    1.2745 ^ _29059_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0374    1.3119 v _29060_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0440    1.3558 ^ _29061_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0374    1.3933 v _29062_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0403    1.4336 ^ _29063_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0297    1.4633 v _39197_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0307    1.4940 ^ _39231_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0268    1.5208 v _39258_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0298    1.5506 ^ _39289_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0268    1.5774 v _39319_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0299    1.6073 ^ _39346_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0268    1.6342 v _39371_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0296    1.6638 ^ _39392_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0268    1.6906 v _39416_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0299    1.7205 ^ _39442_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0262    1.7467 v _39465_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0193    1.7661 ^ _39477_/Y (XOR2xp5_ASAP7_75t_R)
+   0.0000    1.7661 ^ _54116_/D (DFFHQNx1_ASAP7_75t_R)
+             1.7661   data arrival time
 
    1.0000    1.0000   clock clk (rise edge)
    0.0000    1.0000   clock network delay (ideal)
   -0.0500    0.9500   clock uncertainty
    0.0000    0.9500   clock reconvergence pessimism
-             0.9500 ^ _53594_/CLK (DFFHQNx1_ASAP7_75t_R)
-  -0.0083    0.9417   library setup time
-             0.9417   data required time
+             0.9500 ^ _54116_/CLK (DFFHQNx1_ASAP7_75t_R)
+  -0.0104    0.9396   library setup time
+             0.9396   data required time
 -------------------------------------------------------------
-             0.9417   data required time
-            -1.7819   data arrival time
+             0.9396   data required time
+            -1.7661   data arrival time
 -------------------------------------------------------------
-            -0.8402   slack (VIOLATED)
+            -0.8265   slack (VIOLATED)
 
 
-Startpoint: _54036_ (rising edge-triggered flip-flop clocked by clk)
-Endpoint: _54073_ (rising edge-triggered flip-flop clocked by clk)
+Startpoint: _54082_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _54115_ (rising edge-triggered flip-flop clocked by clk)
 Path Group: clk
 Path Type: max
 
@@ -217,93 +216,91 @@ Path Type: max
 -------------------------------------------------------------
    0.0000    0.0000   clock clk (rise edge)
    0.0000    0.0000   clock network delay (ideal)
-   0.0000    0.0000 ^ _54036_/CLK (DFFHQNx1_ASAP7_75t_R)
-   0.0665    0.0665 ^ _54036_/QN (DFFHQNx1_ASAP7_75t_R)
-   0.0272    0.0937 v _27138_/Y (INVx1_ASAP7_75t_R)
-   0.0265    0.1202 ^ _27790_/Y (NAND2xp5_ASAP7_75t_R)
-   0.0238    0.1440 v _27855_/Y (NAND2xp5_ASAP7_75t_R)
-   0.0307    0.1747 v _27903_/Y (XNOR2xp5_ASAP7_75t_R)
-   0.0384    0.2131 v _27904_/Y (XNOR2xp5_ASAP7_75t_R)
-   0.0353    0.2484 v _28538_/Y (XNOR2xp5_ASAP7_75t_R)
-   0.0341    0.2825 v _28539_/Y (XNOR2xp5_ASAP7_75t_R)
-   0.0285    0.3111 v _28556_/Y (XOR2xp5_ASAP7_75t_R)
-   0.0338    0.3449 v _28557_/Y (XNOR2xp5_ASAP7_75t_R)
-   0.0304    0.3754 v _28584_/Y (XNOR2xp5_ASAP7_75t_R)
-   0.0177    0.3930 ^ _28585_/Y (XNOR2xp5_ASAP7_75t_R)
-   0.0160    0.4090 v _28586_/Y (NAND2xp5_ASAP7_75t_R)
-   0.0214    0.4305 ^ _28587_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0192    0.4496 v _28588_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0190    0.4686 ^ _28589_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0369    0.5055 ^ _28611_/Y (AND5x1_ASAP7_75t_R)
-   0.0186    0.5241 v _28615_/Y (NOR2xp33_ASAP7_75t_R)
-   0.0178    0.5419 ^ _28616_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0157    0.5576 v _28617_/Y (NOR2xp33_ASAP7_75t_R)
-   0.0292    0.5868 ^ _28621_/Y (NOR5xp2_ASAP7_75t_R)
-   0.0267    0.6135 v _28622_/Y (NOR2xp33_ASAP7_75t_R)
-   0.0187    0.6322 ^ _28623_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0132    0.6454 v _28624_/Y (NAND2xp33_ASAP7_75t_R)
-   0.0130    0.6583 ^ _28631_/Y (NAND2xp5_ASAP7_75t_R)
-   0.0226    0.6809 ^ _28634_/Y (AND3x1_ASAP7_75t_R)
-   0.0167    0.6976 v _28635_/Y (NOR2xp33_ASAP7_75t_R)
-   0.0231    0.7207 ^ _28636_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0187    0.7394 v _28637_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0184    0.7577 ^ _28638_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0269    0.7847 v _28639_/Y (NAND3xp33_ASAP7_75t_R)
-   0.0344    0.8191 ^ _28640_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0280    0.8471 v _28641_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0338    0.8809 ^ _28642_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0282    0.9091 v _28643_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0331    0.9423 ^ _28644_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0282    0.9705 v _28645_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0331    1.0037 ^ _28646_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0282    1.0319 v _28647_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0331    1.0650 ^ _28648_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0331    1.0981 ^ _28649_/Y (MAJx2_ASAP7_75t_R)
-   0.0268    1.1249 ^ _28650_/Y (MAJx2_ASAP7_75t_R)
-   0.0216    1.1465 v _28651_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0331    1.1796 ^ _28652_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0282    1.2078 v _28653_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0408    1.2486 ^ _28654_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0374    1.2860 v _28655_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0438    1.3298 ^ _28656_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0352    1.3650 v _28657_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0180    1.3830 ^ _28658_/Y (INVx1_ASAP7_75t_R)
-   0.0298    1.4128 ^ _28659_/Y (MAJx2_ASAP7_75t_R)
-   0.0200    1.4328 v _38479_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0298    1.4626 ^ _38515_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0267    1.4893 v _38542_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0298    1.5192 ^ _38575_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0267    1.5459 v _38606_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0299    1.5757 ^ _38634_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0267    1.6025 v _38659_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0296    1.6320 ^ _38683_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0267    1.6587 v _38708_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0298    1.6886 ^ _38736_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0265    1.7151 v _38759_/Y (MAJIxp5_ASAP7_75t_R)
-   0.0278    1.7429 v _38773_/Y (OR2x2_ASAP7_75t_R)
-   0.0111    1.7540 ^ _38779_/Y (NAND3xp33_ASAP7_75t_R)
-   0.0000    1.7540 ^ _54073_/D (DFFHQNx1_ASAP7_75t_R)
-             1.7540   data arrival time
+   0.0000    0.0000 ^ _54082_/CLK (DFFHQNx1_ASAP7_75t_R)
+   0.0799    0.0799 ^ _54082_/QN (DFFHQNx1_ASAP7_75t_R)
+   0.0370    0.1168 ^ _28178_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0241    0.1410 ^ _28226_/Y (XNOR2xp5_ASAP7_75t_R)
+   0.0450    0.1860 v _28227_/Y (XNOR2x2_ASAP7_75t_R)
+   0.0287    0.2147 v _28917_/Y (XOR2x1_ASAP7_75t_R)
+   0.0314    0.2461 v _28918_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0302    0.2762 v _28940_/Y (XOR2x1_ASAP7_75t_R)
+   0.0253    0.3015 v _28941_/Y (XNOR2x1_ASAP7_75t_R)
+   0.0283    0.3298 v _28944_/Y (XNOR2xp5_ASAP7_75t_R)
+   0.0417    0.3715 ^ _28953_/Y (XOR2x2_ASAP7_75t_R)
+   0.0213    0.3928 ^ _28979_/Y (XOR2x1_ASAP7_75t_R)
+   0.0203    0.4132 ^ _28981_/Y (OR2x2_ASAP7_75t_R)
+   0.0090    0.4222 v _28992_/Y (NAND2xp33_ASAP7_75t_R)
+   0.0149    0.4371 ^ _28993_/Y (NAND2xp33_ASAP7_75t_R)
+   0.0155    0.4526 v _29015_/Y (NAND3xp33_ASAP7_75t_R)
+   0.0123    0.4649 ^ _29016_/Y (NAND2xp5_ASAP7_75t_R)
+   0.0242    0.4891 v _29017_/Y (NAND5xp2_ASAP7_75t_R)
+   0.0203    0.5094 ^ _29018_/Y (NAND2xp5_ASAP7_75t_R)
+   0.0176    0.5270 v _29019_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0224    0.5495 ^ _29020_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0187    0.5682 v _29021_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0224    0.5906 ^ _29022_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0187    0.6093 v _29023_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0224    0.6316 ^ _29024_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0154    0.6470 v _29025_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0241    0.6711 ^ _29027_/Y (NOR3xp33_ASAP7_75t_R)
+   0.0296    0.7007 ^ _29028_/Y (MAJx2_ASAP7_75t_R)
+   0.0149    0.7157 v _29029_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0224    0.7381 ^ _29030_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0163    0.7543 v _29031_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0332    0.7875 v _29042_/Y (OR4x1_ASAP7_75t_R)
+   0.0236    0.8112 v _29044_/Y (AND2x2_ASAP7_75t_R)
+   0.0262    0.8374 ^ _29045_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0282    0.8656 v _29046_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0337    0.8993 ^ _29047_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0277    0.9271 v _29048_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0324    0.9594 ^ _29049_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0277    0.9872 v _29050_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0324    1.0195 ^ _29051_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0277    1.0472 v _29052_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0332    1.0805 ^ _29053_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0283    1.1088 v _29054_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0336    1.1424 ^ _29055_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0283    1.1707 v _29056_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0343    1.2051 ^ _29057_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0286    1.2337 v _29058_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0408    1.2745 ^ _29059_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0374    1.3119 v _29060_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0440    1.3558 ^ _29061_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0374    1.3933 v _29062_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0403    1.4336 ^ _29063_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0297    1.4633 v _39197_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0307    1.4940 ^ _39231_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0268    1.5208 v _39258_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0298    1.5506 ^ _39289_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0268    1.5774 v _39319_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0299    1.6073 ^ _39346_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0268    1.6342 v _39371_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0296    1.6638 ^ _39392_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0268    1.6906 v _39416_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0299    1.7205 ^ _39442_/Y (MAJIxp5_ASAP7_75t_R)
+   0.0230    1.7435 ^ _39464_/Y (XNOR2xp5_ASAP7_75t_R)
+   0.0000    1.7435 ^ _54115_/D (DFFHQNx1_ASAP7_75t_R)
+             1.7435   data arrival time
 
    1.0000    1.0000   clock clk (rise edge)
    0.0000    1.0000   clock network delay (ideal)
   -0.0500    0.9500   clock uncertainty
    0.0000    0.9500   clock reconvergence pessimism
-             0.9500 ^ _54073_/CLK (DFFHQNx1_ASAP7_75t_R)
-  -0.0099    0.9401   library setup time
-             0.9401   data required time
+             0.9500 ^ _54115_/CLK (DFFHQNx1_ASAP7_75t_R)
+  -0.0104    0.9396   library setup time
+             0.9396   data required time
 -------------------------------------------------------------
-             0.9401   data required time
-            -1.7540   data arrival time
+             0.9396   data required time
+            -1.7435   data arrival time
 -------------------------------------------------------------
-            -0.8139   slack (VIOLATED)
+            -0.8039   slack (VIOLATED)
 
 
 
 ---------- hold (min) : critical path ----------
 Warning 503: atlas_sfu_asap7.tcl line 1, report_checks -group_count is deprecated. Use -group_path_count instead.
-Startpoint: _53191_ (rising edge-triggered flip-flop clocked by clk)
-Endpoint: _53189_ (rising edge-triggered flip-flop clocked by clk)
+Startpoint: _53987_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _53985_ (rising edge-triggered flip-flop clocked by clk)
 Path Group: clk
 Path Type: min
 
@@ -311,17 +308,17 @@ Path Type: min
 -------------------------------------------------------------
    0.0000    0.0000   clock clk (rise edge)
    0.0000    0.0000   clock network delay (ideal)
-   0.0000    0.0000 ^ _53191_/CLK (DFFHQNx1_ASAP7_75t_R)
-   0.0501    0.0501 ^ _53191_/QN (DFFHQNx1_ASAP7_75t_R)
-   0.0080    0.0581 v _47754_/Y (INVx1_ASAP7_75t_R)
-   0.0000    0.0581 v _53189_/D (DFFHQNx1_ASAP7_75t_R)
+   0.0000    0.0000 ^ _53987_/CLK (DFFHQNx1_ASAP7_75t_R)
+   0.0501    0.0501 ^ _53987_/QN (DFFHQNx1_ASAP7_75t_R)
+   0.0080    0.0581 v _48269_/Y (INVx1_ASAP7_75t_R)
+   0.0000    0.0581 v _53985_/D (DFFHQNx1_ASAP7_75t_R)
              0.0581   data arrival time
 
    0.0000    0.0000   clock clk (rise edge)
    0.0000    0.0000   clock network delay (ideal)
    0.0500    0.0500   clock uncertainty
    0.0000    0.0500   clock reconvergence pessimism
-             0.0500 ^ _53189_/CLK (DFFHQNx1_ASAP7_75t_R)
+             0.0500 ^ _53985_/CLK (DFFHQNx1_ASAP7_75t_R)
    0.0149    0.0649   library hold time
              0.0649   data required time
 -------------------------------------------------------------
@@ -331,8 +328,8 @@ Path Type: min
             -0.0068   slack (VIOLATED)
 
 
-Startpoint: _53192_ (rising edge-triggered flip-flop clocked by clk)
-Endpoint: _53190_ (rising edge-triggered flip-flop clocked by clk)
+Startpoint: _53988_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _53986_ (rising edge-triggered flip-flop clocked by clk)
 Path Group: clk
 Path Type: min
 
@@ -340,17 +337,17 @@ Path Type: min
 -------------------------------------------------------------
    0.0000    0.0000   clock clk (rise edge)
    0.0000    0.0000   clock network delay (ideal)
-   0.0000    0.0000 ^ _53192_/CLK (DFFHQNx1_ASAP7_75t_R)
-   0.0501    0.0501 ^ _53192_/QN (DFFHQNx1_ASAP7_75t_R)
-   0.0080    0.0581 v _47755_/Y (INVx1_ASAP7_75t_R)
-   0.0000    0.0581 v _53190_/D (DFFHQNx1_ASAP7_75t_R)
+   0.0000    0.0000 ^ _53988_/CLK (DFFHQNx1_ASAP7_75t_R)
+   0.0501    0.0501 ^ _53988_/QN (DFFHQNx1_ASAP7_75t_R)
+   0.0080    0.0581 v _48270_/Y (INVx1_ASAP7_75t_R)
+   0.0000    0.0581 v _53986_/D (DFFHQNx1_ASAP7_75t_R)
              0.0581   data arrival time
 
    0.0000    0.0000   clock clk (rise edge)
    0.0000    0.0000   clock network delay (ideal)
    0.0500    0.0500   clock uncertainty
    0.0000    0.0500   clock reconvergence pessimism
-             0.0500 ^ _53190_/CLK (DFFHQNx1_ASAP7_75t_R)
+             0.0500 ^ _53986_/CLK (DFFHQNx1_ASAP7_75t_R)
    0.0149    0.0649   library hold time
              0.0649   data required time
 -------------------------------------------------------------
@@ -360,8 +357,8 @@ Path Type: min
             -0.0068   slack (VIOLATED)
 
 
-Startpoint: _53193_ (rising edge-triggered flip-flop clocked by clk)
-Endpoint: _53191_ (rising edge-triggered flip-flop clocked by clk)
+Startpoint: _53989_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _53987_ (rising edge-triggered flip-flop clocked by clk)
 Path Group: clk
 Path Type: min
 
@@ -369,17 +366,17 @@ Path Type: min
 -------------------------------------------------------------
    0.0000    0.0000   clock clk (rise edge)
    0.0000    0.0000   clock network delay (ideal)
-   0.0000    0.0000 ^ _53193_/CLK (DFFHQNx1_ASAP7_75t_R)
-   0.0501    0.0501 ^ _53193_/QN (DFFHQNx1_ASAP7_75t_R)
-   0.0080    0.0581 v _47756_/Y (INVx1_ASAP7_75t_R)
-   0.0000    0.0581 v _53191_/D (DFFHQNx1_ASAP7_75t_R)
+   0.0000    0.0000 ^ _53989_/CLK (DFFHQNx1_ASAP7_75t_R)
+   0.0501    0.0501 ^ _53989_/QN (DFFHQNx1_ASAP7_75t_R)
+   0.0080    0.0581 v _48271_/Y (INVx1_ASAP7_75t_R)
+   0.0000    0.0581 v _53987_/D (DFFHQNx1_ASAP7_75t_R)
              0.0581   data arrival time
 
    0.0000    0.0000   clock clk (rise edge)
    0.0000    0.0000   clock network delay (ideal)
    0.0500    0.0500   clock uncertainty
    0.0000    0.0500   clock reconvergence pessimism
-             0.0500 ^ _53191_/CLK (DFFHQNx1_ASAP7_75t_R)
+             0.0500 ^ _53987_/CLK (DFFHQNx1_ASAP7_75t_R)
    0.0149    0.0649   library hold time
              0.0649   data required time
 -------------------------------------------------------------
@@ -391,10 +388,10 @@ Path Type: min
 
 
 ---------- slack summary ----------
-setup WNS : -0.8605 ns
+setup WNS : -0.8542 ns
 hold  WNS : -0.0068 ns
-tns max -140.96
-wns max -0.86
+tns max -131.59
+wns max -0.85
 
 ---------- design rule checks ----------
 
@@ -402,13 +399,13 @@ wns max -0.86
 Group                  Internal  Switching    Leakage      Total
                           Power      Power      Power      Power (Watts)
 ----------------------------------------------------------------
-Sequential           3.8218e-03 1.6343e-04 2.3252e-07 3.9855e-03   4.5%
-Combinational        3.6303e-02 4.8356e-02 1.0663e-06 8.4660e-02  95.5%
+Sequential           3.7032e-03 1.5711e-04 2.3218e-07 3.8605e-03   4.2%
+Combinational        3.7529e-02 4.9632e-02 1.1020e-06 8.7162e-02  95.8%
 Clock                0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00   0.0%
 Macro                0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00   0.0%
 Pad                  0.0000e+00 0.0000e+00 0.0000e+00 0.0000e+00   0.0%
 ----------------------------------------------------------------
-Total                4.0125e-02 4.8520e-02 1.2988e-06 8.8646e-02 100.0%
+Total                4.1232e-02 4.9789e-02 1.3342e-06 9.1022e-02 100.0%
                           45.3%      54.7%       0.0%
 
-RESULT: TIMING NOT MET (setup WNS -0.8605 ns)
+RESULT: TIMING NOT MET (setup WNS -0.8542 ns)

@@ -1,0 +1,76 @@
+
+45. Printing statistics.
+
+=== atlas_matrix_unit ===
+
+   Number of wires:             111419
+   Number of wire bits:         111419
+   Number of public wires:        8178
+   Number of public wire bits:    8178
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:             110349
+     AND2x2_ASAP7_75t_R           3397
+     AND2x4_ASAP7_75t_R              1
+     AND3x1_ASAP7_75t_R           1485
+     AND3x2_ASAP7_75t_R              3
+     AND4x1_ASAP7_75t_R            278
+     AND4x2_ASAP7_75t_R              1
+     AND5x1_ASAP7_75t_R             81
+     BUFx12f_ASAP7_75t_R             2
+     BUFx2_ASAP7_75t_R              90
+     BUFx3_ASAP7_75t_R              21
+     BUFx4_ASAP7_75t_R               1
+     BUFx4f_ASAP7_75t_R             10
+     BUFx5_ASAP7_75t_R               1
+     BUFx6f_ASAP7_75t_R              6
+     DFFASRHQNx1_ASAP7_75t_R        27
+     DFFHQNx1_ASAP7_75t_R        10222
+     HB1xp67_ASAP7_75t_R          3394
+     INVx1_ASAP7_75t_R            4811
+     INVx2_ASAP7_75t_R               2
+     INVx3_ASAP7_75t_R               1
+     INVx4_ASAP7_75t_R               2
+     INVx6_ASAP7_75t_R               2
+     INVxp33_ASAP7_75t_R          3446
+     INVxp67_ASAP7_75t_R           412
+     MAJIxp5_ASAP7_75t_R          5095
+     MAJx2_ASAP7_75t_R             803
+     NAND2x1_ASAP7_75t_R            11
+     NAND2x1p5_ASAP7_75t_R           6
+     NAND2x2_ASAP7_75t_R             2
+     NAND2xp33_ASAP7_75t_R       18380
+     NAND2xp5_ASAP7_75t_R          479
+     NAND3x1_ASAP7_75t_R            12
+     NAND3xp33_ASAP7_75t_R        5030
+     NAND4xp25_ASAP7_75t_R        1155
+     NAND4xp75_ASAP7_75t_R           1
+     NAND5xp2_ASAP7_75t_R          166
+     NOR2x1_ASAP7_75t_R            108
+     NOR2x1p5_ASAP7_75t_R           19
+     NOR2x2_ASAP7_75t_R              3
+     NOR2xp33_ASAP7_75t_R        24095
+     NOR2xp67_ASAP7_75t_R            7
+     NOR3x1_ASAP7_75t_R             10
+     NOR3x2_ASAP7_75t_R              2
+     NOR3xp33_ASAP7_75t_R         4003
+     NOR4xp25_ASAP7_75t_R         1157
+     NOR4xp75_ASAP7_75t_R            3
+     NOR5xp2_ASAP7_75t_R           233
+     OR2x2_ASAP7_75t_R            3168
+     OR2x4_ASAP7_75t_R               1
+     OR2x6_ASAP7_75t_R               2
+     OR3x1_ASAP7_75t_R            1236
+     OR3x2_ASAP7_75t_R               3
+     OR4x1_ASAP7_75t_R             433
+     OR5x1_ASAP7_75t_R              54
+     XNOR2x1_ASAP7_75t_R             5
+     XNOR2x2_ASAP7_75t_R            13
+     XNOR2xp5_ASAP7_75t_R        10990
+     XOR2x1_ASAP7_75t_R              2
+     XOR2x2_ASAP7_75t_R              6
+     XOR2xp5_ASAP7_75t_R          5960
+
+   Chip area for module '\atlas_matrix_unit': 10761.833340
+

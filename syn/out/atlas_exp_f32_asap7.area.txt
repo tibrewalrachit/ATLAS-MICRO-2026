@@ -1,54 +1,61 @@
 
-42. Printing statistics.
+43. Printing statistics.
 
 === atlas_exp_f32 ===
 
-   Number of wires:               6331
-   Number of wire bits:           6331
-   Number of public wires:         136
-   Number of public wire bits:     136
+   Number of wires:               6506
+   Number of wire bits:           6506
+   Number of public wires:         104
+   Number of public wire bits:     104
    Number of memories:               0
    Number of memory bits:            0
    Number of processes:              0
-   Number of cells:               6295
-     AND2x2_ASAP7_75t_R            135
-     AND3x1_ASAP7_75t_R             51
+   Number of cells:               6470
+     AND2x2_ASAP7_75t_R            155
+     AND3x1_ASAP7_75t_R             60
      AND4x1_ASAP7_75t_R              3
-     BUFx2_ASAP7_75t_R              27
-     BUFx3_ASAP7_75t_R              11
-     BUFx4f_ASAP7_75t_R              1
-     BUFx6f_ASAP7_75t_R              2
+     BUFx2_ASAP7_75t_R             108
+     BUFx3_ASAP7_75t_R              35
+     BUFx4f_ASAP7_75t_R              6
+     BUFx6f_ASAP7_75t_R             13
      DFFASRHQNx1_ASAP7_75t_R         3
      DFFHQNx1_ASAP7_75t_R          137
-     HB1xp67_ASAP7_75t_R           233
-     INVx1_ASAP7_75t_R              61
-     INVxp33_ASAP7_75t_R           274
-     INVxp67_ASAP7_75t_R            23
-     MAJIxp5_ASAP7_75t_R           475
-     MAJx2_ASAP7_75t_R             147
-     NAND2x1_ASAP7_75t_R             1
-     NAND2xp33_ASAP7_75t_R        1018
-     NAND2xp5_ASAP7_75t_R           59
-     NAND3xp33_ASAP7_75t_R         336
-     NAND4xp25_ASAP7_75t_R           9
-     NAND5xp2_ASAP7_75t_R            1
-     NOR2x1_ASAP7_75t_R              9
-     NOR2xp33_ASAP7_75t_R         1288
-     NOR2xp67_ASAP7_75t_R            1
-     NOR3x1_ASAP7_75t_R              1
-     NOR3xp33_ASAP7_75t_R          312
-     NOR4xp25_ASAP7_75t_R           22
-     NOR5xp2_ASAP7_75t_R             4
-     OR2x2_ASAP7_75t_R              85
-     OR3x1_ASAP7_75t_R              50
-     OR4x1_ASAP7_75t_R               7
+     HB1xp67_ASAP7_75t_R           122
+     INVx1_ASAP7_75t_R              69
+     INVx3_ASAP7_75t_R               1
+     INVxp33_ASAP7_75t_R           186
+     INVxp67_ASAP7_75t_R            18
+     MAJIxp5_ASAP7_75t_R           396
+     MAJx2_ASAP7_75t_R              88
+     NAND2x1_ASAP7_75t_R            26
+     NAND2x1p5_ASAP7_75t_R           7
+     NAND2xp33_ASAP7_75t_R         807
+     NAND2xp5_ASAP7_75t_R          275
+     NAND2xp67_ASAP7_75t_R           1
+     NAND3xp33_ASAP7_75t_R         177
+     NAND4xp25_ASAP7_75t_R           8
+     NAND5xp2_ASAP7_75t_R            4
+     NOR2x1_ASAP7_75t_R             98
+     NOR2x1p5_ASAP7_75t_R            5
+     NOR2x2_ASAP7_75t_R              1
+     NOR2xp33_ASAP7_75t_R         1677
+     NOR2xp67_ASAP7_75t_R           15
+     NOR3x1_ASAP7_75t_R             15
+     NOR3xp33_ASAP7_75t_R          328
+     NOR4xp25_ASAP7_75t_R           33
+     NOR4xp75_ASAP7_75t_R            1
+     NOR5xp2_ASAP7_75t_R            10
+     OR2x2_ASAP7_75t_R             179
+     OR3x1_ASAP7_75t_R              92
+     OR3x2_ASAP7_75t_R               1
+     OR4x1_ASAP7_75t_R               8
      OR5x1_ASAP7_75t_R               1
-     XNOR2x1_ASAP7_75t_R             4
-     XNOR2x2_ASAP7_75t_R            10
-     XNOR2xp5_ASAP7_75t_R          919
-     XOR2x1_ASAP7_75t_R              3
-     XOR2x2_ASAP7_75t_R              8
-     XOR2xp5_ASAP7_75t_R           564
+     XNOR2x1_ASAP7_75t_R            17
+     XNOR2x2_ASAP7_75t_R            34
+     XNOR2xp5_ASAP7_75t_R          769
+     XOR2x1_ASAP7_75t_R             19
+     XOR2x2_ASAP7_75t_R             27
+     XOR2xp5_ASAP7_75t_R           435
 
-   Chip area for module '\atlas_exp_f32': 558.880560
+   Chip area for module '\atlas_exp_f32': 562.773420
 

@@ -89,6 +89,11 @@ module atlas_hbdram_ctrl #(
   // same pair of ticks, and the core issues faster than the DRAM clock.
   logic [SEQ_W-1:0]   q_seq  [0:QDEPTH-1];
   logic [SEQ_W-1:0]   seq_ctr;
+  // Rebasing reference for the arbitration trees.  It only has to be no newer
+  // than every queued entry; the counter value from when the queue last
+  // emptied satisfies that, and the queue holds at most QDEPTH entries out of
+  // a 2^SEQ_W space, so the rebased keys never wrap.
+  logic [SEQ_W-1:0]   base_seq;
 
   localparam int unsigned SEQ_W = 16;
 
@@ -146,7 +151,9 @@ module atlas_hbdram_ctrl #(
   //=========================================================================
   logic              hit_found, any_found;
   logic [QPTR_W-1:0] hit_slot,  any_slot;
+  /* verilator lint_off UNUSEDSIGNAL */
   logic [SEQ_W-1:0]  hit_seq,   any_seq;
+  /* verilator lint_on UNUSEDSIGNAL */
 
   // A request may not overtake an older request to the *same address*.
   // Without this, FR-FCFS will happily promote a read that hits the open row
@@ -167,30 +174,38 @@ module atlas_hbdram_ctrl #(
     end
   end
 
-  integer qi;
+  // Selection uses tournament trees rather than a scan over the queue.  The
+  // scan form chained QDEPTH full sequence-number comparisons and was the
+  // worst path in the whole design by a wide margin.
+  //
+  // Sequence numbers are rebased against the oldest entry before comparison,
+  // so the tree's unsigned compare stays monotonic across a counter wrap.
+  logic [QDEPTH-1:0]       cand_any, cand_hit;
+  logic [QDEPTH*SEQ_W-1:0] rel_key;
+
+  logic [QDEPTH-1:0] q_vld_v;
+
+  integer ci;
   always_comb begin
-    hit_found = 1'b0; hit_slot = '0; hit_seq = '0;
-    any_found = 1'b0; any_slot = '0; any_seq = '0;
-    for (qi = 0; qi < QDEPTH; qi = qi + 1) begin
-      if (q_vld[qi] && !blocked[qi]) begin
-        // Oldest by arrival order; the subtraction is wrap-safe because the
-        // queue only ever holds QDEPTH entries out of a 2^SEQ_W space.
-        if (!any_found || ($signed(q_seq[qi] - any_seq) < 0)) begin
-          any_found = 1'b1;
-          any_slot  = QPTR_W'(qi);
-          any_seq   = q_seq[qi];
-        end
-        if (row_open && (q_row[qi] == open_row) &&
-            (q_we[qi] ? can_wr : can_rd)) begin
-          if (!hit_found || ($signed(q_seq[qi] - hit_seq) < 0)) begin
-            hit_found = 1'b1;
-            hit_slot  = QPTR_W'(qi);
-            hit_seq   = q_seq[qi];
-          end
-        end
-      end
+    for (ci = 0; ci < QDEPTH; ci = ci + 1) begin
+      q_vld_v[ci]  = q_vld[ci];
+      cand_any[ci] = q_vld[ci] & ~blocked[ci];
+      cand_hit[ci] = q_vld[ci] & ~blocked[ci] & row_open &&
+                     (q_row[ci] == open_row) &&
+                     (q_we[ci] ? can_wr : can_rd);
+      rel_key[ci*SEQ_W +: SEQ_W] = q_seq[ci] - base_seq;
     end
   end
+
+  atlas_arb_tree #(.N(QDEPTH), .KW(SEQ_W)) u_arb_any (
+    .valid(cand_any), .key(rel_key),
+    .out_valid(any_found), .out_idx(any_slot), .out_key(any_seq)
+  );
+
+  atlas_arb_tree #(.N(QDEPTH), .KW(SEQ_W)) u_arb_hit (
+    .valid(cand_hit), .key(rel_key),
+    .out_valid(hit_found), .out_idx(hit_slot), .out_key(hit_seq)
+  );
 
   // A miss must precharge before the wanted row can be activated.
   wire need_pre = any_found && row_open && (q_row[any_slot] != open_row);
@@ -237,7 +252,8 @@ module atlas_hbdram_ctrl #(
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) begin
       for (k = 0; k < QDEPTH; k = k + 1) q_vld[k] <= 1'b0;
-      seq_ctr <= '0;
+      seq_ctr  <= '0;
+      base_seq <= '0;
       row_open      <= 1'b0;
       open_row      <= '0;
       c_rcd <= '0; c_ras <= '0; c_rc  <= '0; c_rp  <= '0; c_rtp <= '0;
@@ -247,6 +263,10 @@ module atlas_hbdram_ctrl #(
       stat_row_miss <= 32'd0;
       stat_refresh  <= 32'd0;
     end else begin
+      // The queue being empty is the moment the rebasing reference can safely
+      // advance: nothing older than seq_ctr is outstanding.
+      if (q_vld_v == '0) base_seq <= seq_ctr;
+
       // ---- accept a new request ----
       if (req_valid && has_free) begin
         q_vld [free_slot] <= 1'b1;

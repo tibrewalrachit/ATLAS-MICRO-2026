@@ -1,0 +1,58 @@
+
+45. Printing statistics.
+
+=== atlas_vector_unit ===
+
+   Number of wires:              75322
+   Number of wire bits:          75322
+   Number of public wires:        2649
+   Number of public wire bits:    2649
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:              74769
+     AND2x2_ASAP7_75t_R           1625
+     AND3x1_ASAP7_75t_R            768
+     AND4x1_ASAP7_75t_R            173
+     AND5x1_ASAP7_75t_R             68
+     BUFx2_ASAP7_75t_R              44
+     BUFx3_ASAP7_75t_R              10
+     BUFx4f_ASAP7_75t_R              1
+     BUFx6f_ASAP7_75t_R              1
+     DFFASRHQNx1_ASAP7_75t_R        18
+     DFFHQNx1_ASAP7_75t_R         2863
+     HB1xp67_ASAP7_75t_R          3403
+     INVx1_ASAP7_75t_R             607
+     INVx2_ASAP7_75t_R              19
+     INVx3_ASAP7_75t_R               1
+     INVxp33_ASAP7_75t_R          3250
+     INVxp67_ASAP7_75t_R           101
+     MAJIxp5_ASAP7_75t_R          5600
+     MAJx2_ASAP7_75t_R             962
+     NAND2x1_ASAP7_75t_R            12
+     NAND2x1p5_ASAP7_75t_R           2
+     NAND2xp33_ASAP7_75t_R       15698
+     NAND2xp5_ASAP7_75t_R          676
+     NAND3x1_ASAP7_75t_R             1
+     NAND3xp33_ASAP7_75t_R        2693
+     NAND4xp25_ASAP7_75t_R         341
+     NAND5xp2_ASAP7_75t_R          139
+     NOR2x1_ASAP7_75t_R              5
+     NOR2xp33_ASAP7_75t_R        13532
+     NOR2xp67_ASAP7_75t_R            7
+     NOR3xp33_ASAP7_75t_R         2847
+     NOR4xp25_ASAP7_75t_R          394
+     NOR5xp2_ASAP7_75t_R           140
+     OR2x2_ASAP7_75t_R            1371
+     OR3x1_ASAP7_75t_R             847
+     OR4x1_ASAP7_75t_R             216
+     OR5x1_ASAP7_75t_R              23
+     XNOR2x1_ASAP7_75t_R            23
+     XNOR2x2_ASAP7_75t_R            15
+     XNOR2xp5_ASAP7_75t_R        10630
+     XOR2x1_ASAP7_75t_R              8
+     XOR2x2_ASAP7_75t_R              9
+     XOR2xp5_ASAP7_75t_R          5626
+
+   Chip area for module '\atlas_vector_unit': 6755.876280
+

@@ -1,5 +1,5 @@
 
-42. Printing statistics.
+43. Printing statistics.
 
 === atlas_rsqrt_f32 ===
 

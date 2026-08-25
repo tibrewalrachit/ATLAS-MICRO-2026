@@ -1,0 +1,45 @@
+
+43. Printing statistics.
+
+=== atlas_noc_router ===
+
+   Number of wires:              25605
+   Number of wire bits:          25605
+   Number of public wires:        1346
+   Number of public wire bits:    1346
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:              24929
+     AND2x2_ASAP7_75t_R            303
+     AND3x1_ASAP7_75t_R             27
+     AND4x1_ASAP7_75t_R            143
+     AND5x1_ASAP7_75t_R              2
+     BUFx2_ASAP7_75t_R               2
+     DFFASRHQNx1_ASAP7_75t_R        50
+     DFFHQNx1_ASAP7_75t_R         3300
+     HB1xp67_ASAP7_75t_R          1609
+     INVx1_ASAP7_75t_R             665
+     INVxp33_ASAP7_75t_R            45
+     INVxp67_ASAP7_75t_R            17
+     MAJIxp5_ASAP7_75t_R             7
+     MAJx2_ASAP7_75t_R               1
+     NAND2xp33_ASAP7_75t_R        5161
+     NAND2xp5_ASAP7_75t_R         3197
+     NAND3xp33_ASAP7_75t_R          84
+     NAND4xp25_ASAP7_75t_R         560
+     NAND5xp2_ASAP7_75t_R            9
+     NOR2xp33_ASAP7_75t_R         4913
+     NOR3xp33_ASAP7_75t_R          534
+     NOR4xp25_ASAP7_75t_R          314
+     NOR4xp75_ASAP7_75t_R            1
+     NOR5xp2_ASAP7_75t_R           145
+     OR2x2_ASAP7_75t_R            3359
+     OR3x1_ASAP7_75t_R              24
+     OR4x1_ASAP7_75t_R             403
+     OR5x1_ASAP7_75t_R               1
+     XNOR2xp5_ASAP7_75t_R           33
+     XOR2xp5_ASAP7_75t_R            20
+
+   Chip area for module '\atlas_noc_router': 2407.099680
+

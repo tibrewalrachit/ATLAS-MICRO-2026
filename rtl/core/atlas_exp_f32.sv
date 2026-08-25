@@ -80,10 +80,11 @@ module atlas_exp_f32 (
     end
   end
 
-  wire signed [31:0] x_fixed = s_x ? -$signed(mag_fixed) : $signed(mag_fixed);
-
-  logic               p1_valid, p1_nan, p1_inf, p1_zero, p1_sign, p1_sat;
-  logic signed [31:0] p1_fixed;
+  // The magnitude is carried through the multiply unsigned and the sign
+  // applied afterwards.  Negating before a wide multiply would put a
+  // full-width carry chain in front of it for nothing.
+  logic        p1_valid, p1_nan, p1_inf, p1_zero, p1_sign, p1_sat;
+  logic [31:0] p1_mag;
 
   always_ff @(posedge clk or negedge rst_n) begin
     if (!rst_n) p1_valid <= 1'b0;
@@ -91,7 +92,7 @@ module atlas_exp_f32 (
   end
 
   always_ff @(posedge clk) begin
-    p1_fixed <= x_fixed;
+    p1_mag   <= mag_fixed;
     p1_nan   <= is_nan;
     p1_inf   <= is_inf;
     p1_zero  <= is_zero;
@@ -104,10 +105,34 @@ module atlas_exp_f32 (
   //-------------------------------------------------------------------------
   // Q11.20 * Q2.30 -> Q13.50; keep Q13.20.  The discarded low bits sit far
   // below the table's resolution.
+  //
+  // Structural, not `*`: yosys expands a multiply into a ripple-carry array,
+  // and this one measured 105 majority gates deep -- the critical path of this
+  // block and, through the SFU, of everything that contains it.  log2(e) is a
+  // constant with 16 set bits, so half the partial-product rows fold away
+  // before the carry-save tree ever sees them.
   /* verilator lint_off UNUSEDSIGNAL */
-  wire signed [62:0] t_full = p1_fixed * $signed({1'b0, LOG2E_Q30});
+  wire [63:0] t_full;
   /* verilator lint_on UNUSEDSIGNAL */
-  wire signed [32:0] t_q20  = t_full[62:30];
+
+  atlas_mul_csa #(.W(32)) u_scale (
+    .a(p1_mag), .b({1'b0, LOG2E_Q30}), .p(t_full)
+  );
+
+  // |x| is clamped below 1024, so the product cannot reach bit 63.
+  wire [32:0] t_mag = t_full[62:30];
+
+  // Apply the sign.  Two's complement negation gives floor semantics for the
+  // integer part, which is what the exponent split below needs.
+  /* verilator lint_off UNUSEDSIGNAL */
+  wire t_cout;
+  /* verilator lint_on UNUSEDSIGNAL */
+  wire signed [32:0] t_q20;
+
+  atlas_cpa #(.W(33)) u_sign (
+    .a(p1_sign ? ~t_mag : t_mag), .b(33'd0), .cin(p1_sign),
+    .sum(t_q20), .cout(t_cout)
+  );
 
   /* verilator lint_off UNUSEDSIGNAL */
   wire signed [12:0] t_int  = t_q20[32:20];

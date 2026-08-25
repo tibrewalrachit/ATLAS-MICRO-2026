@@ -1,60 +1,56 @@
 
-42. Printing statistics.
+43. Printing statistics.
 
 === atlas_moe_router ===
 
-   Number of wires:              24092
-   Number of wire bits:          24092
-   Number of public wires:         555
-   Number of public wire bits:     555
+   Number of wires:              24168
+   Number of wire bits:          24168
+   Number of public wires:         554
+   Number of public wire bits:     554
    Number of memories:               0
    Number of memory bits:            0
    Number of processes:              0
-   Number of cells:              24056
-     AND2x2_ASAP7_75t_R            414
-     AND3x1_ASAP7_75t_R            166
-     AND4x1_ASAP7_75t_R             39
-     AND5x1_ASAP7_75t_R              4
-     BUFx16f_ASAP7_75t_R             1
-     BUFx2_ASAP7_75t_R              17
-     BUFx3_ASAP7_75t_R               5
-     BUFx4f_ASAP7_75t_R              1
-     BUFx6f_ASAP7_75t_R              5
-     BUFx8_ASAP7_75t_R              12
+   Number of cells:              24132
+     AND2x2_ASAP7_75t_R            594
+     AND3x1_ASAP7_75t_R            184
+     AND4x1_ASAP7_75t_R             38
+     AND5x1_ASAP7_75t_R              5
+     BUFx2_ASAP7_75t_R               7
+     BUFx3_ASAP7_75t_R               1
      DFFASRHQNx1_ASAP7_75t_R       630
      DFFHQNx1_ASAP7_75t_R         1129
-     HB1xp67_ASAP7_75t_R          1832
-     HB4xp67_ASAP7_75t_R             4
+     HB1xp67_ASAP7_75t_R          1687
      INVx1_ASAP7_75t_R             392
-     INVxp33_ASAP7_75t_R           646
-     INVxp67_ASAP7_75t_R            28
-     MAJIxp5_ASAP7_75t_R          1240
-     MAJx2_ASAP7_75t_R             249
-     MAJx3_ASAP7_75t_R              19
-     NAND2xp33_ASAP7_75t_R        3465
-     NAND2xp5_ASAP7_75t_R          767
-     NAND3xp33_ASAP7_75t_R        1480
-     NAND4xp25_ASAP7_75t_R          75
-     NAND5xp2_ASAP7_75t_R           54
-     NOR2x1_ASAP7_75t_R              6
-     NOR2x1p5_ASAP7_75t_R            1
-     NOR2xp33_ASAP7_75t_R         4624
-     NOR2xp67_ASAP7_75t_R            5
-     NOR3x1_ASAP7_75t_R              1
-     NOR3xp33_ASAP7_75t_R          718
-     NOR4xp25_ASAP7_75t_R          306
-     NOR5xp2_ASAP7_75t_R            62
-     OR2x2_ASAP7_75t_R            1902
-     OR2x4_ASAP7_75t_R               4
-     OR3x1_ASAP7_75t_R             152
-     OR4x1_ASAP7_75t_R              54
-     OR5x1_ASAP7_75t_R              34
-     XNOR2x1_ASAP7_75t_R            11
-     XNOR2x2_ASAP7_75t_R           112
-     XNOR2xp5_ASAP7_75t_R         2153
-     XOR2x1_ASAP7_75t_R              3
-     XOR2x2_ASAP7_75t_R             37
-     XOR2xp5_ASAP7_75t_R          1197
+     INVx2_ASAP7_75t_R               4
+     INVxp33_ASAP7_75t_R           715
+     INVxp67_ASAP7_75t_R            30
+     MAJIxp5_ASAP7_75t_R          1142
+     MAJx2_ASAP7_75t_R             232
+     MAJx3_ASAP7_75t_R              14
+     NAND2x1_ASAP7_75t_R             1
+     NAND2xp33_ASAP7_75t_R        4077
+     NAND2xp5_ASAP7_75t_R          798
+     NAND3x2_ASAP7_75t_R             1
+     NAND3xp33_ASAP7_75t_R        1498
+     NAND4xp25_ASAP7_75t_R          79
+     NAND5xp2_ASAP7_75t_R           55
+     NOR2x1_ASAP7_75t_R              3
+     NOR2xp33_ASAP7_75t_R         4368
+     NOR2xp67_ASAP7_75t_R            3
+     NOR3xp33_ASAP7_75t_R          748
+     NOR4xp25_ASAP7_75t_R          307
+     NOR5xp2_ASAP7_75t_R            59
+     OR2x2_ASAP7_75t_R            1703
+     OR2x4_ASAP7_75t_R               5
+     OR3x1_ASAP7_75t_R             294
+     OR4x1_ASAP7_75t_R              55
+     OR5x1_ASAP7_75t_R              35
+     XNOR2x1_ASAP7_75t_R             9
+     XNOR2x2_ASAP7_75t_R            14
+     XNOR2xp5_ASAP7_75t_R         2176
+     XOR2x1_ASAP7_75t_R              2
+     XOR2x2_ASAP7_75t_R              6
+     XOR2xp5_ASAP7_75t_R          1032
 
-   Chip area for module '\atlas_moe_router': 2322.725220
+   Chip area for module '\atlas_moe_router': 2298.697380
 

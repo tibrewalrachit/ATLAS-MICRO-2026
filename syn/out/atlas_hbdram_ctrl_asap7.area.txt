@@ -1,0 +1,56 @@
+
+43. Printing statistics.
+
+=== atlas_hbdram_ctrl ===
+
+   Number of wires:             121755
+   Number of wire bits:         121755
+   Number of public wires:        4259
+   Number of public wire bits:    4259
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:             118649
+     AND2x2_ASAP7_75t_R          16082
+     AND3x1_ASAP7_75t_R            200
+     AND4x1_ASAP7_75t_R            108
+     AND5x1_ASAP7_75t_R             23
+     BUFx2_ASAP7_75t_R              77
+     BUFx3_ASAP7_75t_R               5
+     BUFx6f_ASAP7_75t_R              2
+     DFFASRHQNx1_ASAP7_75t_R       284
+     DFFHQNx1_ASAP7_75t_R        17128
+     HB1xp67_ASAP7_75t_R          8658
+     INVx1_ASAP7_75t_R             266
+     INVx2_ASAP7_75t_R               3
+     INVx4_ASAP7_75t_R               1
+     INVxp33_ASAP7_75t_R           411
+     INVxp67_ASAP7_75t_R           167
+     MAJIxp5_ASAP7_75t_R          2568
+     MAJx2_ASAP7_75t_R              91
+     NAND2x1_ASAP7_75t_R             4
+     NAND2x1p5_ASAP7_75t_R           1
+     NAND2xp33_ASAP7_75t_R        5287
+     NAND2xp5_ASAP7_75t_R         1369
+     NAND3x1_ASAP7_75t_R             3
+     NAND3xp33_ASAP7_75t_R        1860
+     NAND4xp25_ASAP7_75t_R         231
+     NAND4xp75_ASAP7_75t_R           1
+     NAND5xp2_ASAP7_75t_R          420
+     NOR2x1_ASAP7_75t_R             12
+     NOR2xp33_ASAP7_75t_R        52821
+     NOR3x1_ASAP7_75t_R              5
+     NOR3xp33_ASAP7_75t_R          882
+     NOR4xp25_ASAP7_75t_R         2389
+     NOR5xp2_ASAP7_75t_R          1515
+     OR2x2_ASAP7_75t_R            1485
+     OR3x1_ASAP7_75t_R             117
+     OR3x2_ASAP7_75t_R               1
+     OR4x1_ASAP7_75t_R            1157
+     OR5x1_ASAP7_75t_R              17
+     XNOR2x2_ASAP7_75t_R             1
+     XNOR2xp5_ASAP7_75t_R         1651
+     XOR2xp5_ASAP7_75t_R          1346
+
+   Chip area for module '\atlas_hbdram_ctrl': 12114.740700
+
