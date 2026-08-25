@@ -1,0 +1,56 @@
+
+17. Printing statistics.
+
+=== atlas_dot_unit ===
+
+   Number of wires:              24675
+   Number of wire bits:          24675
+   Number of public wires:        2096
+   Number of public wire bits:    2096
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:              24140
+     AND2x2_ASAP7_75t_R            509
+     AND2x4_ASAP7_75t_R              1
+     AND3x1_ASAP7_75t_R            419
+     AND4x1_ASAP7_75t_R             89
+     AND5x1_ASAP7_75t_R             40
+     BUFx12f_ASAP7_75t_R             1
+     BUFx2_ASAP7_75t_R               9
+     BUFx3_ASAP7_75t_R               1
+     DFFASRHQNx1_ASAP7_75t_R         6
+     DFFHQNx1_ASAP7_75t_R         1930
+     HB1xp67_ASAP7_75t_R           642
+     INVx1_ASAP7_75t_R            1010
+     INVxp33_ASAP7_75t_R           814
+     INVxp67_ASAP7_75t_R            49
+     MAJIxp5_ASAP7_75t_R          1264
+     MAJx2_ASAP7_75t_R             194
+     NAND2x1_ASAP7_75t_R             2
+     NAND2x1p5_ASAP7_75t_R           2
+     NAND2xp33_ASAP7_75t_R        3891
+     NAND2xp5_ASAP7_75t_R          107
+     NAND3x1_ASAP7_75t_R             2
+     NAND3xp33_ASAP7_75t_R        1162
+     NAND4xp25_ASAP7_75t_R         311
+     NAND4xp75_ASAP7_75t_R           1
+     NAND5xp2_ASAP7_75t_R           77
+     NOR2x1_ASAP7_75t_R              8
+     NOR2xp33_ASAP7_75t_R         4624
+     NOR2xp67_ASAP7_75t_R            3
+     NOR3x1_ASAP7_75t_R              3
+     NOR3x2_ASAP7_75t_R              4
+     NOR3xp33_ASAP7_75t_R         1497
+     NOR4xp25_ASAP7_75t_R          152
+     NOR5xp2_ASAP7_75t_R            47
+     OR2x2_ASAP7_75t_R             612
+     OR3x1_ASAP7_75t_R             365
+     OR3x2_ASAP7_75t_R               1
+     OR4x1_ASAP7_75t_R             103
+     OR5x1_ASAP7_75t_R              27
+     XNOR2xp5_ASAP7_75t_R         2610
+     XOR2xp5_ASAP7_75t_R          1551
+
+   Chip area for module '\atlas_dot_unit': 2333.587320
+

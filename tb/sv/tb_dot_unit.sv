@@ -15,7 +15,7 @@ module tb_dot_unit;
 
   localparam int unsigned N       = 32;
   localparam int unsigned MAXV    = 8192;
-  localparam int unsigned LATENCY = 4;
+  localparam int unsigned LATENCY = 6;
 
   logic clk = 1'b0, rst_n = 1'b0;
   always #0.5 clk = ~clk;

@@ -1,11 +1,16 @@
 //===========================================================================
 // atlas_norm_round_f32 -- normalise a fixed-point accumulator to IEEE binary32
 //
-// Takes a two's-complement integer `sum` whose true value is
+// Takes a sign bit and an unsigned magnitude whose true value is
 //
-//     sum * 2^exp_off
+//     (-1)^sgn * mag * 2^exp_off
 //
 // and produces the correctly rounded binary32 encoding, round-to-nearest-even.
+//
+// The caller supplies the magnitude already formed.  Taking a signed value and
+// negating it here would put a full-width carry chain in front of the
+// leading-one detector, and that chain measured as the critical path of the
+// whole dot-product engine.
 // Overflow saturates to Inf and underflow flushes to a signed zero, which is
 // the behaviour an inference datapath wants (no subnormal FP32 output path is
 // built, since a denormal result here is already far below FP4/FP8 resolution).
@@ -18,7 +23,8 @@ module atlas_norm_round_f32 #(
   parameter int unsigned SUM_W = ATLAS_SUM_W,   // width of `sum`, signed
   parameter int unsigned EXP_W = 12             // width of `exp_off`, signed
 ) (
-  input  logic [SUM_W-1:0] sum,
+  input  logic             sgn,
+  input  logic [SUM_W-1:0] mag,
   input  logic [EXP_W-1:0] exp_off,
   input  logic             nan_in,
   output logic [31:0]      f32
@@ -26,29 +32,21 @@ module atlas_norm_round_f32 #(
 
   localparam int unsigned MSB_W = $clog2(SUM_W);
 
-  logic             sgn;
-  logic [SUM_W-1:0] mag;
   logic [MSB_W:0]   msb;      // index of the leading one
   logic             is_zero;
 
-  // Magnitude.  |sum| always fits in SUM_W bits: the tree grows by exactly
-  // LOG2N bits over an ALIGN_W+1-bit signed input, so -2^(SUM_W-1) is never
-  // reachable and the negation cannot overflow.
-  assign sgn = sum[SUM_W-1];
-  assign mag = sgn ? (~sum + 1'b1) : sum;
+  // Leading-one position from a balanced tree.  A linear priority scan over
+  // SUM_W bits would be the longest path in the block by a wide margin.
+  logic [MSB_W-1:0] msb_i;
+  logic             nonzero;
 
-  // Leading-one position.  Written as a descending priority scan; synthesis
-  // maps this to a standard priority encoder.
-  integer k;
+  atlas_msb_idx #(.W(SUM_W), .IW(MSB_W)) u_msb (
+    .din(mag), .idx(msb_i), .nonzero(nonzero)
+  );
+
   always_comb begin
-    msb     = '0;
-    is_zero = 1'b1;
-    for (k = 0; k < SUM_W; k = k + 1) begin
-      if (mag[k]) begin
-        msb     = k[MSB_W:0];
-        is_zero = 1'b0;
-      end
-    end
+    msb     = {1'b0, msb_i};
+    is_zero = ~nonzero;
   end
 
   // Left-align so the leading one sits at bit SUM_W-1, then the top 24 bits
