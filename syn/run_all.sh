@@ -39,6 +39,10 @@ BLOCKS=(
   "atlas_noc_router:"
   "atlas_matrix_unit:ROWS=2 COLS=2"
   "atlas_vector_unit:VEC_N=8 SFU_RATIO=8"
+  "atlas_kda:D=8"
+  # An MXFP4-only engine sizes its guard window to the format rather than to
+  # the widest one it might see.  See docs/rtl/README.md.
+  "atlas_dot_unit:GUARD_W=4"
 )
 
 {
@@ -54,6 +58,8 @@ BLOCKS=(
 for entry in "${BLOCKS[@]}"; do
   name="${entry%%:*}"
   params="${entry#*:}"
+  label="$name"
+  [[ -n "$params" ]] && label="$name"
 
   if ! "$ROOT/syn/run_synth.sh" "$name" "$PERIOD_PS" "$TECH" "$params" > /dev/null 2>&1; then
     printf "%-22s %8s %12s %10s %10s %12s %s\n" "$name" "SYNTH-FAIL" "-" "-" "-" "-" "$params" >> "$OUT"

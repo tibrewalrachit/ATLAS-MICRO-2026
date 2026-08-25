@@ -131,10 +131,26 @@ Both were checked against the *same* reference model, which computes at the
 wide setting. So the narrow build is verified against the full-precision
 answer rather than against itself: 4000 MXFP4 blocks, bit-exact.
 
+**A narrow build is exact only for the pair it was sized for.** The requirement
+is the sum of the two operand formats' spreads, and the datapath supports mixed
+precision, so this is a live hazard rather than a theoretical one:
+
+| | E2M1 | E4M3 | E5M2 |
+|---|---:|---:|---:|
+| **E2M1** | 4 | 16 | 31 |
+| **E4M3** | 16 | 28 | 43 |
+| **E5M2** | 31 | 43 | 58 |
+
+A `GUARD_W=4` engine handed an FP4×FP8 pair drops low-order products and
+returns a plausible, wrong answer. Feeding the mixed-format suite to a narrow
+build produces 1149 mismatches out of 4000 — so `atlas_dot_unit` carries a
+simulation check that fires on the first block whose format pair exceeds its
+window, rather than leaving this to be discovered numerically.
+
 The practical design point for Qwen3-235B is a mixed array — expert weights
-are the overwhelming majority of the MACs and run at MXFP4, so they belong on
-narrow engines, with wide FP8-capable engines kept for the layers that need
-the range.
+are the overwhelming majority of the MACs and run MXFP4 against MXFP4, so they
+belong on narrow engines, with wide FP8-capable engines kept for the layers
+that need the range.
 
 ### 2.4 Accuracy of the transcendentals
 
@@ -351,28 +367,39 @@ Results, at a 1 ns target on ASAP7:
 
 | block | cells | area (µm²) | setup slack (ns) | hold slack (ns) | power (mW) |
 |---|---:|---:|---:|---:|---:|
-| `atlas_dot_unit` | 24570 | 2349.712800 | -0.2658 | -0.0068 | 1.5189e-02 |
-| `atlas_fp32_add` | 1692 | 143.817120 | -0.3544 | -0.0030 | 7.3728e-04 |
-| `atlas_fp32_mul` | 3477 | 343.038240 | -0.1817 | -0.0030 | 5.2562e-03 |
-| `atlas_exp_f32` | 6470 | 562.773420 | -0.3890 | -0.0068 | 5.4044e-02 |
-| `atlas_recip_f32` | 3390 | 281.641860 | -0.3255 | -0.0030 | 2.4196e-03 |
+| `atlas_dot_unit` | 24543 | 2350.266840 | -0.2649 | -0.0068 | 1.5509e-02 |
+| `atlas_fp32_add` | 1756 | 148.336920 | -0.2863 | -0.0030 | 7.7518e-04 |
+| `atlas_fp32_mul` | 3490 | 344.481660 | -0.1933 | -0.0030 | 5.2425e-03 |
+| `atlas_exp_f32` | 6379 | 552.815280 | -0.4234 | -0.0068 | 4.7350e-02 |
+| `atlas_recip_f32` | 3407 | 281.102400 | -0.3558 | -0.0030 | 2.3618e-03 |
 | `atlas_rsqrt_f32` | 4638 | 361.044540 | -0.3171 | -0.0030 | 2.0359e-03 |
-| `atlas_silu_f32` | 15029 | 1353.723840 | -0.4518 | -0.0068 | 5.9005e-02 |
-| `atlas_vec_lane` | 5883 | 548.572500 | -0.2700 | -0.0068 | 6.0515e-03 |
-| `atlas_sfu` | 25809 | 2250.423000 | -0.3073 | -0.0068 | 1.0214e-01 |
-| `atlas_pe` | 27449 | 2595.823200 | -0.3962 | -0.0068 | 1.4917e-02 |
-| `atlas_rmsnorm` | 20015 | 1852.680600 | -0.3078 | -0.0068 | 2.9770e-02 |
-| `atlas_moe_router` | 24928 | 2364.292800 | -0.3455 | -0.0068 | 2.8129e-03 |
-| `atlas_hbdram_ctrl` | 118563 | 12111.955920 | -1.4557 | 0.0020 | 7.2952e-02 |
-| `atlas_dma` | 9725 | 948.866400 | 0.3012 | 0.0178 | 3.5547e-03 |
-| `atlas_noc_router` | 25119 | 2418.136740 | -0.0571 | 0.0103 | 2.2755e-02 |
-| `atlas_matrix_unit` (ROWS=2 COLS=2) | 110268 | 10755.184860 | -0.5133 | -0.0077 | 6.2239e-02 |
-| `atlas_vector_unit` (VEC_N=8 SFU_RATIO=8) | 73178 | 6591.501360 | -0.4266 | -0.0068 | 1.4207e-01 |
+| `atlas_silu_f32` | 14990 | 1360.620180 | -0.3625 | -0.0068 | 7.3025e-02 |
+| `atlas_vec_lane` | 5876 | 549.491040 | -0.3168 | -0.0068 | 6.0291e-03 |
+| `atlas_sfu` | 25923 | 2256.298740 | -0.3586 | -0.0068 | 1.0145e-01 |
+| `atlas_pe` | 26948 | 2579.129100 | -0.4054 | -0.0068 | 1.4239e-02 |
+| `atlas_rmsnorm` | 20009 | 1852.476480 | -0.3319 | -0.0068 | 3.1038e-02 |
+| `atlas_moe_router` | 24885 | 2360.006280 | -0.3450 | -0.0068 | 2.0513e-03 |
+| `atlas_hbdram_ctrl` | 118891 | 12132.061740 | -1.3621 | 0.0025 | 7.2172e-02 |
+| `atlas_dma` | 9746 | 949.099680 | 0.2924 | 0.0178 | 3.4003e-03 |
+| `atlas_noc_router` | 25389 | 2436.872040 | -0.0760 | 0.0103 | 2.2751e-02 |
+| `atlas_matrix_unit` — ROWS=2 COLS=2 | 110363 | 10766.790540 | -0.4670 | -0.0077 | 6.1507e-02 |
+| `atlas_vector_unit` — VEC_N=8 SFU_RATIO=8 | 72708 | 6564.936600 | -0.4251 | -0.0068 | 1.4344e-01 |
+| `atlas_kda` — D=8 | 147822 | 13188.484800 | -0.3346 | -0.0030 | 2.7480e-01 |
+| `atlas_dot_unit` — GUARD_W=4 | 18110 | 1787.099760 | 0.0329 | -0.0068 | 8.4571e-03 |
 
-`atlas_dma` meets timing; `atlas_noc_router` is 57 ps short; most of the rest
-sit between −0.2 and −0.5 ns, i.e. roughly 700–800 MHz. The HBDRAM controller
-is the outlier at −1.46 ns, and its area is dominated by 16 × 1024-bit
-write-data registers that belong in a macro rather than in flip-flops.
+`atlas_dma` meets timing and so does the MXFP4-sized dot engine;
+`atlas_noc_router` is 76 ps short; most of the rest sit between −0.2 and
+−0.5 ns. Two outliers are worth naming rather than burying:
+
+* **`atlas_hbdram_ctrl`** is large and slow because 16 × 1024-bit write-data
+  registers dominate it. Those belong in a macro, not in flip-flops.
+* **`atlas_kda` at d = 8 is 13188 µm²**, which extrapolates to roughly
+  0.2 mm² of logic at d = 128 *before* the 64 KB state, and that state has to
+  be a macro. The cost is the binary32 arithmetic: this engine keeps full
+  precision so the recurrence can be checked exactly against the reference,
+  and a production KDA engine would not — the K3 design it is drawn from uses
+  INT4 throughout. Reading it as the cost of KDA rather than the cost of
+  binary32 would be the wrong conclusion.
 
 Regenerate with `syn/run_all.sh`; the table above is a copy of
 `sta/out/summary_asap7.txt`.
@@ -395,6 +422,18 @@ This matters for reading the numbers, so it is stated plainly:
   survive only when they are separated by a register boundary; this is why the
   fixes that worked were architectural (splitting a reduction across a
   pipeline stage) rather than local.
+* **Single-point slack numbers carry real noise.** Adding a module that is
+  never instantiated moved the dot engine's reported slack by 0.16 ns — 11% of
+  the period — with the cell count essentially unchanged. ABC's mapping is not
+  stable under irrelevant perturbations of its input, so differences smaller
+  than about 0.2 ns in the table below should not be read as meaningful. The
+  guard-window comparison in §2.3 is quoted as the best of several synthesis
+  targets for exactly this reason, and its 0.64 ns gap is far outside that
+  band.
+* **These are post-synthesis, not post-route.** The Kimi K3 write-up quotes
+  post-route frequencies; nothing here has been placed or routed, so the two
+  are not comparable in either direction — wire load is missing, and so is
+  the gate sizing and useful skew that a P&R tool would apply.
 
 ### The dot engine, step by step
 

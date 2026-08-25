@@ -20,6 +20,18 @@
 //     is 2^-22 of the largest product, against inputs whose own resolution is
 //     2^-4.
 //
+// GUARD_W is a design point, not a constant.  What it has to be is a property
+// of the *formats being multiplied*: the exactness requirement is the sum of
+// the two operand formats' exponent spreads.
+//
+//     E2M1 spread  2      E4M3 spread 14      E5M2 spread 29
+//
+// So E2M1 x E2M1 needs 4 and E4M3 x E4M3 needs 28.  Building for MXFP4 alone
+// lets GUARD_W drop from 20 to 4, which takes 24% out of the engine and is
+// what lets it close 1 GHz -- but such a build is then restricted to FP4 x FP4
+// and will quietly truncate a mixed pair.  The check at the bottom of this
+// module catches that in simulation.
+//
 // ---------------------------------------------------------------------------
 // Pipeline (6 stages, one MX block per cycle)
 // ---------------------------------------------------------------------------
@@ -368,5 +380,38 @@ module atlas_dot_unit #(
   always_ff @(posedge clk) begin
     out_f32 <= s5_f32;
   end
+
+
+  //-------------------------------------------------------------------------
+  // Format/guard-window check (simulation only).
+  //
+  // A narrowed build is exact only for the format pair it was sized for.
+  // Feeding it a wider pair loses low-order products silently -- the result
+  // stays plausible, just wrong -- so it is worth failing loudly instead.
+  //-------------------------------------------------------------------------
+`ifndef SYNTHESIS
+  function automatic int fmt_spread(input logic [1:0] f);
+    case (f)
+      ATLAS_FMT_E2M1: fmt_spread = 2;
+      ATLAS_FMT_E4M3: fmt_spread = 14;
+      ATLAS_FMT_E5M2: fmt_spread = 29;
+      default:        fmt_spread = 0;    // BF16 never reaches this array
+    endcase
+  endfunction
+
+  logic warned;
+  initial warned = 1'b0;
+
+  always_ff @(posedge clk) begin
+    if (in_valid && !warned) begin
+      if (int'(GUARD_W) < (fmt_spread(fmt_a) + fmt_spread(fmt_b))) begin
+        $display("%0t WARNING atlas_dot_unit: GUARD_W=%0d is too narrow for this format pair (needs %0d).",
+                 $time, GUARD_W, fmt_spread(fmt_a) + fmt_spread(fmt_b));
+        $display("         Products below the window are dropped; the result will be inexact.");
+        warned <= 1'b1;
+      end
+    end
+  end
+`endif
 
 endmodule
