@@ -1,0 +1,284 @@
+//===========================================================================
+// atlas_recip_lut -- GENERATED FILE, do not edit
+//
+// Regenerate with:  python3 tb/golden/gen_recip_lut.py rtl/gen/atlas_recip_lut.sv
+//
+// Piecewise-linear table for 1/m, m in [1,2):
+//
+//     1/m  ~  (base - ((delta * frac) >> 16)) * 2^-24
+//
+// The subtraction is deliberate: 1/m decreases across each segment, so delta
+// is stored as a magnitude and the interpolation walks downwards.
+//
+// 256 segments; the generator reports the worst-case relative error.
+//===========================================================================
+
+module atlas_recip_lut (
+  input  logic [7:0]  idx,
+  output logic [23:0]  base,
+  output logic [15:0]  delta
+);
+
+  always_comb begin
+    case (idx)
+      8'd0   : begin base = 24'd16777184 ; delta = 16'd65281  ; end
+      8'd1   : begin base = 24'd16711903 ; delta = 16'd64775  ; end
+      8'd2   : begin base = 24'd16647129 ; delta = 16'd64275  ; end
+      8'd3   : begin base = 24'd16582854 ; delta = 16'd63780  ; end
+      8'd4   : begin base = 24'd16519074 ; delta = 16'd63292  ; end
+      8'd5   : begin base = 24'd16455783 ; delta = 16'd62808  ; end
+      8'd6   : begin base = 24'd16392975 ; delta = 16'd62331  ; end
+      8'd7   : begin base = 24'd16330645 ; delta = 16'd61859  ; end
+      8'd8   : begin base = 24'd16268786 ; delta = 16'd61392  ; end
+      8'd9   : begin base = 24'd16207395 ; delta = 16'd60930  ; end
+      8'd10  : begin base = 24'd16146465 ; delta = 16'd60474  ; end
+      8'd11  : begin base = 24'd16085992 ; delta = 16'd60022  ; end
+      8'd12  : begin base = 24'd16025969 ; delta = 16'd59576  ; end
+      8'd13  : begin base = 24'd15966394 ; delta = 16'd59135  ; end
+      8'd14  : begin base = 24'd15907259 ; delta = 16'd58698  ; end
+      8'd15  : begin base = 24'd15848561 ; delta = 16'd58267  ; end
+      8'd16  : begin base = 24'd15790294 ; delta = 16'd57840  ; end
+      8'd17  : begin base = 24'd15732455 ; delta = 16'd57418  ; end
+      8'd18  : begin base = 24'd15675037 ; delta = 16'd57000  ; end
+      8'd19  : begin base = 24'd15618037 ; delta = 16'd56587  ; end
+      8'd20  : begin base = 24'd15561450 ; delta = 16'd56179  ; end
+      8'd21  : begin base = 24'd15505272 ; delta = 16'd55774  ; end
+      8'd22  : begin base = 24'd15449498 ; delta = 16'd55375  ; end
+      8'd23  : begin base = 24'd15394123 ; delta = 16'd54979  ; end
+      8'd24  : begin base = 24'd15339144 ; delta = 16'd54588  ; end
+      8'd25  : begin base = 24'd15284557 ; delta = 16'd54201  ; end
+      8'd26  : begin base = 24'd15230357 ; delta = 16'd53818  ; end
+      8'd27  : begin base = 24'd15176539 ; delta = 16'd53439  ; end
+      8'd28  : begin base = 24'd15123101 ; delta = 16'd53064  ; end
+      8'd29  : begin base = 24'd15070037 ; delta = 16'd52693  ; end
+      8'd30  : begin base = 24'd15017345 ; delta = 16'd52325  ; end
+      8'd31  : begin base = 24'd14965020 ; delta = 16'd51962  ; end
+      8'd32  : begin base = 24'd14913058 ; delta = 16'd51602  ; end
+      8'd33  : begin base = 24'd14861456 ; delta = 16'd51246  ; end
+      8'd34  : begin base = 24'd14810210 ; delta = 16'd50894  ; end
+      8'd35  : begin base = 24'd14759316 ; delta = 16'd50546  ; end
+      8'd36  : begin base = 24'd14708771 ; delta = 16'd50201  ; end
+      8'd37  : begin base = 24'd14658570 ; delta = 16'd49859  ; end
+      8'd38  : begin base = 24'd14608711 ; delta = 16'd49521  ; end
+      8'd39  : begin base = 24'd14559190 ; delta = 16'd49187  ; end
+      8'd40  : begin base = 24'd14510004 ; delta = 16'd48855  ; end
+      8'd41  : begin base = 24'd14461149 ; delta = 16'd48527  ; end
+      8'd42  : begin base = 24'd14412622 ; delta = 16'd48203  ; end
+      8'd43  : begin base = 24'd14364419 ; delta = 16'd47881  ; end
+      8'd44  : begin base = 24'd14316538 ; delta = 16'd47563  ; end
+      8'd45  : begin base = 24'd14268975 ; delta = 16'd47248  ; end
+      8'd46  : begin base = 24'd14221727 ; delta = 16'd46936  ; end
+      8'd47  : begin base = 24'd14174790 ; delta = 16'd46628  ; end
+      8'd48  : begin base = 24'd14128163 ; delta = 16'd46322  ; end
+      8'd49  : begin base = 24'd14081841 ; delta = 16'd46019  ; end
+      8'd50  : begin base = 24'd14035822 ; delta = 16'd45719  ; end
+      8'd51  : begin base = 24'd13990103 ; delta = 16'd45422  ; end
+      8'd52  : begin base = 24'd13944681 ; delta = 16'd45128  ; end
+      8'd53  : begin base = 24'd13899552 ; delta = 16'd44837  ; end
+      8'd54  : begin base = 24'd13854715 ; delta = 16'd44549  ; end
+      8'd55  : begin base = 24'd13810166 ; delta = 16'd44263  ; end
+      8'd56  : begin base = 24'd13765903 ; delta = 16'd43981  ; end
+      8'd57  : begin base = 24'd13721923 ; delta = 16'd43700  ; end
+      8'd58  : begin base = 24'd13678222 ; delta = 16'd43423  ; end
+      8'd59  : begin base = 24'd13634800 ; delta = 16'd43148  ; end
+      8'd60  : begin base = 24'd13591652 ; delta = 16'd42876  ; end
+      8'd61  : begin base = 24'd13548776 ; delta = 16'd42606  ; end
+      8'd62  : begin base = 24'd13506170 ; delta = 16'd42339  ; end
+      8'd63  : begin base = 24'd13463831 ; delta = 16'd42075  ; end
+      8'd64  : begin base = 24'd13421756 ; delta = 16'd41812  ; end
+      8'd65  : begin base = 24'd13379944 ; delta = 16'd41553  ; end
+      8'd66  : begin base = 24'd13338392 ; delta = 16'd41295  ; end
+      8'd67  : begin base = 24'd13297096 ; delta = 16'd41040  ; end
+      8'd68  : begin base = 24'd13256056 ; delta = 16'd40788  ; end
+      8'd69  : begin base = 24'd13215268 ; delta = 16'd40538  ; end
+      8'd70  : begin base = 24'd13174731 ; delta = 16'd40290  ; end
+      8'd71  : begin base = 24'd13134441 ; delta = 16'd40044  ; end
+      8'd72  : begin base = 24'd13094397 ; delta = 16'd39801  ; end
+      8'd73  : begin base = 24'd13054597 ; delta = 16'd39559  ; end
+      8'd74  : begin base = 24'd13015037 ; delta = 16'd39320  ; end
+      8'd75  : begin base = 24'd12975717 ; delta = 16'd39084  ; end
+      8'd76  : begin base = 24'd12936634 ; delta = 16'd38849  ; end
+      8'd77  : begin base = 24'd12897785 ; delta = 16'd38616  ; end
+      8'd78  : begin base = 24'd12859169 ; delta = 16'd38386  ; end
+      8'd79  : begin base = 24'd12820784 ; delta = 16'd38157  ; end
+      8'd80  : begin base = 24'd12782627 ; delta = 16'd37931  ; end
+      8'd81  : begin base = 24'd12744696 ; delta = 16'd37706  ; end
+      8'd82  : begin base = 24'd12706990 ; delta = 16'd37484  ; end
+      8'd83  : begin base = 24'd12669506 ; delta = 16'd37263  ; end
+      8'd84  : begin base = 24'd12632243 ; delta = 16'd37045  ; end
+      8'd85  : begin base = 24'd12595198 ; delta = 16'd36828  ; end
+      8'd86  : begin base = 24'd12558370 ; delta = 16'd36613  ; end
+      8'd87  : begin base = 24'd12521757 ; delta = 16'd36400  ; end
+      8'd88  : begin base = 24'd12485357 ; delta = 16'd36189  ; end
+      8'd89  : begin base = 24'd12449167 ; delta = 16'd35980  ; end
+      8'd90  : begin base = 24'd12413187 ; delta = 16'd35773  ; end
+      8'd91  : begin base = 24'd12377415 ; delta = 16'd35567  ; end
+      8'd92  : begin base = 24'd12341847 ; delta = 16'd35363  ; end
+      8'd93  : begin base = 24'd12306484 ; delta = 16'd35161  ; end
+      8'd94  : begin base = 24'd12271323 ; delta = 16'd34961  ; end
+      8'd95  : begin base = 24'd12236362 ; delta = 16'd34762  ; end
+      8'd96  : begin base = 24'd12201599 ; delta = 16'd34565  ; end
+      8'd97  : begin base = 24'd12167034 ; delta = 16'd34370  ; end
+      8'd98  : begin base = 24'd12132664 ; delta = 16'd34177  ; end
+      8'd99  : begin base = 24'd12098487 ; delta = 16'd33985  ; end
+      8'd100 : begin base = 24'd12064503 ; delta = 16'd33794  ; end
+      8'd101 : begin base = 24'd12030709 ; delta = 16'd33605  ; end
+      8'd102 : begin base = 24'd11997104 ; delta = 16'd33418  ; end
+      8'd103 : begin base = 24'd11963686 ; delta = 16'd33232  ; end
+      8'd104 : begin base = 24'd11930453 ; delta = 16'd33048  ; end
+      8'd105 : begin base = 24'd11897405 ; delta = 16'd32866  ; end
+      8'd106 : begin base = 24'd11864539 ; delta = 16'd32685  ; end
+      8'd107 : begin base = 24'd11831855 ; delta = 16'd32505  ; end
+      8'd108 : begin base = 24'd11799350 ; delta = 16'd32327  ; end
+      8'd109 : begin base = 24'd11767023 ; delta = 16'd32150  ; end
+      8'd110 : begin base = 24'd11734872 ; delta = 16'd31975  ; end
+      8'd111 : begin base = 24'd11702897 ; delta = 16'd31801  ; end
+      8'd112 : begin base = 24'd11671096 ; delta = 16'd31629  ; end
+      8'd113 : begin base = 24'd11639467 ; delta = 16'd31458  ; end
+      8'd114 : begin base = 24'd11608009 ; delta = 16'd31288  ; end
+      8'd115 : begin base = 24'd11576721 ; delta = 16'd31120  ; end
+      8'd116 : begin base = 24'd11545601 ; delta = 16'd30953  ; end
+      8'd117 : begin base = 24'd11514647 ; delta = 16'd30788  ; end
+      8'd118 : begin base = 24'd11483860 ; delta = 16'd30624  ; end
+      8'd119 : begin base = 24'd11453236 ; delta = 16'd30461  ; end
+      8'd120 : begin base = 24'd11422775 ; delta = 16'd30299  ; end
+      8'd121 : begin base = 24'd11392476 ; delta = 16'd30139  ; end
+      8'd122 : begin base = 24'd11362337 ; delta = 16'd29980  ; end
+      8'd123 : begin base = 24'd11332358 ; delta = 16'd29822  ; end
+      8'd124 : begin base = 24'd11302536 ; delta = 16'd29665  ; end
+      8'd125 : begin base = 24'd11272870 ; delta = 16'd29510  ; end
+      8'd126 : begin base = 24'd11243360 ; delta = 16'd29356  ; end
+      8'd127 : begin base = 24'd11214004 ; delta = 16'd29203  ; end
+      8'd128 : begin base = 24'd11184801 ; delta = 16'd29051  ; end
+      8'd129 : begin base = 24'd11155750 ; delta = 16'd28901  ; end
+      8'd130 : begin base = 24'd11126849 ; delta = 16'd28752  ; end
+      8'd131 : begin base = 24'd11098097 ; delta = 16'd28603  ; end
+      8'd132 : begin base = 24'd11069494 ; delta = 16'd28456  ; end
+      8'd133 : begin base = 24'd11041038 ; delta = 16'd28310  ; end
+      8'd134 : begin base = 24'd11012728 ; delta = 16'd28166  ; end
+      8'd135 : begin base = 24'd10984562 ; delta = 16'd28022  ; end
+      8'd136 : begin base = 24'd10956540 ; delta = 16'd27879  ; end
+      8'd137 : begin base = 24'd10928661 ; delta = 16'd27738  ; end
+      8'd138 : begin base = 24'd10900923 ; delta = 16'd27597  ; end
+      8'd139 : begin base = 24'd10873326 ; delta = 16'd27458  ; end
+      8'd140 : begin base = 24'd10845868 ; delta = 16'd27320  ; end
+      8'd141 : begin base = 24'd10818549 ; delta = 16'd27182  ; end
+      8'd142 : begin base = 24'd10791367 ; delta = 16'd27046  ; end
+      8'd143 : begin base = 24'd10764321 ; delta = 16'd26911  ; end
+      8'd144 : begin base = 24'd10737410 ; delta = 16'd26777  ; end
+      8'd145 : begin base = 24'd10710633 ; delta = 16'd26643  ; end
+      8'd146 : begin base = 24'd10683990 ; delta = 16'd26511  ; end
+      8'd147 : begin base = 24'd10657479 ; delta = 16'd26380  ; end
+      8'd148 : begin base = 24'd10631099 ; delta = 16'd26250  ; end
+      8'd149 : begin base = 24'd10604849 ; delta = 16'd26120  ; end
+      8'd150 : begin base = 24'd10578729 ; delta = 16'd25992  ; end
+      8'd151 : begin base = 24'd10552737 ; delta = 16'd25865  ; end
+      8'd152 : begin base = 24'd10526873 ; delta = 16'd25738  ; end
+      8'd153 : begin base = 24'd10501135 ; delta = 16'd25613  ; end
+      8'd154 : begin base = 24'd10475522 ; delta = 16'd25488  ; end
+      8'd155 : begin base = 24'd10450034 ; delta = 16'd25364  ; end
+      8'd156 : begin base = 24'd10424670 ; delta = 16'd25241  ; end
+      8'd157 : begin base = 24'd10399429 ; delta = 16'd25119  ; end
+      8'd158 : begin base = 24'd10374310 ; delta = 16'd24998  ; end
+      8'd159 : begin base = 24'd10349311 ; delta = 16'd24878  ; end
+      8'd160 : begin base = 24'd10324433 ; delta = 16'd24759  ; end
+      8'd161 : begin base = 24'd10299674 ; delta = 16'd24640  ; end
+      8'd162 : begin base = 24'd10275034 ; delta = 16'd24523  ; end
+      8'd163 : begin base = 24'd10250511 ; delta = 16'd24406  ; end
+      8'd164 : begin base = 24'd10226105 ; delta = 16'd24290  ; end
+      8'd165 : begin base = 24'd10201815 ; delta = 16'd24175  ; end
+      8'd166 : begin base = 24'd10177640 ; delta = 16'd24061  ; end
+      8'd167 : begin base = 24'd10153580 ; delta = 16'd23947  ; end
+      8'd168 : begin base = 24'd10129633 ; delta = 16'd23834  ; end
+      8'd169 : begin base = 24'd10105798 ; delta = 16'd23723  ; end
+      8'd170 : begin base = 24'd10082076 ; delta = 16'd23611  ; end
+      8'd171 : begin base = 24'd10058465 ; delta = 16'd23501  ; end
+      8'd172 : begin base = 24'd10034963 ; delta = 16'd23392  ; end
+      8'd173 : begin base = 24'd10011572 ; delta = 16'd23283  ; end
+      8'd174 : begin base = 24'd9988289  ; delta = 16'd23175  ; end
+      8'd175 : begin base = 24'd9965115  ; delta = 16'd23067  ; end
+      8'd176 : begin base = 24'd9942047  ; delta = 16'd22961  ; end
+      8'd177 : begin base = 24'd9919086  ; delta = 16'd22855  ; end
+      8'd178 : begin base = 24'd9896231  ; delta = 16'd22750  ; end
+      8'd179 : begin base = 24'd9873482  ; delta = 16'd22646  ; end
+      8'd180 : begin base = 24'd9850836  ; delta = 16'd22542  ; end
+      8'd181 : begin base = 24'd9828294  ; delta = 16'd22439  ; end
+      8'd182 : begin base = 24'd9805855  ; delta = 16'd22337  ; end
+      8'd183 : begin base = 24'd9783518  ; delta = 16'd22235  ; end
+      8'd184 : begin base = 24'd9761283  ; delta = 16'd22134  ; end
+      8'd185 : begin base = 24'd9739149  ; delta = 16'd22034  ; end
+      8'd186 : begin base = 24'd9717114  ; delta = 16'd21935  ; end
+      8'd187 : begin base = 24'd9695180  ; delta = 16'd21836  ; end
+      8'd188 : begin base = 24'd9673344  ; delta = 16'd21738  ; end
+      8'd189 : begin base = 24'd9651606  ; delta = 16'd21640  ; end
+      8'd190 : begin base = 24'd9629965  ; delta = 16'd21544  ; end
+      8'd191 : begin base = 24'd9608422  ; delta = 16'd21447  ; end
+      8'd192 : begin base = 24'd9586975  ; delta = 16'd21352  ; end
+      8'd193 : begin base = 24'd9565623  ; delta = 16'd21257  ; end
+      8'd194 : begin base = 24'd9544366  ; delta = 16'd21163  ; end
+      8'd195 : begin base = 24'd9523203  ; delta = 16'd21069  ; end
+      8'd196 : begin base = 24'd9502134  ; delta = 16'd20976  ; end
+      8'd197 : begin base = 24'd9481158  ; delta = 16'd20884  ; end
+      8'd198 : begin base = 24'd9460275  ; delta = 16'd20792  ; end
+      8'd199 : begin base = 24'd9439483  ; delta = 16'd20701  ; end
+      8'd200 : begin base = 24'd9418782  ; delta = 16'd20610  ; end
+      8'd201 : begin base = 24'd9398172  ; delta = 16'd20520  ; end
+      8'd202 : begin base = 24'd9377652  ; delta = 16'd20431  ; end
+      8'd203 : begin base = 24'd9357222  ; delta = 16'd20342  ; end
+      8'd204 : begin base = 24'd9336880  ; delta = 16'd20254  ; end
+      8'd205 : begin base = 24'd9316626  ; delta = 16'd20166  ; end
+      8'd206 : begin base = 24'd9296461  ; delta = 16'd20079  ; end
+      8'd207 : begin base = 24'd9276382  ; delta = 16'd19992  ; end
+      8'd208 : begin base = 24'd9256390  ; delta = 16'd19906  ; end
+      8'd209 : begin base = 24'd9236483  ; delta = 16'd19821  ; end
+      8'd210 : begin base = 24'd9216663  ; delta = 16'd19736  ; end
+      8'd211 : begin base = 24'd9196927  ; delta = 16'd19652  ; end
+      8'd212 : begin base = 24'd9177275  ; delta = 16'd19568  ; end
+      8'd213 : begin base = 24'd9157708  ; delta = 16'd19484  ; end
+      8'd214 : begin base = 24'd9138223  ; delta = 16'd19402  ; end
+      8'd215 : begin base = 24'd9118821  ; delta = 16'd19320  ; end
+      8'd216 : begin base = 24'd9099502  ; delta = 16'd19238  ; end
+      8'd217 : begin base = 24'd9080264  ; delta = 16'd19157  ; end
+      8'd218 : begin base = 24'd9061107  ; delta = 16'd19076  ; end
+      8'd219 : begin base = 24'd9042031  ; delta = 16'd18996  ; end
+      8'd220 : begin base = 24'd9023036  ; delta = 16'd18916  ; end
+      8'd221 : begin base = 24'd9004119  ; delta = 16'd18837  ; end
+      8'd222 : begin base = 24'd8985282  ; delta = 16'd18758  ; end
+      8'd223 : begin base = 24'd8966524  ; delta = 16'd18680  ; end
+      8'd224 : begin base = 24'd8947844  ; delta = 16'd18603  ; end
+      8'd225 : begin base = 24'd8929241  ; delta = 16'd18525  ; end
+      8'd226 : begin base = 24'd8910716  ; delta = 16'd18449  ; end
+      8'd227 : begin base = 24'd8892267  ; delta = 16'd18372  ; end
+      8'd228 : begin base = 24'd8873895  ; delta = 16'd18297  ; end
+      8'd229 : begin base = 24'd8855598  ; delta = 16'd18221  ; end
+      8'd230 : begin base = 24'd8837377  ; delta = 16'd18147  ; end
+      8'd231 : begin base = 24'd8819230  ; delta = 16'd18072  ; end
+      8'd232 : begin base = 24'd8801158  ; delta = 16'd17998  ; end
+      8'd233 : begin base = 24'd8783160  ; delta = 16'd17925  ; end
+      8'd234 : begin base = 24'd8765235  ; delta = 16'd17852  ; end
+      8'd235 : begin base = 24'd8747383  ; delta = 16'd17779  ; end
+      8'd236 : begin base = 24'd8729604  ; delta = 16'd17707  ; end
+      8'd237 : begin base = 24'd8711897  ; delta = 16'd17635  ; end
+      8'd238 : begin base = 24'd8694261  ; delta = 16'd17564  ; end
+      8'd239 : begin base = 24'd8676697  ; delta = 16'd17493  ; end
+      8'd240 : begin base = 24'd8659204  ; delta = 16'd17423  ; end
+      8'd241 : begin base = 24'd8641781  ; delta = 16'd17353  ; end
+      8'd242 : begin base = 24'd8624428  ; delta = 16'd17283  ; end
+      8'd243 : begin base = 24'd8607145  ; delta = 16'd17214  ; end
+      8'd244 : begin base = 24'd8589930  ; delta = 16'd17146  ; end
+      8'd245 : begin base = 24'd8572785  ; delta = 16'd17077  ; end
+      8'd246 : begin base = 24'd8555708  ; delta = 16'd17009  ; end
+      8'd247 : begin base = 24'd8538698  ; delta = 16'd16942  ; end
+      8'd248 : begin base = 24'd8521756  ; delta = 16'd16875  ; end
+      8'd249 : begin base = 24'd8504882  ; delta = 16'd16808  ; end
+      8'd250 : begin base = 24'd8488074  ; delta = 16'd16742  ; end
+      8'd251 : begin base = 24'd8471332  ; delta = 16'd16676  ; end
+      8'd252 : begin base = 24'd8454656  ; delta = 16'd16610  ; end
+      8'd253 : begin base = 24'd8438046  ; delta = 16'd16545  ; end
+      8'd254 : begin base = 24'd8421500  ; delta = 16'd16480  ; end
+      8'd255 : begin base = 24'd8405020  ; delta = 16'd16416  ; end
+      default:   begin base = 24'd16777184; delta = 16'd65281; end
+    endcase
+  end
+
+endmodule
