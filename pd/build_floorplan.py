@@ -57,12 +57,20 @@ ATLAS_MODEL_MM2 = {
 
 
 def read_areas(path):
-    """block name -> area in um^2, from the synthesis/STA summary."""
+    """block name -> area in um^2, from the synthesis/STA summary.
+
+    The summary can carry more than one row per block when a configuration is
+    swept (an MXFP4-only dot engine, for instance).  The first row is the
+    default build, so later rows are ignored rather than silently replacing it
+    and changing the floorplan underneath.
+    """
     areas = {}
     with open(path) as f:
         for line in f:
             parts = line.split()
             if len(parts) >= 3 and parts[0].startswith("atlas_"):
+                if parts[0] in areas:
+                    continue
                 try:
                     areas[parts[0]] = float(parts[2])
                 except ValueError:

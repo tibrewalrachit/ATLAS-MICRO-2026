@@ -51,6 +51,7 @@ python3 tb/golden/gen_dot_vectors.py  tb/sv/dot_vectors.txt   > /dev/null
 python3 tb/golden/gen_fadd_vectors.py tb/sv/fadd_vectors.txt  > /dev/null
 python3 tb/golden/gen_gemm_vectors.py tb/sv/gemm_vectors.txt  > /dev/null
 python3 tb/golden/gen_moe_vectors.py  tb/sv/moe_vectors.txt   > /dev/null
+python3 tb/golden/gen_kda_vectors.py  tb/sv/kda_vectors.txt   > /dev/null
 echo
 
 echo "Testbenches"
@@ -64,6 +65,7 @@ run_tb tb_rmsnorm     tb_rmsnorm     tb/sv/tb_rmsnorm.sv     $RTL_ALL
 run_tb tb_moe_router  tb_moe_router  tb/sv/tb_moe_router.sv  $RTL_ALL
 run_tb tb_hbdram      tb_hbdram      "tb/sv/tb_hbdram.sv tb/sv/hbdram_model.sv $RTL_ALL"
 run_tb tb_noc_mesh    tb_noc_mesh    tb/sv/tb_noc_mesh.sv    $RTL_ALL
+run_tb tb_kda         tb_kda         tb/sv/tb_kda.sv         $RTL_ALL
 
 echo "-----------------------------------------------------------------------"
 echo "$pass passed, $fail failed"

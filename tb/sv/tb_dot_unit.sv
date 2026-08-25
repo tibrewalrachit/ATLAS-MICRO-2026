@@ -13,7 +13,12 @@
 
 module tb_dot_unit;
 
-  localparam int unsigned N       = 32;
+  parameter  int unsigned N       = 32;
+  // Overridable so the guard window can be swept.  A narrower window is still
+  // bit-exact for MXFP4 -- see docs/rtl/README.md -- and the reference model
+  // is deliberately left at the wide setting so a narrowed RTL is checked
+  // against the full-precision answer, not against itself.
+  parameter  int unsigned GUARD_W = 20;
   localparam int unsigned MAXV    = 8192;
   localparam int unsigned LATENCY = 6;
 
@@ -27,7 +32,7 @@ module tb_dot_unit;
   logic           out_valid;
   logic [31:0]    out_f32;
 
-  atlas_dot_unit #(.N(N)) dut (
+  atlas_dot_unit #(.N(N), .GUARD_W(GUARD_W)) dut (
     .clk(clk), .rst_n(rst_n),
     .in_valid(in_valid), .fmt_a(fmt_a), .fmt_b(fmt_b),
     .a_codes(a_codes), .b_codes(b_codes),

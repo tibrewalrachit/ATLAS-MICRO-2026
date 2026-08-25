@@ -32,6 +32,15 @@ module atlas_norm_round_f32 #(
 
   localparam int unsigned MSB_W = $clog2(SUM_W);
 
+  // The normalisation window has to be at least as wide as the binary32
+  // significand plus its round bit.  A narrow accumulator -- which is what
+  // sizing the guard window to the format gives, e.g. 18 bits for an
+  // MXFP4-only build -- would otherwise be sliced past its own top bit.
+  // Widening here costs nothing: the extension is constant zero, so the shift
+  // and the slices below collapse in synthesis.
+  localparam int unsigned NW    = (SUM_W < 25) ? 25 : SUM_W;
+  localparam int unsigned SH_W  = $clog2(NW) + 1;
+
   logic [MSB_W:0]   msb;      // index of the leading one
   logic             is_zero;
 
@@ -51,17 +60,26 @@ module atlas_norm_round_f32 #(
 
   // Left-align so the leading one sits at bit SUM_W-1, then the top 24 bits
   // are the significand and the remainder feeds round/sticky.
-  logic [SUM_W-1:0]  norm;
+  logic [NW-1:0]     norm;
   logic [23:0]       signif;
   logic              round_bit, sticky, inc;
   logic [24:0]       signif_r;
 
-  logic [MSB_W:0] shamt;
-  assign shamt     = (MSB_W+1)'(SUM_W-1) - msb;
-  assign norm      = mag << shamt;
-  assign signif    = norm[SUM_W-1 -: 24];
-  assign round_bit = norm[SUM_W-25];
-  assign sticky    = |norm[SUM_W-26:0];
+  logic [SH_W-1:0] shamt;
+  assign shamt     = SH_W'(NW-1) - SH_W'(msb);
+  assign norm      = NW'(mag) << shamt;
+  assign signif    = norm[NW-1 -: 24];
+  assign round_bit = norm[NW-25];
+  // With NW == 25 there is nothing below the round bit, so the reduction has
+  // no bits to take and sticky is constant zero.
+  generate
+    if (NW >= 26) begin : g_sticky
+      assign sticky = |norm[NW-26:0];
+    end else begin : g_no_sticky
+      assign sticky = 1'b0;
+    end
+  endgenerate
+
   assign inc       = round_bit & (sticky | signif[0]);
   assign signif_r  = {1'b0, signif} + {24'd0, inc};
 
